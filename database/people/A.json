@@ -1,0 +1,10 @@
+{
+	Id = "",
+	FirstName = "",
+	LastName = ""
+	Phone = "",
+	Email = "",
+	Other = "",
+	SmallPhotoPath = "",
+	LargePhotoPath = ""
+},
