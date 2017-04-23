@@ -1,6 +1,10 @@
 .mainpage, .mainContent {
     width: 76.2%;
-    height: auto;
+    height: 80%;
+}
+
+.mainpage {
+    height: 100%;
 }
 
 .updates {
@@ -53,7 +57,7 @@
 }
 
 .projectsList {
-    height: 67%;
+    height: 82%;
     overflow-y: auto;
     margin-top: 8%;
 }
@@ -71,8 +75,10 @@
 }
 
 .request {
+    position: relative;
+    margin-top: -22%;
     background-color: #cce6ff;
-    height: 13%;
+    height: 16%;
     width: 76.2%;
 }
 
