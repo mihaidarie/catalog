@@ -1,7 +1,6 @@
 $(document).ready(function() {
     console.log( "ready!" );
-    alert("ready");
-    $(".loginOK").click(function() {
+    $("#loginOK").click(function() {
         var username = $("#username").val();
         var password = $("#password").val();
         var isLoginOk = performLogin(username, password);

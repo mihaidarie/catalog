@@ -4,11 +4,40 @@
     margin: auto;
     position: relative;
     height: 50%;
-    width: 70%;
+    width: 50%;
 }
 
 .login {
+    margin-right: 2.5%;
+    width: 19%;
+    height: 55%;
+    vertical-align: bottom;
+    position: absolute; 
+    bottom: -16.5%; 
+    right: 0;
+}
+
+.loginLabel {
+    color: white;
+}
+
+.floatRight {
     float: right;
-    margin-right: 1%;
-    width: 20%;
+}
+
+.textBox {
+    width: 100%;
+}
+
+.marginTop {
+    margin-top: 4%;
+}
+
+.header input {
+    height: 15%;
+}
+
+.header button {
+    width: 40%;
+    border-radius: 7px;
 }
