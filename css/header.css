@@ -1,17 +1,31 @@
 .header {
-    background-image: url("../images/header.png");
+    background-image: url("../images/colegiul.png");
     background-size: 100% 100%;
     margin: auto;
     position: relative;
     height: 50%;
-    width: 50%;
+    width: 58%;
+}
+
+.promotion {
+    clear: right;
+}
+
+.promotion, .promotion button {
+    color: white;
+    font-size: 25px;
+    background-color: black;
+    border: none;
+}
+
+.promotion button {
+    cursor: pointer;
 }
 
 .login {
     margin-right: 2.5%;
     width: 19%;
     height: 55%;
-    vertical-align: bottom;
     position: absolute; 
     bottom: -16.5%; 
     right: 0;
@@ -37,7 +51,7 @@
     height: 15%;
 }
 
-.header button {
+#loginOK {
     width: 40%;
     border-radius: 7px;
 }

@@ -1,0 +1,96 @@
+.mainpage, .mainContent {
+    width: 76.2%;
+    height: auto;
+}
+
+.updates {
+    float: left;
+    width: 49.7%;
+    background-color: #cce6ff;
+}
+
+.projects {
+    float: right;
+    width: 49.7%;
+}
+
+.projects li {
+    text-align: right;
+}
+
+.updatesHeader, .projectsHeader, .requestHeader {
+    color: red;
+    font-size: 22px;
+    margin-left: 3%;
+    margin-top: 1%;
+    float: left;
+}
+
+.requestHeader {
+    margin-left: 3%;
+    float: left;
+}
+
+.menu {
+    background-color: #595959;
+    width: 76.2%;
+    clear: right;
+    text-align: center;
+    height: 10%;
+}
+
+.menu button, span {
+    background-color: #595959;
+    color: white;
+    border: none;
+    font-size: 16px;
+    position: relative;
+    top: 35%;
+}
+
+.menu button {
+    cursor: pointer;
+}
+
+.projectsList {
+    height: 67%;
+    overflow-y: auto;
+    margin-top: 8%;
+}
+
+.projectsList, .updatesContent, .requestBody {
+    font-size: 18px;
+}
+
+.updatesContent {
+    float: left;
+}
+
+.projectsList li {
+    padding-bottom: 1.6%;
+}
+
+.request {
+    background-color: #cce6ff;
+    height: 13%;
+    width: 76.2%;
+}
+
+.requestBody {
+    float: right;
+    margin-left: 17%;
+}
+
+.textPadding {
+    padding: 2%;
+}
+
+.projects label {
+    float: right;
+    margin-right: 2%;
+}
+
+.border {
+    border-style: solid;
+    border-width: 1px;
+}
