@@ -1,14 +1,57 @@
 .header {
-    background-image: url("../images/header.png");
+    background-image: url("../images/colegiul.png");
     background-size: 100% 100%;
     margin: auto;
     position: relative;
     height: 50%;
-    width: 70%;
+    width: 58%;
+}
+
+.promotion {
+    clear: right;
+}
+
+.promotion, .promotion button {
+    color: white;
+    font-size: 25px;
+    background-color: black;
+    border: none;
+}
+
+.promotion button {
+    cursor: pointer;
 }
 
 .login {
+    margin-right: 2.5%;
+    width: 19%;
+    height: 55%;
+    position: absolute; 
+    bottom: -16.5%; 
+    right: 0;
+}
+
+.loginLabel {
+    color: white;
+}
+
+.floatRight {
     float: right;
-    margin-right: 1%;
-    width: 20%;
+}
+
+.textBox {
+    width: 100%;
+}
+
+.marginTop {
+    margin-top: 4%;
+}
+
+.header input {
+    height: 15%;
+}
+
+#loginOK {
+    width: 40%;
+    border-radius: 7px;
 }
