@@ -1,0 +1,6 @@
+[{
+	"Description" : "Clasa A",
+	"Profiles" : [ { "Id" : "1", "FirstName" : "Nume1", "LastName" : "Prenume1", "PhotoPath" : "/images/profiles/small/1.png" }, 
+		{ "Id" : "2", "FirstName" : "Nume2", "LastName" : "Prenume2", "PhotoPath" : "/images/profiles/small/2.png" }, 
+		{ "Id" : "3", "FirstName" : "Nume3", "LastName" : "Prenume3", "PhotoPath" : "/images/profiles/small/3.png" }]
+}]
