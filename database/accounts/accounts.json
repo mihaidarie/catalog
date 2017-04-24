@@ -1,0 +1,18 @@
+{
+	Id = "0",
+	Username = "admin",
+	Password = "admin",
+	AccountType = "admin"
+},
+{
+	Id = "1",
+	Username = "user1",
+	Password = "pass1",
+	AccountType = "regular"
+},
+{
+	Id = "2",
+	Username = "user2",
+	Password = "pass2",
+	AccountType = "regular"
+},

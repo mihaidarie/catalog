@@ -1,24 +1,47 @@
-$(document).ready(function() {
-    console.log( "ready!" );
-    $("#profiles").load(function() {
+URI.prototype.getParameter = function(key) {
+    var paramValue = this.query(true)[key];
+    return paramValue;
+};
 
-        var profileInfo = { Id = 1 };
+$(document).ready(loadClassProfiles);
 
-        var profileId = profileInfo.Id;
+function loadClassProfiles() {
+    $("header").load('header.html', wireupHeaderButtons);
 
-        var newProfile;
-        newProfile.Id = "profile_" + profileId;
-        
+    var uri = URI(window.location.href);
+    var className = uri.getParameter("name");
+    
+    var classFileName = "database/classes/" + className + ".json";
 
-        var profilePhoto;
+    $.getJSON(classFileName, function( data ) {
+      
+        var items = [];
+        $.each(data, function(index, classDetails) {
 
-        var profileDescription;
+            items.push( "<p>" + classDetails.Description + "</p>" );
 
-        this.children.add(newProfile);
+            $.each(classDetails.Profiles, function(index2, profile) {
 
-        $("").click(function() {
-            var profileId = this.Id;
-            window.URL = "profile\id=" + profileId;
+                var profileId = "personprofile" + profile.Id;
+                items.push( "<div data-id='" + profile.Id + "' id='" + profileId + "'><img src=" + profile.PhotoPath + 
+                    "></img><label>" + profile.LastName + " " + profile.FirstName + "</label></div>" );
+            });
         });
+        
+        $( "<div/>", {
+            "class": "my-new-list",
+            html: items.join("")
+        }).appendTo("#profiles");
+
+        hookProfileClick();
     });
-});
+}
+
+function hookProfileClick() {
+    $("div[id^='personprofile']").click(function(e) {
+        var elementId = this.id;
+        var profileId = this.getAttribute("data-id");
+        window.location.href = "profile.html?id=" + profileId;
+        e.stopPropagation();
+    });
+}

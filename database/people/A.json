@@ -1,10 +1,112 @@
-{
-	Id = "",
-	FirstName = "",
-	LastName = ""
-	Phone = "",
-	Email = "",
-	Other = "",
-	SmallPhotoPath = "",
-	LargePhotoPath = ""
-},
+[{
+	"Id" : "1",
+	"FirstName" : "Nume1",
+	"LastName" : "Prenume1",
+	"Phone" : "telefon1",
+	"Address" : "Adresa1",
+	"Country" : "Romania1",
+	"LinkedIn" : "linkedin1.com",
+	"Facebook" : "facebook1.com",
+	"Occupation" : "Ocupatie1",
+	"Email" : "mail1@mail.com",
+	"Description" : "+ scurta descriere a individului
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit,
+vulputate eu pharetra nec, mattis ac neque. Duis vulputate commodo
+lectus, ac blandit elit tincidunt id. Sed rhoncus, tortor sed eleifend
+tristique, tortor mauris molestie elit, et lacinia ipsum quam nec dui.
+Quisque nec mauris sit amet elit iaculis pretium sit amet quis magna.
+Aenean velit odio, elementum in tempus ut, vehicula eu diam.
+Pellentesque rhoncus aliquam mattis. Ut vulputate eros sed felis sodales
+nec vulputate justo hendrerit. Vivamus varius pretium ligula, a aliquam
+odio euismod sit amet. Quisque laoreet sem sit amet orci ullamcorper at
+ultricies metus viverra. Pellentesque arcu mauris, malesuada quis ornare
+accumsan, blandit sed diam.",
+	Other : "catva cuvinete, idei, poroiecte, vise, cosmaruri
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit,
+vulputate eu pharetra nec, mattis ac neque. Duis vulputate commodo
+lectus, ac blandit elit tincidunt id. Sed rhoncus, tortor sed eleifend
+tristique, tortor mauris molestie elit, et lacinia ipsum quam nec dui.
+Quisque nec mauris sit amet elit iaculis pretium sit amet quis magna.
+Aenean velit odio, elementum in tempus ut, vehicula eu diam.
+Pellentesque rhoncus aliquam mattis. Ut vulputate eros sed felis sodales
+nec vulputate justo hendrerit. Vivamus varius pretium ligula, a aliquam
+odio euismod sit amet. Quisque laoreet sem sit amet orci ullamcorper at
+ultricies metus viverra. Pellentesque arcu mauris, malesuada quis ornare
+accumsan, blandit sed diam.",
+	"SmallPhotoPath" : "/Catalog/images/profiles/small/1.png",
+	"LargePhotoPath" : "/Catalog/images/profiles/large/1.png"
+},{
+	"Id" : "2",
+	"FirstName" : "Nume2",
+	"LastName" : "Prenume2",
+	"Phone" : "telefon2",
+	"Address" : "Adresa2",
+	"Country" : "Romania2",
+	"LinkedIn" : "linkedin2.com",
+	"Facebook" : "facebook2.com",
+	"Occupation" : "Ocupatie2",
+	"Email" : "mail2@mail.com",
+	"Description" : "+ scurta descriere a individului
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit,
+vulputate eu pharetra nec, mattis ac neque. Duis vulputate commodo
+lectus, ac blandit elit tincidunt id. Sed rhoncus, tortor sed eleifend
+tristique, tortor mauris molestie elit, et lacinia ipsum quam nec dui.
+Quisque nec mauris sit amet elit iaculis pretium sit amet quis magna.
+Aenean velit odio, elementum in tempus ut, vehicula eu diam.
+Pellentesque rhoncus aliquam mattis. Ut vulputate eros sed felis sodales
+nec vulputate justo hendrerit. Vivamus varius pretium ligula, a aliquam
+odio euismod sit amet. Quisque laoreet sem sit amet orci ullamcorper at
+ultricies metus viverra. Pellentesque arcu mauris, malesuada quis ornare
+accumsan, blandit sed diam.",
+	Other : "catva cuvinete, idei, poroiecte, vise, cosmaruri
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit,
+vulputate eu pharetra nec, mattis ac neque. Duis vulputate commodo
+lectus, ac blandit elit tincidunt id. Sed rhoncus, tortor sed eleifend
+tristique, tortor mauris molestie elit, et lacinia ipsum quam nec dui.
+Quisque nec mauris sit amet elit iaculis pretium sit amet quis magna.
+Aenean velit odio, elementum in tempus ut, vehicula eu diam.
+Pellentesque rhoncus aliquam mattis. Ut vulputate eros sed felis sodales
+nec vulputate justo hendrerit. Vivamus varius pretium ligula, a aliquam
+odio euismod sit amet. Quisque laoreet sem sit amet orci ullamcorper at
+ultricies metus viverra. Pellentesque arcu mauris, malesuada quis ornare
+accumsan, blandit sed diam.",
+	"SmallPhotoPath" : "/Catalog/images/profiles/small/2.png",
+	"LargePhotoPath" : "/Catalog/images/profiles/large/2.png"
+},{
+	"Id" : "3",
+	"FirstName" : "Nume3",
+	"LastName" : "Prenume3"
+	"Phone" : "telefon3",
+	"Address" : "Adresa3",
+	"Country" : "Romania3",
+	"LinkedIn" : "linkedin3.com",
+	"Facebook" : "facebook3.com",
+	"Occupation" : "Ocupatie3",
+	"Email" : "mail3@mail.com",
+	"Description" : "+ scurta descriere a individului
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit,
+vulputate eu pharetra nec, mattis ac neque. Duis vulputate commodo
+lectus, ac blandit elit tincidunt id. Sed rhoncus, tortor sed eleifend
+tristique, tortor mauris molestie elit, et lacinia ipsum quam nec dui.
+Quisque nec mauris sit amet elit iaculis pretium sit amet quis magna.
+Aenean velit odio, elementum in tempus ut, vehicula eu diam.
+Pellentesque rhoncus aliquam mattis. Ut vulputate eros sed felis sodales
+nec vulputate justo hendrerit. Vivamus varius pretium ligula, a aliquam
+odio euismod sit amet. Quisque laoreet sem sit amet orci ullamcorper at
+ultricies metus viverra. Pellentesque arcu mauris, malesuada quis ornare
+accumsan, blandit sed diam.",
+	Other : "catva cuvinete, idei, poroiecte, vise, cosmaruri
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit,
+vulputate eu pharetra nec, mattis ac neque. Duis vulputate commodo
+lectus, ac blandit elit tincidunt id. Sed rhoncus, tortor sed eleifend
+tristique, tortor mauris molestie elit, et lacinia ipsum quam nec dui.
+Quisque nec mauris sit amet elit iaculis pretium sit amet quis magna.
+Aenean velit odio, elementum in tempus ut, vehicula eu diam.
+Pellentesque rhoncus aliquam mattis. Ut vulputate eros sed felis sodales
+nec vulputate justo hendrerit. Vivamus varius pretium ligula, a aliquam
+odio euismod sit amet. Quisque laoreet sem sit amet orci ullamcorper at
+ultricies metus viverra. Pellentesque arcu mauris, malesuada quis ornare
+accumsan, blandit sed diam.",
+	"SmallPhotoPath" : "/Catalog/images/profiles/small/3.png",
+	"LargePhotoPath" : "/Catalog/images/profiles/large/3.png"
+}]
