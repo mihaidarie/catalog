@@ -23,7 +23,7 @@ function loadClassProfiles() {
             $.each(classDetails.Profiles, function(index2, profile) {
 
                 var profileId = "personprofile" + profile.Id;
-                items.push( "<div data-id='" + profile.Id + "' id='" + profileId + "'><img src=" + profile.PhotoPath + 
+                items.push( "<div data-id='" + profile.Id + "' id='" + profileId + "'><img src=" + profile.SmallPhotoPath + 
                     "></img><label>" + profile.LastName + " " + profile.FirstName + "</label></div>" );
             });
         });
@@ -39,9 +39,11 @@ function loadClassProfiles() {
 
 function hookProfileClick() {
     $("div[id^='personprofile']").click(function(e) {
+        var uri = URI(window.location.href);
+        var className = uri.getParameter("name");
         var elementId = this.id;
         var profileId = this.getAttribute("data-id");
-        window.location.href = "profile.html?id=" + profileId;
+        window.location.href = "profile.html?class=" + className + "&id=" + profileId;
         e.stopPropagation();
     });
 }

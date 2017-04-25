@@ -15,21 +15,23 @@
 .profilesList div {
     width: auto;
     height: auto;
-    display: inline-block;
-    text-align: center;
-    margin-left: 
+    display: inline-block;  
 }
 
 .profilesList img {
     border: solid 1px;
     clear: both;
     float: left;
+    cursor: pointer;
+    margin-left: 5%;
 }
 
 .profilesList label {
-    border: solid 1px;
+    width: 100%;
     padding: 2px;
     margin-top: 5%;
+    margin-bottom: 5%;
     clear: both;
     float: left;
+    cursor: pointer;
 }
