@@ -29,7 +29,7 @@ function loadClassProfiles() {
         });
         
         $( "<div/>", {
-            "class": "my-new-list",
+            "class": "profilesList",
             html: items.join("")
         }).appendTo("#profiles");
 
