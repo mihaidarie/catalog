@@ -13,6 +13,10 @@
     background-color: #cce6ff;
 }
 
+.updates img {
+    margin-top: 2%;
+}
+
 .projects {
     float: right;
     width: 49.7%;
@@ -76,7 +80,7 @@
 
 .request {
     position: relative;
-    margin-top: -22%;
+    margin-top: -19%;
     background-color: #cce6ff;
     height: 16%;
     width: 76.2%;
