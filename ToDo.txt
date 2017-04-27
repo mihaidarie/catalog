@@ -1,6 +1,8 @@
 - "Noutati" - form + JS logic pt editat continut (overwrite)
 - De folosit logica din projects.js intr-un html form
 - footer pus peste tot + buttons click
+- logout button
+- save ID to cookie upon login
 
 
 Intrebari:
