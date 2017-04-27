@@ -1,0 +1,8 @@
+- "Noutati" - form + JS logic pt editat continut (overwrite)
+- De folosit logica din projects.js intr-un html form
+- footer pus peste tot + buttons click
+
+
+Intrebari:
+- ce apare la click pe Galerie Foto / Contacte / Sugestii?
+- doar admin-ul editeaza proiectele?
