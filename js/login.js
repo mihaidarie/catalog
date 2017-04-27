@@ -3,21 +3,12 @@ $(document).ready(function() {
     $("#loginOK").click(function() {
         var username = $("#username").val();
         var password = $("#password").val();
-        var isLoginOk = performLogin(username, password);
+        var isLoginOk = validateCredentials(username, password);
         if(isLoginOk === true) {
              alert("go!");
+             // todo: set session or move this validate to the profile page
         } else {
             alert("invalid");
         }
-
-
     });
 });
-
-function performLogin(username, password){
-    if(username == "mihai" && password == "mihai") {
-        return true;
-    }
-
-    return false;
-}
