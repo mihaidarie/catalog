@@ -39,27 +39,6 @@
     float: left;
 }
 
-.menu {
-    background-color: #595959;
-    width: 76.2%;
-    clear: right;
-    text-align: center;
-    height: 10%;
-}
-
-.menu button, span {
-    background-color: #595959;
-    color: white;
-    border: none;
-    font-size: 16px;
-    position: relative;
-    top: 35%;
-}
-
-.menu button {
-    cursor: pointer;
-}
-
 .projectsList {
     height: 82%;
     overflow-y: auto;

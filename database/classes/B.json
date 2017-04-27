@@ -35,6 +35,6 @@
 		{ "Id" : "33", "FirstName" : "", "LastName" : "", "SmallPhotoPath" : "/images/profiles/small/B/33.jpg" },  
 		{ "Id" : "34", "FirstName" : "", "LastName" : "", "SmallPhotoPath" : "/images/profiles/small/B/34.jpg" },  
 		{ "Id" : "35", "FirstName" : "", "LastName" : "", "SmallPhotoPath" : "/images/profiles/small/B/35.jpg" },  
-		{ "Id" : "36", "FirstName" : "", "LastName" : "", "SmallPhotoPath" : "/images/profiles/small/B/36.jpg" }, 
+		{ "Id" : "36", "FirstName" : "", "LastName" : "", "SmallPhotoPath" : "/images/profiles/small/B/36.jpg" } 
 		]
 }]

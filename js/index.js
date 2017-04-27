@@ -1,6 +1,6 @@
 $(document).ready(function() {
     
-    $("header").load('header.html', wireupHeaderButtons);
+    $("header").load('header.html', loadHeader);
     $("footer").load('footer.html');
 
     loadProjects();
@@ -11,8 +11,7 @@ function loadProjects() {
     var projectsFileName = "database/projects/projects.json";
 
     $.getJSON(projectsFileName, function(data) {
-        alert('loaded');
-
+    
         var items = [];
         $.each(data, function(index, projectDetails) {
             if(projectDetails.Id && projectDetails.Id != '' && projectDetails.Description && projectDetails.Description != '') {
