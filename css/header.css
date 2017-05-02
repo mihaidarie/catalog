@@ -7,7 +7,7 @@
     width: 58%;
 }
 
-#dialog-confirm {
+#alert-session {
     background-color: yellow;
     display: inline-block;
     margin-left: auto;
@@ -21,6 +21,7 @@
     z-index: 100;
     margin-top: 30%;
     font-size: 28px;
+    display: none;
 }
 
 .promotion {
