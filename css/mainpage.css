@@ -11,7 +11,7 @@
     float: left;
     width: 49.7%;
     background-color: #cce6ff;
-    height: 85%;
+    height: 86%;
     overflow: auto;
 }
 
@@ -22,7 +22,7 @@
 .projects {
     float: right;
     width: 49.7%;
-    height: 85%;
+    height: 86%;
     overflow: auto;
 }
 

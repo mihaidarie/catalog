@@ -12,7 +12,7 @@ function loadProjects() {
         var items = [];
         $.each(data, function(index, projectDetails) {
             if(projectDetails.Id && projectDetails.Id != '' && projectDetails.Description && projectDetails.Description != '') {
-                items.push( "<li id=project_'" + projectDetails.Id + "'>" + projectDetails.Description + "</li>" );
+                items.push( "<li id=project_" + projectDetails.Id + ">" + projectDetails.Description + "</li>" );
             }
         });
         
@@ -24,7 +24,7 @@ function loadProjects() {
 }
 
 function hookProjectsClick() {
-     $("ul[id^='project_']").click(function(e) {
+     $("ul li[id^='project_']").click(function(e) {
         // todo: navigate to project details page
         alert('certain project clicked');
      });

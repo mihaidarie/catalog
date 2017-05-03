@@ -7,7 +7,6 @@ $(document).ready(loadClassProfiles);
 
 function loadClassProfiles() {
     $("header").load('header.html', loadHeader);
-
     $("footer").load('footer.html');
 
     var uri = URI(window.location.href);
