@@ -7,7 +7,7 @@ $(document).ready(function() {
 
     renderProfileData(profileId, profileClass);
 
-    $("header").load('header.html', wireupHeaderButtons);
+    $("header").load('header.html', loadHeader);
     $("footer").load('footer.html');
 });
 

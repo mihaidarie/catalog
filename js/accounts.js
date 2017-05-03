@@ -1,23 +1,56 @@
 var accountsFileName = "database/accounts/accounts.json";
 
-function validateCredentials(username, password) {
+function validateCredentials(username, password){
+    var loginResultOK = {
+                        IsLoginOk: true,
+                        UserId: "",
+                        Class: "" 
+                };
 
-    $.getJSON(accountsFileName, function( allAccounts ) {
+    var loginResultFailed =  {
+          IsLoginOk: false
+        };
+
+    var userId = "";
+    var userClass = "";
+
+    var loginResult = loginResultFailed;
+
+    $.ajax({
+        dataType: "json",
+        url: accountsFileName,
+        data: '',
+        async: false,
+        success: function(allAccounts) {
+
         $.each(allAccounts, function(key, value) {
             // todo: decrypt stored password
+            var readUsername = value.Username;
+            var readPassword = value.Password;
 
-            if(value.Username == username && value.Password == password) {
-               return true;
+            var isValid = readUsername == username && readPassword == password;
+            
+            if(isValid) {
+                userId = value.Id;
+                userClass = value.Class;
+                loginResult = loginResultOK;
             }
         });
-        
-        return false;
+    }
     });
+
+    if(loginResult == loginResultOK) {
+        loginResult.UserId = userId;
+        loginResult.Class = userClass;
+    }
+
+    return loginResult;
 }
 
 function validateNewCredentials(username, password) {
     
-    $.getJSON(accountsFileName, function( allAccounts ) {
+    // todo: replace with synchronous ajax call
+    $.getJSON(accountsFileName, function(allAccounts) {
         $.each(allAccounts, function(key, value) {
             if(value.AccountType == "admin") {
                 var adminUsername = value.Username;
@@ -35,7 +68,7 @@ function validateNewCredentials(username, password) {
         });
         
         return true;
-    }
+    });
 }
 
 function saveAccounts(newAccountsData) {
