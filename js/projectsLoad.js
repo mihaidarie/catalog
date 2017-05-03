@@ -21,14 +21,11 @@ function loadProjects() {
 
         hookProjectsClick();
     });
-
-    $("#projects").click(function() {
-        alert('projects click');
-    });
 }
 
 function hookProjectsClick() {
      $("ul[id^='project_']").click(function(e) {
         // todo: navigate to project details page
+        alert('certain project clicked');
      });
 }

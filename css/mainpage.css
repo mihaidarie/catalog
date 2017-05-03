@@ -11,7 +11,7 @@
     float: left;
     width: 49.7%;
     background-color: #cce6ff;
-    height: 65%;
+    height: 85%;
     overflow: auto;
 }
 
@@ -22,7 +22,7 @@
 .projects {
     float: right;
     width: 49.7%;
-    height: 65%;
+    height: 85%;
     overflow: auto;
 }
 
@@ -67,7 +67,7 @@
 
 .request {
     position: relative;
-    margin-top: -15%;
+    margin-top: -5%;
     background-color: #cce6ff;
     height: 16%;
     width: 76.2%;
