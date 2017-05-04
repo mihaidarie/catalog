@@ -4,6 +4,8 @@ URI.prototype.getParameter = function(key) {
 };
 
 $(document).ready(function() {
+    $('#profileDescription').elastic();
+    $('#otherInfo').elastic();
     var uri = URI(window.location.href);
     var profileId = uri.getParameter('id');
     var profileClass = uri.getParameter('class');
@@ -12,6 +14,15 @@ $(document).ready(function() {
     $("footer").load('footer.html');
 
     renderProfileData(profileId, profileClass);
+
+    $("#btnSave").click(function() {
+        // todo: save profile details to file
+        alert('saving profile!');
+    });
+
+    $("#btnCancel").click(function() {
+        window.location.href = window.location.href;
+    });
 });
 
 function renderProfileData(profileId, profileClass) {
@@ -27,16 +38,18 @@ function renderProfileData(profileId, profileClass) {
 
                 $('#firstname').text(profile.FirstName);
                 $('#lastname').text(profile.LastName);
-                $('#phoneNumber').text(profile.Phone);
-                $('#address').text(profile.Address);
-                $('#country').text(profile.Country);
-                $('#linkedinUrl').text(profile.LinkedIn);
-                $('#facebookUrl').text(profile.Facebook);
-                $('#job').text(profile.Occupation);
+                $('#phoneNumber').val(profile.Phone);
+                $('#address').val(profile.Address);
+                $('#country').val(profile.Country);
+                $('#linkedinUrl').val(profile.LinkedIn);
+                $('#facebookUrl').val(profile.Facebook);
+                $('#job').val(profile.Occupation);
                 //$('#').text(profile.Email);
-                $('#description').text(profile.Description);
+                $('#description').val(profile.Description);
                 $('#profilePhoto').attr("src", profile.ProfilePhotoPath);
                 $('#recentPhoto').attr("src", profile.RecentPhotoPath);
+                $('#otherInfo').text(profile.Other);
+                
             }
         });
     });

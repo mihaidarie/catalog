@@ -1,6 +1,11 @@
 $(document).ready(function() {
     $("header").load('header.html', loadHeader);
-    $("#button").click(function() {
+    
+    $("#btnSave").click(function() {
         // todo: save project details to file
+    });
+
+    $("#btnCancel").click(function() {
+        window.location.href = window.location.href;
     });
 })
