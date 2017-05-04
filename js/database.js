@@ -16,7 +16,7 @@ function modifyProfile(profilesData, newProfile) {
 function updateProfileData(currentProfileData, newProfileData) {
     currentProfileData.FirstName = newProfileData.FirstName;
     currentProfileData.LastName = newProfileData.LastName;
-    currentProfileData.SmallPhotoPath = newProfileData.SmallPhotoPath;
+    currentProfileData.ProfilePhotoPath = newProfileData.ProfilePhotoPath;
     currentProfileData.Phone = newProfileData.Phone;
     currentProfileData.Address = newProfileData.Address;
     currentProfileData.Country = newProfileData.Country;
