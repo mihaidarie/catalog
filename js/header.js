@@ -12,7 +12,10 @@ function wireupSessionTimer() {
     // binds to document, 3 minutes
     //$.idleTimer(3 * 60 * 1000);
 
-    $.idleTimer(10 * 1000);
+    $.idleTimer(
+        {
+            timeout: 10 * 1000,
+        });
 
     $(document).on("idle.idleTimer", function(event, elem, obj){
         var isUserLoggedIn = checkCookie();
@@ -21,6 +24,10 @@ function wireupSessionTimer() {
             // function you want to fire when the user goes idle
 
             $('#alert-session').show();
+            
+            // $('html, body').animate({
+            //     scrollTop: $("body").offset().top
+            // }, 1000);
 
             // 10 seconds timeout till we logout
             setTimeout(function () {

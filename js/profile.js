@@ -14,15 +14,6 @@ $(document).ready(function() {
     $("footer").load('footer.html');
 
     renderProfileData(profileId, profileClass);
-
-    $("#btnSave").click(function() {
-        // todo: save profile details to file
-        alert('saving profile!');
-    });
-
-    $("#btnCancel").click(function() {
-        window.location.href = window.location.href;
-    });
 });
 
 function renderProfileData(profileId, profileClass) {
@@ -33,9 +24,6 @@ function renderProfileData(profileId, profileClass) {
       
         $.each(data[0].Profiles, function(index, profile) {
             if(profile.Id == profileId) {
-
-                // todo: verify if logged-in and make editable/readonly fields
-
                 $('#firstname').text(profile.FirstName);
                 $('#lastname').text(profile.LastName);
                 $('#phoneNumber').val(profile.Phone);
@@ -49,10 +37,47 @@ function renderProfileData(profileId, profileClass) {
                 $('#profilePhoto').attr("src", profile.ProfilePhotoPath);
                 $('#recentPhoto').attr("src", profile.RecentPhotoPath);
                 $('#otherInfo').text(profile.Other);
-                
             }
         });
     });
+
+    // todo: verify if logged-in and make editable/readonly fields
+    var isUserLoggedIn = checkCookie();
+    var isRightUserLoggedIn = false;
+    if(isUserLoggedIn == true) {
+        var cookieValue = Cookies.getJSON('login');
+        var loggedInUserId = cookieValue.UserId;
+        var loggedInUserClass = cookieValue.Class;
+        
+        var uri = URI(window.location.href);
+        var profileId = uri.getParameter('id');
+        var profileClass = uri.getParameter('class');
+
+        // todo: get admin ID from file
+
+        var adminId = 0;
+
+        isRightUserLoggedIn = (adminId == loggedInUserId) || (loggedInUserId == profileId && loggedInUserClass == profileClass);
+    }
+
+    if(isRightUserLoggedIn == false) {
+        $('.profile input, textarea').attr("readonly", "readonly");
+        $('#buttons').hide();
+        $("input[type='checkbox']").hide();
+        $('.profileDetails label:nth-child(even)').hide();
+    } else {
+        $("#btnSave").click(function() {
+            // todo: save profile details to file
+
+            // todo: verify logged in user to be same as profile ID
+
+            alert('saving profile!');
+        });
+
+        $("#btnCancel").click(function() {
+            window.location.href = window.location.href;
+        });
+    }
 }
 
 // id, firstName, lastName, phone, address, country, linkedIn, facebook, occupation, email, description, ProfilePhotoPath, RecentPhotoPath
