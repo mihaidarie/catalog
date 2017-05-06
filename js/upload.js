@@ -45,7 +45,7 @@ $(document).ready(function() {
         }
 
         $.ajax({
-          url: '/upload?profileId=' + profileId + 'profileClass=' + profileClass,
+          url: '/upload?profileId=' + profileId + '&profileClass=' + profileClass,
           type: 'POST',
           data: formData,
           processData: false,

@@ -31,8 +31,10 @@ app.post('/upload', function(req, res){
   form.on('file', function(field, file) {
     var providedFileName = file.name;
     var fileExtension = path.extname(providedFileName);
-    var classParam = req.body.profileClass;
-    var profileIdParam = req.body.profileId;
+
+    var classParam = req.query.profileClass;
+    var profileIdParam = req.query.profileId;
+    
     var newFileName = classParam + profileIdParam + fileExtension;
     fs.rename(file.path, path.join(form.uploadDir, newFileName));
   });
