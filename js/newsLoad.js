@@ -16,8 +16,8 @@ function loadNews() {
             }
         });
         
-        var allProjects = items.join("");
-        $(allProjects).appendTo("#newsList");
+        var allNews = items.join("");
+        $(allNews).appendTo("#newsList");
 
         hookNewsClick();
     });

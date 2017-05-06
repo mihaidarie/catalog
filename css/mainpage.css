@@ -42,6 +42,11 @@
     float: left;
 }
 
+.updatesHeader {
+    cursor: pointer;
+    
+}
+
 .requestHeader {
     margin-left: 3%;
     float: left;
