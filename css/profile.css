@@ -89,7 +89,8 @@ body {
 
 .profileDetails input[type='text'] {
     padding: 0.3em;
-    margin: 0.3em;
+    margin-top: 0.3em;
+    margin-bottom: 0.3em;
     width: 100%;
 }
 
