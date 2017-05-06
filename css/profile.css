@@ -117,5 +117,5 @@ input[type='checkbox'] {
 }
 
 #changePhoto {
-    float: none !important;
+    margin-top: 1em;
 }

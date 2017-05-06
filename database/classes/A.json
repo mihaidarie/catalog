@@ -5,7 +5,7 @@
 		"FirstName" : "Gigel", 
 		"LastName" : "Baciu", 
 		"ProfilePhotoPath" : "/images/profiles/small/A/1.jpg",
-		"RecentPhotoPath" : "/images/profiles/large/A1.JPG",
+		"RecentPhotoPath" : "/images/profiles/large/A1.png",
 		"Phone" : "telefon1",
 		"Address" : "Adresa1",
 		"Country" : "Romania1",
@@ -13,7 +13,7 @@
 		"Facebook" : "facebook1.com",
 		"Occupation" : "Ocupatie1",
 		"Email" : "mail1@mail.com",
-		"Description" : "scurta descriere a individului",
+		"Description" : "scurta descriere a individului casdvsdvsd advsgasdvsdvsd dasdasd",
 		"Other" : "catva cuvinete, idei, poroiecte, vise, cosmaruri" }, 
 		
 		{ "Id" : "2", "FirstName" : "Virgil", "LastName" : "Axinia", "ProfilePhotoPath" : "/images/profiles/small/A/2.jpg", 
