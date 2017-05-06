@@ -1,0 +1,121 @@
+body {
+    height: 100%;
+}
+
+#profilePhoto {
+    height: 9em;
+    width: 7em;
+}
+
+#recentPhoto {
+    margin-top: 2em;
+    border: 1px solid;
+    height: 18em;
+    width: 15em;
+}
+
+#photoArea {
+    text-align: center;
+    width: 15em;
+    float: left;
+}
+
+#photoArea label {
+    border: 1px solid;
+    margin-top: 0.5em;
+    display: block;
+    width: 7em;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.profile {
+    width: 58%;
+    height: 80%;
+}
+
+#profileDescription {
+    float: right;
+    width: 32em;
+}
+
+#name {
+    float: left;
+    width: 100%;
+    text-align: left;
+}
+
+#description {
+    width: 100%;
+    height: auto;
+    border: none;
+    resize: none;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+#otherInfo {
+    width: 100%;
+    height: auto;
+    border: none;
+    resize: none;
+    margin-top: 1em;
+}
+
+#profileDescription textarea {
+    padding: 1em;
+    overflow: auto;
+}
+
+.profileDetails {
+    width: 45%;
+}
+
+#profileDescription div:nth-child(odd) {
+    float: left;
+}
+
+#profileDescription div:nth-child(even) {
+    float: right;
+}
+
+#profileDescription :nth-child(odd) {
+    float: left;
+}
+
+#profileDescription :nth-child(even):not(:last-child) {
+    float: right;
+}
+
+.profileDetails input[type='text'] {
+    padding: 0.3em;
+    margin: 0.3em;
+    width: 100%;
+}
+
+#profileDescription label:first-of-type {
+    font-weight: bold;
+}
+
+input[type='checkbox'] {
+    width: 1em;
+    float: right !important;
+}
+
+#firstname, #lastname {
+    font-size: 26px;
+    font-weight: bold;
+    float: left !important;
+    margin-right: 1em;
+}
+
+#buttons {
+    float: left !important;
+    width: 50%;
+    height: 15%;
+    margin-left: 30%;
+}
+
+#changePhoto {
+    float: none !important;
+}

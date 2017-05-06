@@ -7,7 +7,6 @@ $(document).ready(loadClassProfiles);
 
 function loadClassProfiles() {
     $("header").load('header.html', loadHeader);
-
     $("footer").load('footer.html');
 
     var uri = URI(window.location.href);
@@ -25,7 +24,7 @@ function loadClassProfiles() {
             $.each(classDetails.Profiles, function(index2, profile) {
 
                 var profileId = "personprofile" + profile.Id;
-                items.push( "<div data-id='" + profile.Id + "' id='" + profileId + "'><img src=" + profile.SmallPhotoPath + 
+                items.push( "<div data-id='" + profile.Id + "' id='" + profileId + "'><img src=" + profile.ProfilePhotoPath + 
                     "></img><label>" + profile.LastName + " " + profile.FirstName + "</label></div>" );
             });
         });

@@ -1,0 +1,27 @@
+{
+  "name": "package.json",
+  "version": "1.0.0",
+  "description": "catalogserver",
+  "main": "app.js",
+  "scripts": {
+    "test": "catalog"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mihaidarie/catalog.git"
+  },
+  "keywords": [
+    "mihai"
+  ],
+  "author": "mihai",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mihaidarie/catalog/issues"
+  },
+  "homepage": "https://github.com/mihaidarie/catalog#readme",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "formidable": "^1.1.1"
+  }
+}
