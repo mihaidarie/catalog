@@ -5,3 +5,7 @@
 .progress {
     width: 58% !important;
 }
+
+#uploadContent {
+    height: 25%;
+}

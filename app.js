@@ -3,6 +3,11 @@ var app = express();
 var path = require('path');
 var formidable = require('formidable');
 var fs = require('fs');
+var bodyParser = require('body-parser');
+app.use( bodyParser.json() );       // to support JSON-encoded bodies
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+  extended: true
+}));
 
 app.use(express.static(path.join(__dirname, '')));
 
@@ -24,7 +29,12 @@ app.post('/upload', function(req, res){
   // every time a file has been uploaded successfully,
   // rename it to it's orignal name
   form.on('file', function(field, file) {
-    fs.rename(file.path, path.join(form.uploadDir, file.name));
+    var providedFileName = file.name;
+    var fileExtension = path.extname(providedFileName);
+    var classParam = req.body.profileClass;
+    var profileIdParam = req.body.profileId;
+    var newFileName = classParam + profileIdParam + fileExtension;
+    fs.rename(file.path, path.join(form.uploadDir, newFileName));
   });
 
   // log any errors that occur

@@ -14,6 +14,14 @@ $(document).ready(function() {
     $("footer").load('footer.html');
 
     renderProfileData(profileId, profileClass);
+
+    $('#changePhoto').click(function() {
+        var uri = URI(window.location.href);
+        var profileId = uri.getParameter('id');
+        var profileClass = uri.getParameter('class');
+
+        window.location.href = "fileUpload.html?class=" + profileClass + "&id=" + profileId;
+    });
 });
 
 function renderProfileData(profileId, profileClass) {
@@ -65,6 +73,7 @@ function renderProfileData(profileId, profileClass) {
         $('#buttons').hide();
         $("input[type='checkbox']").hide();
         $('.profileDetails label:nth-child(even)').hide();
+        $('#changePhoto').hide();
     } else {
         $("#btnSave").click(function() {
             // todo: save profile details to file

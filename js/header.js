@@ -9,12 +9,11 @@ $(document).ready(function() {
 });
 
 function wireupSessionTimer() {
-    // binds to document, 3 minutes
-    //$.idleTimer(3 * 60 * 1000);
+    // binds timer to document, 3 minutes
 
     $.idleTimer(
         {
-            timeout: 10 * 1000,
+            timeout: 3 * 60 * 1000,
         });
 
     $(document).on("idle.idleTimer", function(event, elem, obj){

@@ -9,17 +9,25 @@ $(document).ready(function() {
     var profileId = uri.getParameter('id');
     var profileClass = uri.getParameter('class');
 
-
     $("header").load('header.html', loadHeader);
     $("footer").load('footer.html');
 
-    $('#upload-btn').on('click', function (){
+    $('#upload-btn').on('click', function () {
+
+        // todo: verify logged in user to be same as class and ID from URL
+
         $('#upload-input').click();
         $('.progress-bar').text('0%');
         $('.progress-bar').width('0%');
     });
 
+    $('#btnProfile').on('click', function () {
+      window.location.href = "profile.html?class=" + profileClass + "&id=" + profileId;
+    });
+
     $('#upload-input').on('change', function(){
+
+      // todo: verify logged in user to be same as class and ID from URL
 
       var files = $(this).get(0).files;
 
@@ -37,13 +45,14 @@ $(document).ready(function() {
         }
 
         $.ajax({
-          url: '/upload',
+          url: '/upload?profileId=' + profileId + 'profileClass=' + profileClass,
           type: 'POST',
           data: formData,
           processData: false,
           contentType: false,
           success: function(data) {
-              console.log('upload successful!\n' + data);
+              // TODO: change recent photo path in profiles
+
           },
           complete: function() {
               $('#upload-input').val('');
