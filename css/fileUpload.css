@@ -1,3 +1,7 @@
 #upload-input {
     visibility: hidden;
 }
+
+.progress {
+    width: 58% !important;
+}

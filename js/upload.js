@@ -46,7 +46,7 @@ $(document).ready(function() {
               console.log('upload successful!\n' + data);
           },
           complete: function() {
-              $('#upload-input').text('');
+              $('#upload-input').val('');
           },
           xhr: function() {
             // create an XMLHttpRequest
