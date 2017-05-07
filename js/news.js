@@ -11,6 +11,14 @@ $(document).ready(function() {
     loadNews();
 
     setupFormMode();
+
+    $('#saveNews').click(function() {
+        alert('save news!');
+    });
+    
+    $('#removeNews').click(function() {
+        alert('delete news!');
+    });
 });
  
 function loadNews() {
@@ -22,11 +30,16 @@ function loadNews() {
     
         var items = [];
         $.each(data, function(index, newsDetails) {
-            if(newsDetails.Id && newsDetails.Id != '' && newsDetails.Id == newsId && newsDetails.Description && newsDetails.Description != '') {
-                $('#newsDetails').text(newsDetails.Description);
+            if(newsDetails.Id && newsDetails.Id != '' && newsDetails.Description && newsDetails.Description != '') {
+                items.push( "<li id=news_" + newsDetails.Id + ">" + newsDetails.Description + 
+                "<input type='checkbox' id='deletenews_'" + newsDetails.Id + "'/>"
+                +
+                "</li>" );
             }
         });
         
+        var allNews = items.join("");
+        $(allNews).prependTo("#newsList");
     });
 }
 
@@ -36,23 +49,28 @@ function setupFormMode() {
     // todo: dynamically look for admin ID
 
     if(cookieValue && cookieValue.UserId == 0) {
-        $('input[type="text"], textarea').removeAttr('readonly');
-        $('#newsEdit').show();
 
-        $('#removeNews').click(function() {
-            alert('remove news!');
+        // $('input[type="text"], textarea').removeAttr('readonly');
+        // $('#newsEdit').show();
+
+        // $('#removeNews').click(function() {
+        //     alert('remove news!');
 
 
-        });
+        // });
     
-        $('#saveNews').click(function() {
-            alert('save news!');
+        // $('#saveNews').click(function() {
+        //     alert('save news!');
 
 
-        });
+        // });
     }
     else {
-        $('input[type="text"], textarea').attr('readonly','readonly');
-        $('#newsEdit').hide();
+        // $('input[type="text"], textarea').attr('readonly','readonly');
+        //$('#newsEdit').hide();
+
+        
+        // redirect to root page if not admin
+        window.location.href = "index.html";
     }
 }

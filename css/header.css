@@ -67,11 +67,15 @@
     height: 15%;
 }
 
-#loginOK {
+#loginOK, #loginReset {
     width: 40%;
     border-radius: 7px;
 }
 
 header {
     margin-bottom: 3%;
+}
+
+#loginReset {
+    margin-right: 1em;
 }

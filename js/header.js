@@ -6,6 +6,12 @@ $(document).ready(function() {
     if(isUserLoggedIn == true) {
         wireupSessionTimer();
     }
+
+    $('#loginReset').click(function() {
+        alert('reset login');
+
+        // todo: generate new password and send via email
+    });
 });
 
 function wireupSessionTimer() {
@@ -13,7 +19,7 @@ function wireupSessionTimer() {
 
     $.idleTimer(
         {
-            timeout: 3 * 60 * 1000,
+            timeout: 10 * 1000,
         });
 
     $(document).on("idle.idleTimer", function(event, elem, obj){

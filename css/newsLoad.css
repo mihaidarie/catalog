@@ -3,7 +3,7 @@
     float: left;
     padding: 1%;
     margin-top: 2%;
-    width: 58%;
+    width: 85%;
     float: none;
     height: 40%;
 }
@@ -14,18 +14,4 @@
 
 #newsList li:not(:last-child) {
     margin-bottom: 2%;
-}
-
-#newsEdit {
-    margin-top: 1.5%;
-}
-
-#newsEdit button {
-    border-radius: 7px;
-    cursor: pointer;
-}
-
-#newsDetails {
-    width: 50%;
-    height: 30%;
 }
