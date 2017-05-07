@@ -1,4 +1,26 @@
 .gallery {
     width: 58%;
-    height: 48em;
+    height: 88em;
+}
+
+#freeLinks {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    height: auto;
+    max-height: 35em;
+    overflow: auto !important;
+    margin-top: 1em;
+}
+
+#galleryLinks {
+    margin-top: 1em;
+}
+
+#galleryLinks button {
+    margin-top: 1em;
+}
+
+#galleryLinks label:first-child {
+    font-weight: bold;
 }
