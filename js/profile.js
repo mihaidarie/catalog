@@ -40,7 +40,7 @@ function renderProfileData(profileId, profileClass) {
                 $('#linkedinUrl').val(profile.LinkedIn);
                 $('#facebookUrl').val(profile.Facebook);
                 $('#job').val(profile.Occupation);
-                //$('#').text(profile.Email);
+                $('#email').val(profile.Email);
                 $('#description').val(profile.Description);
                 $('#profilePhoto').attr("src", profile.ProfilePhotoPath);
                 $('#recentPhoto').attr("src", profile.RecentPhotoPath);

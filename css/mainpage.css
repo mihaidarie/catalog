@@ -42,6 +42,10 @@
     float: left;
 }
 
+.projectsHeader {
+    cursor: pointer;
+}
+
 .updatesHeader {
     cursor: pointer;
     

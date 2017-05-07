@@ -1,0 +1,17 @@
+#newsList {
+    list-style-type: none;
+    float: left;
+    padding: 1%;
+    margin-top: 2%;
+    width: 85%;
+    float: none;
+    height: 40%;
+}
+
+#newsList li {
+    float: left;
+}
+
+#newsList li:not(:last-child) {
+    margin-bottom: 2%;
+}
