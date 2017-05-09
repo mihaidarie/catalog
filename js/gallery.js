@@ -8,6 +8,7 @@ $(document).ready(function() {
     $('#freeLinks').elastic();
 
     loadLinks();
+    loadPhotos();
 
     $('#galleryLinks button').click(function() {
         alert('saving links!');
@@ -26,4 +27,9 @@ $(document).ready(function() {
 function loadLinks() {
     // todo: load links and make editable + show/hide save button, if admin is logged-in
 
+}
+
+function loadPhotos() {
+    // todo: get current photos paths from server
+    
 }
