@@ -20,7 +20,7 @@ $(document).ready(function() {
         var profileId = uri.getParameter('id');
         var profileClass = uri.getParameter('class');
 
-        window.location.href = "fileUpload.html?class=" + profileClass + "&id=" + profileId;
+        window.location.href = "fileUpload.html?type=profile&class=" + profileClass + "&id=" + profileId;
     });
 });
 

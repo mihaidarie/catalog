@@ -2,7 +2,8 @@
 	"Id":"0",
 	"Username":"admin",
 	"Password":"admin",
-	"AccountType":"admin"
+	"AccountType":"admin",
+	"Email":"mihai_darie2@yahoo.com"
 },
 {
 	"Id":"1",
