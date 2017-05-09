@@ -19,7 +19,7 @@ function wireupSessionTimer() {
 
     $.idleTimer(
         {
-            timeout: 10 * 1000,
+            timeout: 3 * 60 * 1000,
         });
 
     $(document).on("idle.idleTimer", function(event, elem, obj){

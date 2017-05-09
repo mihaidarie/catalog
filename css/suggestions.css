@@ -1,0 +1,56 @@
+.suggestionDetails input:nth-child(even) {
+    float: right;
+    width: 15em;
+}
+
+.suggestionDetails label:nth-child(odd) {
+    float: left;
+}
+
+.suggestionDetails {
+    width: 40%;
+    height: 2em;
+}
+
+.suggestions {
+    width: 58%;
+}
+
+#emailContent {
+    height: 15em;
+}
+
+#emailContent textarea {
+    float: right;
+    width: 15.4em;
+    height: 17em;
+    max-height: 17em;
+    resize: none;
+    overflow: auto;
+}
+
+#formSubmission {
+    height: 7em;
+    width: 30%;
+}
+
+#divGenerateRandomValues {
+    margin-bottom: 1em;
+    float: none;
+}
+
+#formSubmission>input {
+    width: 7em;
+}
+
+#captchaInput {
+    float: right;
+}
+
+#sendEmail {
+    float: left;
+}
+
+#emailResult {
+    margin-top: 1em;
+}

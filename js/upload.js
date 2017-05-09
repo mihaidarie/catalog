@@ -8,7 +8,8 @@ $(document).ready(function() {
     var uri = URI(window.location.href);
     var profileId = uri.getParameter('id');
     var profileClass = uri.getParameter('class');
-
+    var uploadType = uri.getParameter('type');
+      
     $("header").load('header.html', loadHeader);
     $("footer").load('footer.html');
 
@@ -21,8 +22,15 @@ $(document).ready(function() {
         $('.progress-bar').width('0%');
     });
 
-    $('#btnProfile').on('click', function () {
-      window.location.href = "profile.html?class=" + profileClass + "&id=" + profileId;
+    $('#btnBack').on('click', function () {
+
+      if(uploadType == 'profile') {
+        window.location.href = "profile.html?class=" + profileClass + "&id=" + profileId;
+      }
+
+      if(uploadType == 'gallery') {
+        window.location.href = "gallery.html";
+      }
     });
 
     $('#upload-input').on('change', function(){
@@ -44,8 +52,17 @@ $(document).ready(function() {
           formData.append('uploads[]', file, file.name);
         }
 
+        var postUrl = "";
+        if(uploadType == 'profile') {
+          postUrl = '/upload?type=' + uploadType + '&profileId=' + profileId + '&profileClass=' + profileClass;
+        }
+
+        if(uploadType == 'gallery') {
+          postUrl = '/upload?type=' + uploadType;
+        }
+
         $.ajax({
-          url: '/upload?profileId=' + profileId + '&profileClass=' + profileClass,
+          url: postUrl,
           type: 'POST',
           data: formData,
           processData: false,
