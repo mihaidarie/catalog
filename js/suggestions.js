@@ -8,11 +8,12 @@ function generateNumber() {
 $(document).ready(function() {
     $("header").load('header.html', loadHeader);
     $("footer").load('footer.html');
+    $("#emailBody").elastic();
     
     generateCaptcha();
 
     $("#sendEmail").click(function () {
-        if ($("#textInput").val() != iNumber) {
+        if ($("#captchaInput").val() != iNumber) {
             $('#emailResult').text('Numar de verificare incorect!');
         }
         else {
@@ -46,6 +47,7 @@ function sendMail() {
     });
     
     $('#emailResult').text('Trimitere cu succes!');
+    $('#captchaInput').val('');
 }
 
 function generateCaptcha() {
@@ -59,7 +61,7 @@ function generateCaptcha() {
     $("#txtNewInput").prop('disabled', true);
 
     var wrongInput = function () {  
-        if ($("#textInput").val() != iNumber) {  
+        if ($("#captchaInput").val() != iNumber) {  
             return true;
         }  
         else {  
@@ -67,7 +69,7 @@ function generateCaptcha() {
         }  
     };
 
-    $("#textInput").bind('input', function () {                  
+    $("#captchaInput").bind('input', function () {                  
         $("#sendEmail").prop('disabled', wrongInput);  
     });  
 }
