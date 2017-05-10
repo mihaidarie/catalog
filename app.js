@@ -6,6 +6,9 @@ var fs = require('fs');
 var bodyParser = require('body-parser');
 var mv = require('mv');
 
+var photosFolder = '/catalog/images/gallery/';
+var photoClientPath = '/images/gallery/';
+
 'use strict';
 const nodemailer = require('nodemailer');
 
@@ -89,7 +92,23 @@ app.post('/emailadmin', function(req, res){
   sendMailToAdmin(firstname, lastname, email, subject, body);
 });
 
-app.post('/upload', function(req, res){
+// handler for sending suggestions to administrator
+app.get('/gallery', function(req, res) {
+    res.setHeader('Content-Type', 'application/json');
+    var photosList = [];
+
+    var files = fs.readdirSync(photosFolder);
+
+    if(files) {
+      files.forEach(file => {
+        photosList.push(photoClientPath + file);
+      });
+    }
+
+    res.send(JSON.stringify(photosList));
+});
+
+app.post('/upload', function(req, res) {
 
   // create an incoming form object
   var form = new formidable.IncomingForm();
@@ -99,7 +118,7 @@ app.post('/upload', function(req, res){
 
   // store all uploads in the /uploads directory
   form.profileUploadDir = path.join(__dirname, '/images/profiles/large');
-  form.galleryUploadDir = path.join(__dirname, '/images/gallery');
+  form.galleryUploadDir = path.join(__dirname, photoClientPath);
 
   // every time a file has been uploaded successfully,
   // rename it to it's orignal name

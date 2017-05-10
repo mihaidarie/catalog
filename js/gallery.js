@@ -1,10 +1,7 @@
 $(document).ready(function() {
-   
-
     $("header").load('header.html', loadHeader);
     $("footer").load('footer.html');
 
-   
     $('#freeLinks').elastic();
 
     loadLinks();
@@ -30,6 +27,57 @@ function loadLinks() {
 }
 
 function loadPhotos() {
-    // todo: get current photos paths from server
+    // get current photos paths from server
+            
+    //loadPhotosSlider();
+
+    // $.ajax({
+    //     url: "/gallery",
+    //     success: function (data) {
+    //         var items = [];
+    //         $.each( data, function(key, val) {
+    //             items.push('<li><img src="' + val + '" alt="" /></li>');
+    //         });
+            
+    //         var images = items.join( "" );
+    //         $('<ul />', {
+    //             "class": "pxs_slider",
+    //             "id": "pxs_thumbnails",
+    //             html: images
+    //         }).appendTo( "#allPhotos" );
+
+    //         $('<ul />', {
+    //             "class": "pxs_thumbnails",
+    //             html: images
+    //         }).appendTo( "#allPhotos" );
+
+    //         loadPhotosSlider();
+    //     },
+    //     async: false
+    // });
+
+    $.getJSON("/gallery", function(data) {
+        var items = [];
+        $.each( data, function(key, val) {
+            items.push('<li><img src="' + val + '" alt="" /></li>');
+        });
+        
+        var images = items.join( "" );
+        $('<ul />', {
+            "class": "pxs_slider",
+            "id": "pxs_thumbnails",
+            html: images
+        }).appendTo( "#allPhotos" );
+
+        $('<div class="pxs_navigation"><span class="pxs_next"></span><span class="pxs_prev"></span></div>')
+        .appendTo( "#allPhotos" );
+
+        $('<ul />', {
+            "class": "pxs_thumbnails",
+            html: images
+        }).appendTo( "#allPhotos" );
+        
+        loadPhotosSlider();
+    });
     
 }
