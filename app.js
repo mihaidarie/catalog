@@ -132,8 +132,8 @@ app.post('/upload', function(req, res) {
   // create an incoming form object
   var form = new formidable.IncomingForm();
 
-  // specify that we don't want to allow the user to upload multiple files in a single request
-  form.multiples = false;
+  // specify that we want to allow the user to upload multiple files in a single request
+  form.multiples = true;
 
   // store all uploads in the /uploads directory
   form.profileUploadDir = path.join(__dirname, '/images/profiles/large');
