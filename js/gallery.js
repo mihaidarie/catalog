@@ -24,9 +24,9 @@ $(document).ready(function() {
     $('#removePhoto').click(function() {
         // todo: validate if admin is logged-in
         
-        var imageName = $('input[type=file]').val().split('\\').pop();
-        
-        $.post("/removephoto?path=" + imageName, function() {
+        var imageName = $('ul.pxs_thumbnails li.selected img').attr('src').split('/').pop();
+
+        $.post("/removephoto?photoName=" + imageName, function() {
             window.location.href = window.location.href;
         });
     });

@@ -115,6 +115,18 @@ app.get('/gallery', function(req, res) {
     res.send(JSON.stringify(photosList));
 });
 
+app.post('/removePhoto', function(req, res) {
+  var photoName = req.query.photoName;
+
+  if(photoName != "NoPhoto.png") {
+    var photoPath = photosFolder + photoName;
+
+    fs.unlinkSync(photoPath);
+
+    res.sendStatus(200);
+  }
+});
+
 app.post('/upload', function(req, res) {
 
   // create an incoming form object
