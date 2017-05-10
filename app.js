@@ -146,8 +146,9 @@ app.post('/upload', function(req, res) {
     }
 
     if(uploadType == 'gallery') {
-      var newPhotoPath = path.join(form.galleryUploadDir, file.name);
-      //fs.rename(file.path, newPhotoPath);
+      var files = fs.readdirSync(photosFolder);
+      var numberOfFiles = files.length;
+      var newPhotoPath = path.join(form.galleryUploadDir, numberOfFiles + "_" + file.name);
 
       mv(file.path, newPhotoPath, function(err) {
         if (err) { throw err; }
