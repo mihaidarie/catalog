@@ -32,22 +32,29 @@ function sendMail() {
     var subject = $('#subject').val();
     var emailBody = $('#emailBody').val();
     var postUrl = "/emailadmin?firstname=" + firstname + "&lastname=" + lastname +
-        "&email=" + email + "&subject=" + subject + "&emailbody=" + emailBody;
+        "&email=" + email + "&subject=" + subject;
+    
+    var jsonBody = JSON.stringify({ emailBody: emailBody } );
 
     $.ajax({
         url: postUrl,
         type: 'POST',
+        data: jsonBody,
+        contentType: 'application/json',
         error: function(jqXHR, textStatus, errorThrown ) {
             //alert('jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
-            $('#emailResult').text('Trimitere esuata! Contactati administratorul.');
+            //$('#emailResult').text('Trimitere esuata! Contactati administratorul.');
         },
         complete: function() {
-            console.log("completed!");
+            console.log("completed!");         
         }
-    });
+    });  
     
-    $('#emailResult').text('Trimitere cu succes!');
+    $('#emailResult').text('Mesaj expediat!');
     $('#captchaInput').val('');
+    setTimeout(function() {
+        window.location.href = window.location.href;
+    }, 5000);
 }
 
 function generateCaptcha() {

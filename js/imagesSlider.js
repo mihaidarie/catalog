@@ -1,4 +1,4 @@
-(function($) {
+function loadPhotosSlider() {
 	Cufon.replace('h1',{ textShadow: '1px 1px #000'});
 	Cufon.replace('h2',{ textShadow: '1px 1px #000'});
 	Cufon.replace('.footer',{ textShadow: '1px 1px #000'});
@@ -281,4 +281,4 @@
 	var $pxs_container	= $('#pxs_container');
 	$pxs_container.parallaxSlider();
 
-})(jQuery);
+}

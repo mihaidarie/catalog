@@ -6,10 +6,23 @@ var fs = require('fs');
 var bodyParser = require('body-parser');
 var mv = require('mv');
 
+var photosFolder = '/catalog/images/gallery/';
+var photoClientPath = '/images/gallery/';
+
 'use strict';
 const nodemailer = require('nodemailer');
 
+app.use(bodyParser.json());       // to support JSON-encoded bodies
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+  extended: true
+}));
+
+app.use(express.static(path.join(__dirname, '')));
+
 function setupTransporter(service, user, password) {
+
+  //todo: read mail account from app config
+
   // create reusable transporter object using the default SMTP transport
   let transporter = nodemailer.createTransport({
       service: 'Yahoo',
@@ -18,6 +31,7 @@ function setupTransporter(service, user, password) {
           pass: 'Maymay2017'
       }
   });
+
   return transporter;
 }
 
@@ -54,26 +68,21 @@ function sendMailToAdmin(firstname, lastname, email, subject, body) {
 function createEmailMessage(firstname, lastname, email, subject, body, adminEmail) {
   // setup email data with unicode symbols
   var friendlyName= '"' + firstname + ' ' + lastname + '"';
-  var emailAddress = '<' + email + '>';
-  var from = '"' + friendlyName + '"' + emailAddress;
+  var mailForBody = friendlyName + ' ' + email;
+  var from =  friendlyName + ' ' + adminEmail;
+  var bodyHeader = "Ati primit o sugestie de la " + mailForBody + "\r\n\r\n";
 
   let mailOptions = {
       from: from, // sender address
       to: adminEmail, // list of receivers
       subject: subject, // Subject line
-      text: body // plain text body
+      text: bodyHeader + body, // plain text body
+      replyTo: email
       // ,html: '<b>Iti sugerez sa dai jos site-ul!!!</b>' // html body
   };
 
   return mailOptions;
 }
-
-app.use(bodyParser.json());       // to support JSON-encoded bodies
-app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
-  extended: true
-}));
-
-app.use(express.static(path.join(__dirname, '')));
 
 app.get('/', function(req, res){
   res.sendFile(path.join(__dirname, '/FileUpload.html'));
@@ -85,21 +94,50 @@ app.post('/emailadmin', function(req, res){
   var lastname = req.query.lastname;
   var email = req.query.email;
   var subject = req.query.subject;
-  var body = req.query.emailbody;
+  var body = req.body.emailBody;
+
   sendMailToAdmin(firstname, lastname, email, subject, body);
 });
 
-app.post('/upload', function(req, res){
+// handler for sending suggestions to administrator
+app.get('/gallery', function(req, res) {
+    res.setHeader('Content-Type', 'application/json');
+    var photosList = [];
+
+    var files = fs.readdirSync(photosFolder);
+
+    if(files) {
+      files.forEach(file => {
+        photosList.push(photoClientPath + file);
+      });
+    }
+
+    res.send(JSON.stringify(photosList));
+});
+
+app.post('/removePhoto', function(req, res) {
+  var photoName = req.query.photoName;
+
+  if(photoName != "NoPhoto.png") {
+    var photoPath = photosFolder + photoName;
+
+    fs.unlinkSync(photoPath);
+
+    res.sendStatus(200);
+  }
+});
+
+app.post('/upload', function(req, res) {
 
   // create an incoming form object
   var form = new formidable.IncomingForm();
 
-  // specify that we don't want to allow the user to upload multiple files in a single request
-  form.multiples = false;
+  // specify that we want to allow the user to upload multiple files in a single request
+  form.multiples = true;
 
   // store all uploads in the /uploads directory
   form.profileUploadDir = path.join(__dirname, '/images/profiles/large');
-  form.galleryUploadDir = path.join(__dirname, '/images/gallery');
+  form.galleryUploadDir = path.join(__dirname, photoClientPath);
 
   // every time a file has been uploaded successfully,
   // rename it to it's orignal name
@@ -127,8 +165,9 @@ app.post('/upload', function(req, res){
     }
 
     if(uploadType == 'gallery') {
-      var newPhotoPath = path.join(form.galleryUploadDir, file.name);
-      //fs.rename(file.path, newPhotoPath);
+      var files = fs.readdirSync(photosFolder);
+      var numberOfFiles = files.length;
+      var newPhotoPath = path.join(form.galleryUploadDir, numberOfFiles + "_" + file.name);
 
       mv(file.path, newPhotoPath, function(err) {
         if (err) { throw err; }
