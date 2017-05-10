@@ -7,6 +7,8 @@ $(document).ready(function() {
     loadLinks();
     loadPhotos();
 
+    // todo: hide upload and remove photos buttons if admin not logged in
+
     $('#galleryLinks button').click(function() {
         alert('saving links!');
         // todo: save links text if admin is logged-in
@@ -19,6 +21,15 @@ $(document).ready(function() {
         window.location.href = redirectUrl;
     });
     
+    $('#removePhoto').click(function() {
+        // todo: validate if admin is logged-in
+        
+        var imageName = $('input[type=file]').val().split('\\').pop();
+        
+        $.post("/removephoto?path=" + imageName, function() {
+            window.location.href = window.location.href;
+        });
+    });
 });
 
 function loadLinks() {
@@ -28,33 +39,6 @@ function loadLinks() {
 
 function loadPhotos() {
     // get current photos paths from server
-            
-    //loadPhotosSlider();
-
-    // $.ajax({
-    //     url: "/gallery",
-    //     success: function (data) {
-    //         var items = [];
-    //         $.each( data, function(key, val) {
-    //             items.push('<li><img src="' + val + '" alt="" /></li>');
-    //         });
-            
-    //         var images = items.join( "" );
-    //         $('<ul />', {
-    //             "class": "pxs_slider",
-    //             "id": "pxs_thumbnails",
-    //             html: images
-    //         }).appendTo( "#allPhotos" );
-
-    //         $('<ul />', {
-    //             "class": "pxs_thumbnails",
-    //             html: images
-    //         }).appendTo( "#allPhotos" );
-
-    //         loadPhotosSlider();
-    //     },
-    //     async: false
-    // });
 
     $.getJSON("/gallery", function(data) {
         var items = [];

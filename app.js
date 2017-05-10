@@ -12,7 +12,17 @@ var photoClientPath = '/images/gallery/';
 'use strict';
 const nodemailer = require('nodemailer');
 
+app.use(bodyParser.json());       // to support JSON-encoded bodies
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+  extended: true
+}));
+
+app.use(express.static(path.join(__dirname, '')));
+
 function setupTransporter(service, user, password) {
+
+  //todo: read mail account from app config
+
   // create reusable transporter object using the default SMTP transport
   let transporter = nodemailer.createTransport({
       service: 'Yahoo',
@@ -21,6 +31,7 @@ function setupTransporter(service, user, password) {
           pass: 'Maymay2017'
       }
   });
+
   return transporter;
 }
 
@@ -57,26 +68,21 @@ function sendMailToAdmin(firstname, lastname, email, subject, body) {
 function createEmailMessage(firstname, lastname, email, subject, body, adminEmail) {
   // setup email data with unicode symbols
   var friendlyName= '"' + firstname + ' ' + lastname + '"';
-  var emailAddress = '<' + email + '>';
-  var from = '"' + friendlyName + '"' + emailAddress;
+  var mailForBody = friendlyName + ' ' + email;
+  var from =  friendlyName + ' ' + adminEmail;
+  var bodyHeader = "Ati primit o sugestie de la " + mailForBody + "\r\n\r\n";
 
   let mailOptions = {
       from: from, // sender address
       to: adminEmail, // list of receivers
       subject: subject, // Subject line
-      text: body // plain text body
+      text: bodyHeader + body, // plain text body
+      replyTo: email
       // ,html: '<b>Iti sugerez sa dai jos site-ul!!!</b>' // html body
   };
 
   return mailOptions;
 }
-
-app.use(bodyParser.json());       // to support JSON-encoded bodies
-app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
-  extended: true
-}));
-
-app.use(express.static(path.join(__dirname, '')));
 
 app.get('/', function(req, res){
   res.sendFile(path.join(__dirname, '/FileUpload.html'));
@@ -88,7 +94,8 @@ app.post('/emailadmin', function(req, res){
   var lastname = req.query.lastname;
   var email = req.query.email;
   var subject = req.query.subject;
-  var body = req.query.emailbody;
+  var body = req.body.emailBody;
+
   sendMailToAdmin(firstname, lastname, email, subject, body);
 });
 
