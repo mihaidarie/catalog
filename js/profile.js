@@ -92,13 +92,49 @@ function renderProfileData(profileId, profileClass) {
                     }
                 }    
 
-                $('#phonePublic').attr('checked', profile.PhonePublic);
-                $('#addressPublic').attr('checked', profile.AddressPublic);
-                $('#countryPublic').attr('checked', profile.CountryPublic);
-                $('#linkedInPublic').attr('checked', profile.LinkedInPublic);
-                $('#facebookPublic').attr('checked', profile.FacebookPublic);
-                $('#jobPublic').attr('checked', profile.JobPublic);
-                $('#emailPublic').attr('checked', profile.EmailPublic);
+
+                var phonePublic = false;
+                if(profile.PhonePublic) {
+                    phonePublic = profile.PhonePublic;
+                }
+
+                var addressPublic = false;
+                if(profile.AddressPublic) {
+                    addressPublic = profile.AddressPublic;
+                }
+
+                var countryPublic = false;
+                if(profile.CountryPublic) {
+                    countryPublic = profile.CountryPublic;
+                }
+
+                var linkedInPublic = false;
+                if(profile.LinkedInPublic) {
+                    linkedInPublic = profile.LinkedInPublic;
+                }
+
+                var facebookPublic = false;
+                if(profile.FacebookPublic) {
+                    facebookPublic = profile.FacebookPublic;
+                }
+
+                var jobPublic = false;
+                if(profile.JobPublic) {
+                    jobPublic = profile.JobPublic;
+                }
+
+                var emailPublic = false;
+                if(profile.EmailPublic) {
+                    emailPublic = profile.EmailPublic;
+                }
+
+                $('#phonePublic').attr('checked', phonePublic);
+                $('#addressPublic').attr('checked', addressPublic);
+                $('#countryPublic').attr('checked', countryPublic);
+                $('#linkedInPublic').attr('checked', linkedInPublic);
+                $('#facebookPublic').attr('checked', facebookPublic);
+                $('#jobPublic').attr('checked', jobPublic);
+                $('#emailPublic').attr('checked', emailPublic);
             }
         });
     });
