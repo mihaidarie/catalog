@@ -113,9 +113,9 @@ function renderProfileData(profileId, profileClass) {
         $('#changePhoto').hide();
     } else {
         $("#btnSave").click(function() {
-            // todo: save profile details to file
+            // save profile details to file
 
-            // todo: verify logged in user to be same as profile ID
+            // verify logged in user to be same as profile ID or to be admin
             var profile = {};
             profile.FirstName = $('#firstname').text();
             profile.LastName = $('#lastname').text();
@@ -128,6 +128,14 @@ function renderProfileData(profileId, profileClass) {
             profile.Email = $('#email').val();
             profile.Description = $('#description').val();
             profile.Other = $('#otherInfo').text();
+
+            profile.PhonePublic = $('#phonePublic')[0].checked;
+            profile.AddressPublic = $('#addressPublic')[0].checked;
+            profile.CountryPublic = $('#countryPublic')[0].checked;
+            profile.LinkedInPublic = $('#linkedInPublic')[0].checked;
+            profile.FacebookPublic = $('#facebookPublic')[0].checked;
+            profile.JobPublic = $('#jobPublic')[0].checked;
+            profile.EmailPublic = $('#emailPublic')[0].checked;
 
             var uri = URI(window.location.href);
             var profileId = uri.getParameter('id');
@@ -185,5 +193,3 @@ function verifyLoggedInUser() {
 
     return isRightUserLoggedIn;
 }
-
-// id, firstName, lastName, phone, address, country, linkedIn, facebook, job, email, description, ProfilePhotoPath, RecentPhotoPath

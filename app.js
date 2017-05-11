@@ -119,6 +119,14 @@ app.post('/saveProfile', function(req, res) {
         profileDetails.Email = postedProfile.Email;
         profileDetails.Description = postedProfile.Description;
         profileDetails.Other = postedProfile.Other;
+
+        profileDetails.PhonePublic = postedProfile.PhonePublic;
+        profileDetails.AddressPublic = postedProfile.AddressPublic;
+        profileDetails.CountryPublic = postedProfile.CountryPublic;
+        profileDetails.LinkedInPublic = postedProfile.LinkedInPublic;
+        profileDetails.FacebookPublic = postedProfile.FacebookPublic;
+        profileDetails.JobPublic = postedProfile.JobPublic;
+        profileDetails.EmailPublic = postedProfile.EmailPublic;
     }
   }
 
