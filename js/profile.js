@@ -34,39 +34,76 @@ function renderProfileData(profileId, profileClass) {
             if(profile.Id == profileId) {
                 $('#firstname').text(profile.FirstName);
                 $('#lastname').text(profile.LastName);
+    
+                var defaultString = "privat";
+                var isRightUserLoggedIn = verifyLoggedInUser();
+
                 $('#phoneNumber').val(profile.Phone);
-                $('#address').val(profile.Address);
                 $('#country').val(profile.Country);
                 $('#linkedinUrl').val(profile.LinkedIn);
                 $('#facebookUrl').val(profile.Facebook);
-                $('#job').val(profile.Occupation);
+                $('#job').val(profile.Job);
                 $('#email').val(profile.Email);
                 $('#description').val(profile.Description);
                 $('#profilePhoto').attr("src", profile.ProfilePhotoPath);
                 $('#recentPhoto').attr("src", profile.RecentPhotoPath);
                 $('#otherInfo').text(profile.Other);
+                $('#address').val(profile.Address);
+                
+                if(isRightUserLoggedIn == false) {
+                    if(profile.PhonePublic == false) {
+                        $('#phoneNumber').val(defaultString);
+                    }
+                }
+
+                if(isRightUserLoggedIn == false) {
+                    if(profile.AddressPublic == false) {
+                        $('#address').val(defaultString);
+                    }
+                }         
+
+                if(isRightUserLoggedIn == false) {
+                    if(profile.CountryPublic == false) {
+                        $('#country').val(defaultString);
+                    }
+                }    
+
+                if(isRightUserLoggedIn == false) {
+                    if(profile.LinkedInPublic == false) {
+                        $('#linkedinUrl').val(defaultString);
+                    }
+                }    
+
+                if(isRightUserLoggedIn == false) {
+                    if(profile.FacebookPublic == false) {
+                        $('#facebookUrl').val(defaultString);
+                    }
+                }    
+
+                if(isRightUserLoggedIn == false) {
+                    if(profile.JobPublic == false) {
+                        $('#job').val(defaultString);
+                    }
+                }    
+
+                if(isRightUserLoggedIn == false) {
+                    if(profile.EmailPublic == false) {
+                        $('#email').val(defaultString);
+                    }
+                }    
+
+                $('#phonePublic').attr('checked', profile.PhonePublic);
+                $('#addressPublic').attr('checked', profile.AddressPublic);
+                $('#countryPublic').attr('checked', profile.CountryPublic);
+                $('#linkedInPublic').attr('checked', profile.LinkedInPublic);
+                $('#facebookPublic').attr('checked', profile.FacebookPublic);
+                $('#jobPublic').attr('checked', profile.JobPublic);
+                $('#emailPublic').attr('checked', profile.EmailPublic);
             }
         });
     });
 
-    // todo: verify if logged-in and make editable/readonly fields
-    var isUserLoggedIn = checkCookie();
-    var isRightUserLoggedIn = false;
-    if(isUserLoggedIn == true) {
-        var cookieValue = Cookies.getJSON('login');
-        var loggedInUserId = cookieValue.UserId;
-        var loggedInUserClass = cookieValue.Class;
-        
-        var uri = URI(window.location.href);
-        var profileId = uri.getParameter('id');
-        var profileClass = uri.getParameter('class');
-
-        // todo: get admin ID from file
-
-        var adminId = 0;
-
-        isRightUserLoggedIn = (adminId == loggedInUserId) || (loggedInUserId == profileId && loggedInUserClass == profileClass);
-    }
+    var isRightUserLoggedIn = verifyLoggedInUser();
 
     if(isRightUserLoggedIn == false) {
         $('.profile input, textarea').attr("readonly", "readonly");
@@ -87,7 +124,7 @@ function renderProfileData(profileId, profileClass) {
             profile.Country = $('#country').val();
             profile.LinkedIn = $('#linkedinUrl').val();
             profile.Facebook = $('#facebookUrl').val();
-            profile.Occupation = $('#job').val();
+            profile.job = $('#job').val();
             profile.Email = $('#email').val();
             profile.Description = $('#description').val();
             profile.Other = $('#otherInfo').text();
@@ -126,4 +163,27 @@ function renderProfileData(profileId, profileClass) {
     }
 }
 
-// id, firstName, lastName, phone, address, country, linkedIn, facebook, occupation, email, description, ProfilePhotoPath, RecentPhotoPath
+function verifyLoggedInUser() {
+    // verify if logged-in and make editable/readonly fields
+    var isUserLoggedIn = checkCookie();
+    var isRightUserLoggedIn = false;
+    if(isUserLoggedIn == true) {
+        var cookieValue = Cookies.getJSON('login');
+        var loggedInUserId = cookieValue.UserId;
+        var loggedInUserClass = cookieValue.Class;
+        
+        var uri = URI(window.location.href);
+        var profileId = uri.getParameter('id');
+        var profileClass = uri.getParameter('class');
+
+        // todo: get admin ID from file
+
+        var adminId = 0;
+
+        isRightUserLoggedIn = (adminId == loggedInUserId) || (loggedInUserId == profileId && loggedInUserClass == profileClass);
+    }
+
+    return isRightUserLoggedIn;
+}
+
+// id, firstName, lastName, phone, address, country, linkedIn, facebook, job, email, description, ProfilePhotoPath, RecentPhotoPath
