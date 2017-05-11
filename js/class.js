@@ -7,45 +7,15 @@ $(document).ready(loadClassProfiles);
 
 function afterLoadHeader() {
     loadHeader();
-    var isAdminLogged = isAdminLoggedIn();
-    if(isAdminLogged == true) {
-        $('.description').attr('contenteditable', 'true');
-    }
-
-    $('#saveDescription').click(function() {
-        if(isAdminLogged == true) {
-            // post description to server
-            
-            var inputDescription = $('.description').text();
-            var uri = URI(window.location.href);
-            var className = uri.getParameter("name");
-
-            var postedData = JSON.stringify( { description : inputDescription });
-            var postUrl = "/saveClass?className=" + className;
-                $.ajax({
-                    url: postUrl,
-                    type: 'POST',
-                    data: postedData,
-                    contentType: 'application/json',
-                    error: function(jqXHR, textStatus, errorThrown ) {
-                        alert('jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
-                        //$('#emailResult').text('Trimitere esuata! Contactati administratorul.');
-                    },
-                    success: function() {
-                        console.log("success!");         
-                    },
-                    complete: function() {
-                        console.log("completed!");         
-                    }
-                });
-        }
-    });
+    loadClassInfo();
 }
 
 function loadClassProfiles() {
     $("header").load('header.html', afterLoadHeader);
     $("footer").load('footer.html');
+}
 
+function loadClassInfo() {
     var uri = URI(window.location.href);
     var className = uri.getParameter("name");
     
@@ -74,6 +44,40 @@ function loadClassProfiles() {
         }).appendTo("#profiles");
 
         hookProfileClick();
+
+        var isAdminLogged = isAdminLoggedIn();
+        if(isAdminLogged == false) {
+            $('.description').attr('readonly', 'readonly');
+        }
+
+        $('#saveDescription').click(function() {
+            if(isAdminLogged == true) {
+                // post description to server
+                
+                var inputDescription = $('.description').val();
+                var uri = URI(window.location.href);
+                var className = uri.getParameter("name");
+
+                var postedData = JSON.stringify( { description : inputDescription });
+                var postUrl = "/saveClass?className=" + className;
+                    $.ajax({
+                        url: postUrl,
+                        type: 'POST',
+                        data: postedData,
+                        contentType: 'application/json',
+                        error: function(jqXHR, textStatus, errorThrown ) {
+                            alert('jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
+                            //$('#emailResult').text('Trimitere esuata! Contactati administratorul.');
+                        },
+                        success: function() {
+                            console.log("success!");         
+                        },
+                        complete: function() {
+                            console.log("completed!");         
+                        }
+                    });
+            }
+        });
     });
 }
 
