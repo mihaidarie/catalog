@@ -99,7 +99,34 @@ app.post('/emailadmin', function(req, res){
   sendMailToAdmin(firstname, lastname, email, subject, body);
 });
 
-// handler for sending suggestions to administrator
+app.post('/saveProfile', function(req, res) {
+  var postedProfile = JSON.parse(req.body.ProfileDetails);
+  var className = req.query.className;
+  var classesFilePath = '/catalog/database/classes/' + className + ".json";
+  var classDetails = JSON.parse(fs.readFileSync(classesFilePath));
+
+  for (var i = 0, len = classDetails[0].Profiles.length; i < len; i++) {
+    var profileDetails = classDetails[0].Profiles[i];
+    if(postedProfile.Id == profileDetails.Id) {
+        profileDetails.FirstName = postedProfile.FirstName;
+        profileDetails.LastName = postedProfile.LastName;
+        profileDetails.Phone = postedProfile.Phone;
+        profileDetails.Address = postedProfile.Address;
+        profileDetails.Country = postedProfile.Country;
+        profileDetails.LinkedIn = postedProfile.LinkedIn;
+        profileDetails.Facebook = postedProfile.Facebook;
+        profileDetails.Occupation = postedProfile.Occupation;
+        profileDetails.Email = postedProfile.Email;
+        profileDetails.Description = postedProfile.Description;
+        profileDetails.Other = postedProfile.Other;
+    }
+  }
+
+  fs.writeFileSync(classesFilePath, JSON.stringify(classDetails));
+  res.sendStatus(200);
+});
+
+// handler for getting gallery phothos paths
 app.get('/gallery', function(req, res) {
     res.setHeader('Content-Type', 'application/json');
     var photosList = [];

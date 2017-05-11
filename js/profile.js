@@ -79,8 +79,45 @@ function renderProfileData(profileId, profileClass) {
             // todo: save profile details to file
 
             // todo: verify logged in user to be same as profile ID
+            var profile = {};
+            profile.FirstName = $('#firstname').text();
+            profile.LastName = $('#lastname').text();
+            profile.Phone = $('#phoneNumber').val();
+            profile.Address = $('#address').val();
+            profile.Country = $('#country').val();
+            profile.LinkedIn = $('#linkedinUrl').val();
+            profile.Facebook = $('#facebookUrl').val();
+            profile.Occupation = $('#job').val();
+            profile.Email = $('#email').val();
+            profile.Description = $('#description').val();
+            profile.Other = $('#otherInfo').text();
 
-            alert('saving profile!');
+            var uri = URI(window.location.href);
+            var profileId = uri.getParameter('id');
+            var profileClass = uri.getParameter('class');
+            profile.Id = profileId;
+
+            var profileJson = JSON.stringify(profile);
+            var postedProfile = { ProfileDetails : profileJson};
+            var postedData = JSON.stringify(postedProfile);
+
+            var postUrl = "/saveProfile?className=" + profileClass;
+            $.ajax({
+                    url: postUrl,
+                    type: 'POST',
+                    data: postedData,
+                    contentType: 'application/json',
+                    error: function(jqXHR, textStatus, errorThrown ) {
+                        alert('jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
+                        //$('#emailResult').text('Trimitere esuata! Contactati administratorul.');
+                    },
+                    success: function() {
+                        console.log("success!");         
+                    },
+                    complete: function() {
+                        console.log("completed!");         
+                    }
+                });
         });
 
         $("#btnCancel").click(function() {
