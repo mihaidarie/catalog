@@ -152,38 +152,42 @@ function renderProfileData(profileId, profileClass) {
             // save profile details to file
 
             // verify logged in user to be same as profile ID or to be admin
-            var profile = {};
-            profile.FirstName = $('#firstname').text();
-            profile.LastName = $('#lastname').text();
-            profile.Phone = $('#phoneNumber').val();
-            profile.Address = $('#address').val();
-            profile.Country = $('#country').val();
-            profile.LinkedIn = $('#linkedinUrl').val();
-            profile.Facebook = $('#facebookUrl').val();
-            profile.job = $('#job').val();
-            profile.Email = $('#email').val();
-            profile.Description = $('#description').val();
-            profile.Other = $('#otherInfo').text();
 
-            profile.PhonePublic = $('#phonePublic')[0].checked;
-            profile.AddressPublic = $('#addressPublic')[0].checked;
-            profile.CountryPublic = $('#countryPublic')[0].checked;
-            profile.LinkedInPublic = $('#linkedInPublic')[0].checked;
-            profile.FacebookPublic = $('#facebookPublic')[0].checked;
-            profile.JobPublic = $('#jobPublic')[0].checked;
-            profile.EmailPublic = $('#emailPublic')[0].checked;
+            var isRightUserLoggedIn = verifyLoggedInUser();
+            if(isRightUserLoggedIn == true) {
 
-            var uri = URI(window.location.href);
-            var profileId = uri.getParameter('id');
-            var profileClass = uri.getParameter('class');
-            profile.Id = profileId;
+                var profile = {};
+                profile.FirstName = $('#firstname').text();
+                profile.LastName = $('#lastname').text();
+                profile.Phone = $('#phoneNumber').val();
+                profile.Address = $('#address').val();
+                profile.Country = $('#country').val();
+                profile.LinkedIn = $('#linkedinUrl').val();
+                profile.Facebook = $('#facebookUrl').val();
+                profile.job = $('#job').val();
+                profile.Email = $('#email').val();
+                profile.Description = $('#description').val();
+                profile.Other = $('#otherInfo').text();
 
-            var profileJson = JSON.stringify(profile);
-            var postedProfile = { ProfileDetails : profileJson};
-            var postedData = JSON.stringify(postedProfile);
+                profile.PhonePublic = $('#phonePublic')[0].checked;
+                profile.AddressPublic = $('#addressPublic')[0].checked;
+                profile.CountryPublic = $('#countryPublic')[0].checked;
+                profile.LinkedInPublic = $('#linkedInPublic')[0].checked;
+                profile.FacebookPublic = $('#facebookPublic')[0].checked;
+                profile.JobPublic = $('#jobPublic')[0].checked;
+                profile.EmailPublic = $('#emailPublic')[0].checked;
 
-            var postUrl = "/saveProfile?className=" + profileClass;
-            $.ajax({
+                var uri = URI(window.location.href);
+                var profileId = uri.getParameter('id');
+                var profileClass = uri.getParameter('class');
+                profile.Id = profileId;
+
+                var profileJson = JSON.stringify(profile);
+                var postedProfile = { ProfileDetails : profileJson};
+                var postedData = JSON.stringify(postedProfile);
+
+                var postUrl = "/saveProfile?className=" + profileClass;
+                $.ajax({
                     url: postUrl,
                     type: 'POST',
                     data: postedData,
@@ -199,6 +203,7 @@ function renderProfileData(profileId, profileClass) {
                         console.log("completed!");         
                     }
                 });
+            }
         });
 
         $("#btnCancel").click(function() {

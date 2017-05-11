@@ -151,3 +151,18 @@ function checkCookie() {
 
     return false;
 }
+
+function isAdminLoggedIn() {
+    var isUserLoggedIn = checkCookie();
+
+    if(isUserLoggedIn == false) {
+        return false;
+    }
+
+    var cookieValue = Cookies.getJSON('login');
+    var loggedInUserId = cookieValue.UserId;
+
+    var adminId = 0; //  todo: get admin ID from file
+
+    return adminId == loggedInUserId;
+}

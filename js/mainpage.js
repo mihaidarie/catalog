@@ -4,10 +4,15 @@ $(document).ready(function() {
 
     $('.updatesHeader').click(function() {
         window.location.href = "news.html";
-    });
-
-    $('.projectsHeader').click(function() {
-        window.location.href = "projects.html";
-    });
-    
+    });   
 });
+
+function wireupProjectsHandlers() {
+    $('.projectsHeader').click(function() {
+        var isAdminUserLoggedIn = isAdminLoggedIn();
+
+        if(isAdminUserLoggedIn == true) {
+            window.location.href = "projects.html";
+        }
+    });
+}
