@@ -1,15 +1,20 @@
 .description {
-    width: 58%;
+    width: 100%;
     margin-top: 1%;
-}
-
-#profiles p {
     font-weight: bold;
     font-size: 22px;
 }
 
+#classDescription {
+    width: 100%;
+}
+
 .profiles {
     width: 58%;
+}
+
+#saveDescription {
+    margin-bottom: 1em;
 }
 
 .profilesList div {

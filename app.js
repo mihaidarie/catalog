@@ -134,6 +134,18 @@ app.post('/saveProfile', function(req, res) {
   res.sendStatus(200);
 });
 
+app.post('/saveClass', function(req, res) {
+  var classDescription = req.body.description.trim();
+  var className = req.query.className;
+  var classesFilePath = '/catalog/database/classes/' + className + ".json";
+  var classDetails = JSON.parse(fs.readFileSync(classesFilePath));
+
+  classDetails[0].Description = classDescription;
+
+  fs.writeFileSync(classesFilePath, JSON.stringify(classDetails));
+  res.sendStatus(200);
+});
+
 // handler for getting gallery phothos paths
 app.get('/gallery', function(req, res) {
     res.setHeader('Content-Type', 'application/json');
