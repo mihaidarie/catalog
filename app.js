@@ -8,6 +8,7 @@ var mv = require('mv');
 
 var photosFolder = '/catalog/images/gallery/';
 var photoClientPath = '/images/gallery/';
+var newsFilePath = '/catalog/database/news/news.json';
 
 'use strict';
 const nodemailer = require('nodemailer');
@@ -104,6 +105,37 @@ app.post('/saveContacts', function(req, res){
   
   var contactsFilePath = '/catalog/database/contacts/contacts.json';
   fs.writeFileSync(contactsFilePath, JSON.stringify(body));
+  res.sendStatus(200);
+});
+
+app.post('/saveNews', function(req, res) {
+  var postedNews = JSON.stringify(req.body);
+
+  fs.writeFileSync(newsFilePath, postedNews);
+  res.sendStatus(200);
+});
+
+app.post('/removeNews', function(req, res) {
+  var postedNews = req.body;
+
+  var itemsToRemove = [];
+  var newsFileContent = fs.readFileSync(newsFilePath);
+  var newsArray = JSON.parse(newsFileContent); 
+
+  newsArray.forEach(currentItem => {
+      postedNews.forEach(itemToRemove => {
+        if(currentItem.Id == itemToRemove) {
+          itemsToRemove.push(currentItem);
+        }  
+      });
+    });
+
+  itemsToRemove.forEach(itemToRemove => {
+    var index = newsArray.indexOf(itemToRemove);
+    newsArray.splice(index, 1);
+  });
+
+  fs.writeFileSync(newsFilePath, JSON.stringify(newsArray));
   res.sendStatus(200);
 });
 

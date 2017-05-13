@@ -90,8 +90,7 @@ function renderProfileData(profileId, profileClass) {
                     if(profile.EmailPublic == false) {
                         $('#email').val(defaultString);
                     }
-                }    
-
+                }
 
                 var phonePublic = false;
                 if(profile.PhonePublic) {
