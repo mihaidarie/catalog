@@ -5,9 +5,12 @@ URI.prototype.getParameter = function(key) {
 
 $(document).ready(function() {
 
-    $("header").load('header.html', loadHeader);
+    $("header").load('header.html', renderNewsForm);
     $("footer").load('footer.html');
-
+});
+ 
+function renderNewsForm() {
+    loadHeader();
     loadNews();
 
     setupFormMode();
@@ -17,10 +20,10 @@ $(document).ready(function() {
     });
     
     $('#removeNews').click(function() {
-        alert('delete news!');
+        
     });
-});
- 
+}
+
 function loadNews() {
     var uri = URI(window.location.href);
     var newsId = uri.getParameter("id");
@@ -31,8 +34,8 @@ function loadNews() {
         var items = [];
         $.each(data, function(index, newsDetails) {
             if(newsDetails.Id && newsDetails.Id != '' && newsDetails.Description && newsDetails.Description != '') {
-                items.push( "<li id=news_" + newsDetails.Id + ">" + newsDetails.Description + 
-                "<input type='checkbox' id='deletenews_'" + newsDetails.Id + "'/>"
+                items.push( "<li><textarea readonly id=news_" + newsDetails.Id + ">" + newsDetails.Description + 
+                "</textarea><input type='checkbox' id='deletenews_'" + newsDetails.Id + "'/>"
                 +
                 "</li>" );
             }
@@ -44,26 +47,24 @@ function loadNews() {
 }
 
 function setupFormMode() {
-    var cookieValue = Cookies.getJSON('login');
+    var isAdminUserLoggedIn = isAdminLoggedIn();
 
-    // todo: dynamically look for admin ID
+    if(isAdminUserLoggedIn) {
 
-    if(cookieValue && cookieValue.UserId == 0) {
+        $('textarea[id^="news_"]').removeAttr('readonly');
+        $('#newsEdit').show();
 
-        // $('input[type="text"], textarea').removeAttr('readonly');
-        // $('#newsEdit').show();
-
-        // $('#removeNews').click(function() {
-        //     alert('remove news!');
+        $('#removeNews').click(function() {
+            alert('remove news!');
 
 
-        // });
+        });
     
-        // $('#saveNews').click(function() {
-        //     alert('save news!');
+        $('#saveNews').click(function() {
+            alert('save news!');
 
 
-        // });
+        });
     }
     else {
         // $('input[type="text"], textarea').attr('readonly','readonly');
