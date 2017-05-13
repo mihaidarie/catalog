@@ -18,6 +18,11 @@
     width: 100%;
 }
 
+center label:first-of-type {
+    font-weight: bold;
+    font-size: 20px;
+}
+
 #newsList li textarea {
     width: 97%;
     max-width: 97%;
