@@ -99,7 +99,62 @@ app.post('/emailadmin', function(req, res){
   sendMailToAdmin(firstname, lastname, email, subject, body);
 });
 
-// handler for sending suggestions to administrator
+app.post('/saveContacts', function(req, res){
+  var body = req.body;
+  
+  var contactsFilePath = '/catalog/database/contacts/contacts.json';
+  fs.writeFileSync(contactsFilePath, JSON.stringify(body));
+  res.sendStatus(200);
+});
+
+app.post('/saveProfile', function(req, res) {
+  var postedProfile = JSON.parse(req.body.ProfileDetails);
+  var className = req.query.className;
+  var classesFilePath = '/catalog/database/classes/' + className + ".json";
+  var classDetails = JSON.parse(fs.readFileSync(classesFilePath));
+
+  for (var i = 0, len = classDetails[0].Profiles.length; i < len; i++) {
+    var profileDetails = classDetails[0].Profiles[i];
+    if(postedProfile.Id == profileDetails.Id) {
+        profileDetails.FirstName = postedProfile.FirstName;
+        profileDetails.LastName = postedProfile.LastName;
+        profileDetails.Phone = postedProfile.Phone;
+        profileDetails.Address = postedProfile.Address;
+        profileDetails.Country = postedProfile.Country;
+        profileDetails.LinkedIn = postedProfile.LinkedIn;
+        profileDetails.Facebook = postedProfile.Facebook;
+        profileDetails.Occupation = postedProfile.Occupation;
+        profileDetails.Email = postedProfile.Email;
+        profileDetails.Description = postedProfile.Description;
+        profileDetails.Other = postedProfile.Other;
+
+        profileDetails.PhonePublic = postedProfile.PhonePublic;
+        profileDetails.AddressPublic = postedProfile.AddressPublic;
+        profileDetails.CountryPublic = postedProfile.CountryPublic;
+        profileDetails.LinkedInPublic = postedProfile.LinkedInPublic;
+        profileDetails.FacebookPublic = postedProfile.FacebookPublic;
+        profileDetails.JobPublic = postedProfile.JobPublic;
+        profileDetails.EmailPublic = postedProfile.EmailPublic;
+    }
+  }
+
+  fs.writeFileSync(classesFilePath, JSON.stringify(classDetails));
+  res.sendStatus(200);
+});
+
+app.post('/saveClass', function(req, res) {
+  var classDescription = req.body.description.trim();
+  var className = req.query.className;
+  var classesFilePath = '/catalog/database/classes/' + className + ".json";
+  var classDetails = JSON.parse(fs.readFileSync(classesFilePath));
+
+  classDetails[0].Description = classDescription;
+
+  fs.writeFileSync(classesFilePath, JSON.stringify(classDetails));
+  res.sendStatus(200);
+});
+
+// handler for getting gallery phothos paths
 app.get('/gallery', function(req, res) {
     res.setHeader('Content-Type', 'application/json');
     var photosList = [];

@@ -1,15 +1,35 @@
-#newsList {
-    list-style-type: none;
+#newsEdit {
     float: left;
-    padding: 1%;
     margin-top: 2%;
     width: 58%;
     float: none;
-    height: 40%;
+    height: auto;
+}
+
+#newsList {
+    width: 100%;
+    list-style-type: none;
+    float: left;
+    margin-left: -2.5em;
 }
 
 #newsList li {
     float: left;
+    width: 100%;
+}
+
+center label:first-of-type {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+#newsList li textarea {
+    width: 97%;
+    max-width: 97%;
+    min-width: 97%;
+    resize: none;
+    height: 10em;
+    overflow: auto;
 }
 
 #newsList li:not(:last-child) {
@@ -23,9 +43,4 @@
 #newsEdit button {
     border-radius: 7px;
     cursor: pointer;
-}
-
-#newsDetails {
-    width: 50%;
-    height: 30%;
 }

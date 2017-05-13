@@ -34,22 +34,186 @@ function renderProfileData(profileId, profileClass) {
             if(profile.Id == profileId) {
                 $('#firstname').text(profile.FirstName);
                 $('#lastname').text(profile.LastName);
+    
+                var defaultString = "privat";
+                var isRightUserLoggedIn = verifyLoggedInUser();
+
                 $('#phoneNumber').val(profile.Phone);
-                $('#address').val(profile.Address);
                 $('#country').val(profile.Country);
                 $('#linkedinUrl').val(profile.LinkedIn);
                 $('#facebookUrl').val(profile.Facebook);
-                $('#job').val(profile.Occupation);
+                $('#job').val(profile.Job);
                 $('#email').val(profile.Email);
                 $('#description').val(profile.Description);
                 $('#profilePhoto').attr("src", profile.ProfilePhotoPath);
                 $('#recentPhoto').attr("src", profile.RecentPhotoPath);
                 $('#otherInfo').text(profile.Other);
+                $('#address').val(profile.Address);
+                
+                if(isRightUserLoggedIn == false) {
+                    if(profile.PhonePublic == false) {
+                        $('#phoneNumber').val(defaultString);
+                    }
+                }
+
+                if(isRightUserLoggedIn == false) {
+                    if(profile.AddressPublic == false) {
+                        $('#address').val(defaultString);
+                    }
+                }         
+
+                if(isRightUserLoggedIn == false) {
+                    if(profile.CountryPublic == false) {
+                        $('#country').val(defaultString);
+                    }
+                }    
+
+                if(isRightUserLoggedIn == false) {
+                    if(profile.LinkedInPublic == false) {
+                        $('#linkedinUrl').val(defaultString);
+                    }
+                }    
+
+                if(isRightUserLoggedIn == false) {
+                    if(profile.FacebookPublic == false) {
+                        $('#facebookUrl').val(defaultString);
+                    }
+                }    
+
+                if(isRightUserLoggedIn == false) {
+                    if(profile.JobPublic == false) {
+                        $('#job').val(defaultString);
+                    }
+                }    
+
+                if(isRightUserLoggedIn == false) {
+                    if(profile.EmailPublic == false) {
+                        $('#email').val(defaultString);
+                    }
+                }    
+
+
+                var phonePublic = false;
+                if(profile.PhonePublic) {
+                    phonePublic = profile.PhonePublic;
+                }
+
+                var addressPublic = false;
+                if(profile.AddressPublic) {
+                    addressPublic = profile.AddressPublic;
+                }
+
+                var countryPublic = false;
+                if(profile.CountryPublic) {
+                    countryPublic = profile.CountryPublic;
+                }
+
+                var linkedInPublic = false;
+                if(profile.LinkedInPublic) {
+                    linkedInPublic = profile.LinkedInPublic;
+                }
+
+                var facebookPublic = false;
+                if(profile.FacebookPublic) {
+                    facebookPublic = profile.FacebookPublic;
+                }
+
+                var jobPublic = false;
+                if(profile.JobPublic) {
+                    jobPublic = profile.JobPublic;
+                }
+
+                var emailPublic = false;
+                if(profile.EmailPublic) {
+                    emailPublic = profile.EmailPublic;
+                }
+
+                $('#phonePublic').attr('checked', phonePublic);
+                $('#addressPublic').attr('checked', addressPublic);
+                $('#countryPublic').attr('checked', countryPublic);
+                $('#linkedInPublic').attr('checked', linkedInPublic);
+                $('#facebookPublic').attr('checked', facebookPublic);
+                $('#jobPublic').attr('checked', jobPublic);
+                $('#emailPublic').attr('checked', emailPublic);
             }
         });
     });
 
-    // todo: verify if logged-in and make editable/readonly fields
+    var isRightUserLoggedIn = verifyLoggedInUser();
+
+    if(isRightUserLoggedIn == false) {
+        $('.profile input, textarea').attr("readonly", "readonly");
+        $('#buttons').hide();
+        $("input[type='checkbox']").hide();
+        $('.profileDetails label:nth-child(even)').hide();
+        $('#changePhoto').hide();
+    } else {
+        $("#btnSave").click(function() {
+            // save profile details to file
+
+            // verify logged in user to be same as profile ID or to be admin
+
+            var isRightUserLoggedIn = verifyLoggedInUser();
+            if(isRightUserLoggedIn == true) {
+
+                var profile = {};
+                profile.FirstName = $('#firstname').text();
+                profile.LastName = $('#lastname').text();
+                profile.Phone = $('#phoneNumber').val();
+                profile.Address = $('#address').val();
+                profile.Country = $('#country').val();
+                profile.LinkedIn = $('#linkedinUrl').val();
+                profile.Facebook = $('#facebookUrl').val();
+                profile.job = $('#job').val();
+                profile.Email = $('#email').val();
+                profile.Description = $('#description').val();
+                profile.Other = $('#otherInfo').text();
+
+                profile.PhonePublic = $('#phonePublic')[0].checked;
+                profile.AddressPublic = $('#addressPublic')[0].checked;
+                profile.CountryPublic = $('#countryPublic')[0].checked;
+                profile.LinkedInPublic = $('#linkedInPublic')[0].checked;
+                profile.FacebookPublic = $('#facebookPublic')[0].checked;
+                profile.JobPublic = $('#jobPublic')[0].checked;
+                profile.EmailPublic = $('#emailPublic')[0].checked;
+
+                var uri = URI(window.location.href);
+                var profileId = uri.getParameter('id');
+                var profileClass = uri.getParameter('class');
+                profile.Id = profileId;
+
+                var profileJson = JSON.stringify(profile);
+                var postedProfile = { ProfileDetails : profileJson};
+                var postedData = JSON.stringify(postedProfile);
+
+                var postUrl = "/saveProfile?className=" + profileClass;
+                $.ajax({
+                    url: postUrl,
+                    type: 'POST',
+                    data: postedData,
+                    contentType: 'application/json',
+                    error: function(jqXHR, textStatus, errorThrown ) {
+                        alert('jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
+                        //$('#emailResult').text('Trimitere esuata! Contactati administratorul.');
+                    },
+                    success: function() {
+                        console.log("success!");         
+                    },
+                    complete: function() {
+                        console.log("completed!");         
+                    }
+                });
+            }
+        });
+
+        $("#btnCancel").click(function() {
+            window.location.href = window.location.href;
+        });
+    }
+}
+
+function verifyLoggedInUser() {
+    // verify if logged-in and make editable/readonly fields
     var isUserLoggedIn = checkCookie();
     var isRightUserLoggedIn = false;
     if(isUserLoggedIn == true) {
@@ -68,25 +232,5 @@ function renderProfileData(profileId, profileClass) {
         isRightUserLoggedIn = (adminId == loggedInUserId) || (loggedInUserId == profileId && loggedInUserClass == profileClass);
     }
 
-    if(isRightUserLoggedIn == false) {
-        $('.profile input, textarea').attr("readonly", "readonly");
-        $('#buttons').hide();
-        $("input[type='checkbox']").hide();
-        $('.profileDetails label:nth-child(even)').hide();
-        $('#changePhoto').hide();
-    } else {
-        $("#btnSave").click(function() {
-            // todo: save profile details to file
-
-            // todo: verify logged in user to be same as profile ID
-
-            alert('saving profile!');
-        });
-
-        $("#btnCancel").click(function() {
-            window.location.href = window.location.href;
-        });
-    }
+    return isRightUserLoggedIn;
 }
-
-// id, firstName, lastName, phone, address, country, linkedIn, facebook, occupation, email, description, ProfilePhotoPath, RecentPhotoPath
