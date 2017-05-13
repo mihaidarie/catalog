@@ -99,6 +99,14 @@ app.post('/emailadmin', function(req, res){
   sendMailToAdmin(firstname, lastname, email, subject, body);
 });
 
+app.post('/saveContacts', function(req, res){
+  var body = req.body;
+  
+  var contactsFilePath = '/catalog/database/contacts/contacts.json';
+  fs.writeFileSync(contactsFilePath, JSON.stringify(body));
+  res.sendStatus(200);
+});
+
 app.post('/saveProfile', function(req, res) {
   var postedProfile = JSON.parse(req.body.ProfileDetails);
   var className = req.query.className;
