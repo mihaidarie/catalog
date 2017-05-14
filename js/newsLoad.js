@@ -18,16 +18,5 @@ function loadNews() {
         
         var allNews = items.join("");
         $(allNews).appendTo("#newsList");
-
-        hookNewsClick();
     });
-}
-
-function hookNewsClick() {
-     $("ul li[id^='news_']").click(function(e) {
-        // navigate to news details page
-        var newsId = this.id;
-        var newnewsId = newsId.replace("news_", ""); 
-        window.location.href = "news.html?id=" + newnewsId;
-     });
 }

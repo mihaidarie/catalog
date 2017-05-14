@@ -7,8 +7,6 @@ function renderNewsForm() {
     loadHeader();
     loadNews();
 
-    // todo: add news button
-
     $('#saveNews').click(function() {
         var isAdminUserLoggedIn = isAdminLoggedIn();
 
@@ -18,24 +16,34 @@ function renderNewsForm() {
             $('textarea[id^="news_"]').each(function(index, itemDetails) {
                 var newsItem = {};
                 var itemId = itemDetails.id.substring(itemDetails.id.indexOf('news_') + 5);
-                newsItem.Id = itemId;
+                newsItem.Id = parseInt(itemId);
                 newsItem.Description = itemDetails.value;
                 newsList.push(newsItem);
             });
 
-            var newsJson = JSON.stringify(newsList);
+            var newsJson = {
+                existingData : newsList,
+            };
+
+            var newNewsValue = $('#newNews').val();
+            if(newNewsValue && newNewsValue.trim() != '') {
+                newsJson.newData = newNewsValue;
+            }
+
+            var postedNewsJson = JSON.stringify(newsJson);
 
             var postUrl = "/saveNews";
             $.ajax({
                 url: postUrl,
                 type: 'POST',
-                data: newsJson,
+                data: postedNewsJson,
                 contentType: 'application/json',
                 error: function(jqXHR, textStatus, errorThrown ) {
                     alert('jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
                 },
                 success: function() {
-                    console.log("success!");         
+                    console.log("success!");
+                    loadNews();     
                 },
                 complete: function() {
                     console.log("completed!");      
@@ -45,32 +53,36 @@ function renderNewsForm() {
     });
     
     $('#removeNews').click(function() {
-        var newsIdsList = [];
+        var isAdminUserLoggedIn = isAdminLoggedIn();
 
-        $('input[id^="deletenews_"]:checked').each(function(index, currentItem) {
-            var itemId = currentItem.id.substring(currentItem.id.indexOf('deletenews_') + 11);
-            newsIdsList.push(itemId);
-        });
+        if(isAdminUserLoggedIn) {
+            var newsIdsList = [];
 
-        var postedData = JSON.stringify(newsIdsList);
+            $('input[id^="deletenews_"]:checked').each(function(index, currentItem) {
+                var itemId = currentItem.id.substring(currentItem.id.indexOf('deletenews_') + 11);
+                newsIdsList.push(itemId);
+            });
 
-        var postUrl = "/removeNews";
-        $.ajax({
-            url: postUrl,
-            type: 'POST',
-            data: postedData,
-            contentType: 'application/json',
-            error: function(jqXHR, textStatus, errorThrown ) {
-                alert('jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
-            },
-            success: function() {
-                console.log("success!");
-                loadNews();
-            },
-            complete: function() {
-                console.log("completed!");      
-            }
-        });
+            var postedData = JSON.stringify(newsIdsList);
+
+            var postUrl = "/removeNews";
+            $.ajax({
+                url: postUrl,
+                type: 'POST',
+                data: postedData,
+                contentType: 'application/json',
+                error: function(jqXHR, textStatus, errorThrown ) {
+                    alert('jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
+                },
+                success: function() {
+                    console.log("success!");
+                    loadNews();
+                },
+                complete: function() {
+                    console.log("completed!");      
+                }
+            });
+        }
     });
 }
 
@@ -94,8 +106,15 @@ function loadNews() {
         var allNews = items.join("");
         $(allNews).prependTo("#newsList");
 
+        renderNewNewsElement();
+
         setupFormMode();
     });
+}
+
+function renderNewNewsElement() {
+    var newNews = "<li><textarea readonly id=newNews></textarea></li>";
+    $(newNews).appendTo("#newsList");
 }
 
 function setupFormMode() {
@@ -104,6 +123,7 @@ function setupFormMode() {
     if(isAdminUserLoggedIn) {
 
         $('textarea[id^="news_"]').removeAttr('readonly');
+        $('textarea[id^="newNews"]').removeAttr('readonly');
         $('#newsEdit').show();
     }
     else {       
