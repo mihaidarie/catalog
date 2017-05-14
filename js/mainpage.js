@@ -7,12 +7,13 @@ function wireupNewsHandlers() {
     var isAdminUserLoggedIn = isAdminLoggedIn();
     if(isAdminUserLoggedIn == true) {
         $('.updatesHeader').css('cursor', 'pointer');
-     }else {
+    } else {
         $('.updatesHeader').css('cursor', '');
-     }
+    }
 
     $('.updatesHeader').click(function(e) {
-        if(isAdminUserLoggedIn == true) {
+        var isAdminUserLoggedIn1 = isAdminLoggedIn();
+        if(isAdminUserLoggedIn1 == true) {
             window.location.href = "news.html";
         }
 
@@ -21,10 +22,17 @@ function wireupNewsHandlers() {
 }
 
 function wireupProjectsHandlers() {
-    $('.projectsHeader').click(function(e) {
-        var isAdminUserLoggedIn = isAdminLoggedIn();
+    var isAdminUserLoggedIn = isAdminLoggedIn();
+    if(isAdminUserLoggedIn == true) {
+        $('.projectsHeader').css('cursor', 'pointer');
+    } else {
+        $('.projectsHeader').css('cursor', '');
+    }
 
-        if(isAdminUserLoggedIn == true) {
+    $('.projectsHeader').click(function(e) {
+        var isAdminUserLoggedIn1 = isAdminLoggedIn();
+
+        if(isAdminUserLoggedIn1 == true) {
             window.location.href = "projects.html";
         }
 

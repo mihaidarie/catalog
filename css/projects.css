@@ -1,0 +1,38 @@
+#projectsEdit {
+    float: left;
+    margin-top: 2%;
+    width: 58%;
+    float: none;
+    height: auto;
+}
+
+#projectsList {
+    width: 100%;
+    list-style-type: none;
+    float: left;
+    margin-left: -2.5em;
+}
+
+#projectsList li {
+    float: left;
+    width: 100%;
+    margin-bottom: 1em;
+}
+
+#projectsList input:nth-child(2) {
+    width: 15em;
+}
+
+#projectsList textarea {
+    width: 27em;
+    max-width: 27em;
+    resize: none;
+    min-width: 27em;
+    overflow: auto;
+    height: 10em;
+}
+
+#projectsList li input, textarea {
+    margin-right: 1em;
+    float: left;
+}

@@ -113,7 +113,7 @@ function loadNews() {
 }
 
 function renderNewNewsElement() {
-    var newNews = "<li><textarea readonly id=newNews></textarea></li>";
+    var newNews = "<li><textarea readonly id='newNews'></textarea></li>";
     $(newNews).appendTo("#newsList");
 }
 
