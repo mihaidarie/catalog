@@ -86,7 +86,7 @@ function createEmailMessage(firstname, lastname, email, subject, body, adminEmai
   return mailOptions;
 }
 
-function compareNewsIds(a, b) {
+function compareIds(a, b) {
   if (a < b) {
     return -1;
   }
@@ -124,7 +124,7 @@ app.post('/saveContacts', function(req, res){
 app.post('/saveNews', function(req, res) {
   var parsedNews = req.body;
 
-  parsedNews.existingData.sort(compareNewsIds);
+  parsedNews.existingData.sort(compareIds);
 
   if(parsedNews.newData) {
     var newNews = parsedNews.newData;
@@ -172,7 +172,31 @@ app.post('/removeNews', function(req, res) {
 });
 
 app.post('/saveProjects', function(req, res) {
-  var postedProjecs = JSON.parse(req.body.ProjectsDetails);
+  var postedProjects = req.body;
+
+  postedProjects.existingData.sort(compareIds);
+
+  if(postedProjects.newData) {
+    var newProject = postedProjects.newData;
+    var lastId = 0;
+    if(postedProjects.existingData.length > 0) {
+      lastId = postedProjects.existingData[postedProjects.existingData.length - 1].Id;
+    }
+    
+    var newProjectItem = {
+      Id : lastId + 1,
+      Title : newProject.Title,
+      Subtitle: newProject.Subtitle,
+      Description : newProject.Description
+    };
+
+    postedProjects.existingData.push(newProjectItem);
+  }
+
+  var postedProjectsJson = JSON.stringify(postedProjects.existingData);
+
+  fs.writeFileSync(projectsFilePath, postedProjectsJson);
+  res.sendStatus(200);
 
 });
 

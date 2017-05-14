@@ -16,6 +16,7 @@
 #projectsList li {
     float: left;
     width: 100%;
+    margin-bottom: 1em;
 }
 
 #projectsList input:nth-child(2) {
@@ -33,5 +34,5 @@
 
 #projectsList li input, textarea {
     margin-right: 1em;
-    vertical-align: middle;
+    float: left;
 }
