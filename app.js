@@ -316,6 +316,20 @@ app.post('/removePhoto', function(req, res) {
   }
 });
 
+app.post('/removeProjectPhoto', function(req, res) {
+  var photoNames = req.body;
+  for (var i = 0, len = photoNames.length; i < len; i++) {
+    var photoName = photoNames[i];
+    if(photoName != "NoPhoto.png") {
+      var photoPath = projectsFolder + photoName;
+
+      fs.unlinkSync(photoPath);
+
+      res.sendStatus(200);
+    }
+  }
+});
+
 app.post('/upload', function(req, res) {
 
   // create an incoming form object

@@ -45,6 +45,9 @@ function setupUploadControls(uploadType, profileId, profileClass) {
           success: function(data) {
               // TODO: change recent photo path in profiles
 
+              if(loadProjectPhotos) {
+                loadProjectPhotos();
+              }
           },
           complete: function() {
               $('#upload-input').val('');

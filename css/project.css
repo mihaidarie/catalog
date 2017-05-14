@@ -7,7 +7,7 @@
     padding: 1em;
 }
 
-#projectDetails input:nth-child(-n+3), textarea {
+#projectDetails>input:nth-child(-n+3), textarea {
     display: inherit;
     text-align: center;
 }
@@ -17,7 +17,7 @@
     width: 50em;
     max-width: 50em;
     min-width: 50em;
-    height: 30em;
+    height: auto;
     max-height: 50em;
     overflow: auto;
 }
@@ -38,6 +38,11 @@
     margin-bottom: 1em;
 }
 
+
+#allPhotos li > * {
+    margin-right: 1em;
+}
+
 #uploadContent > * {
     margin-bottom: 1em;
 }
@@ -55,4 +60,8 @@
     height: 24em;
     width: 38em;
     border: solid;
+}
+
+#allPhotos li {
+    margin: 1em;
 }

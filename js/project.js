@@ -17,17 +17,36 @@ function setupPageElements() {
 }
 
 function wireUpHandlers() {
-    $("#btnSave").click(function() {
-        // todo: save project details to file
-
-    });
-
-    $("#btnCancel").click(function() {
-        window.location.href = window.location.href;
-    });
-
     $('#btnBack').on('click', function () {
         window.location.href = 'index.html';
+    });
+
+    $('#btnRemove').click(function() {
+        var checkedImagesNames = [];
+        $.each($('#allPhotos input:checked'), function(i, elem) {
+            var imagePath = $(this).siblings('img').attr('src');
+            var photoName = imagePath.replace(/^.*[\\\/]/, '');
+            checkedImagesNames.push(photoName);
+        });
+        
+        if(checkedImagesNames.length > 0) {
+            var postUrl = "/removeProjectPhoto";
+            $.ajax({
+                url: postUrl,
+                type: 'POST',
+                data: JSON.stringify(checkedImagesNames),
+                contentType: 'application/json',
+                error: function(jqXHR, textStatus, errorThrown ) {
+                    alert('jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
+                },
+                success: function() {
+                    loadProjectPhotos();
+                },
+                complete: function() {
+                    console.log("completed!");
+                }
+            });
+        }
     });
 }
 
@@ -47,20 +66,35 @@ function loadProjectDetails() {
             }
         });
 
-        // todo: form mode setup
-
+        setupFormMode();
     });
 
-    loadPhotos();
+    loadProjectPhotos();
 }
 
-function loadPhotos() {
+function setupFormMode() {
+    var isAdminUserLoggedIn = isAdminLoggedIn();
+
+    if(isAdminUserLoggedIn) {        
+        $('#uploadContent').show();
+        $(':checkbox').show();
+    }
+    else {       
+        $('#uploadContent').hide();
+        $(':checkbox').hide();
+    }
+}
+
+function loadProjectPhotos() {
     var photosArray = [];
+
     $.getJSON('/getProjectPhotos', function(photosPathsArray) {
         $.each( photosPathsArray, function( key, elem ) {
-            var newPhoto = '<li><img src="' + elem + '" /></li>';
+            var newPhoto = '<li><img src="' + elem + '" /><input type="checkbox" /></li>';
             photosArray.push(newPhoto);
         });
+
+        $('#projectDetails').children("#allPhotos").remove();
 
         var allPhotos = photosArray.join("");
         $('<ul />', {

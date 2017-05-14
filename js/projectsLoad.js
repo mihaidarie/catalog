@@ -11,7 +11,7 @@ function loadProjects() {
     
         var items = [];
         $.each(data, function(index, projectDetails) {
-            items.push( "<li id=project_" + projectDetails.Id + ">" + projectDetails.Description + "</li>" );
+            items.push( "<li id=project_" + projectDetails.Id + ">" + projectDetails.Title + " - " + projectDetails.Subtitle + "</li>" );
         });
         
         var allProjects = items.join("");
