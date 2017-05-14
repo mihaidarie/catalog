@@ -7,8 +7,6 @@ function renderNewsForm() {
     loadHeader();
     loadNews();
 
-    // todo: add news button
-
     $('#saveNews').click(function() {
         var isAdminUserLoggedIn = isAdminLoggedIn();
 
