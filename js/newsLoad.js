@@ -18,7 +18,5 @@ function loadNews() {
         
         var allNews = items.join("");
         $(allNews).appendTo("#newsList");
-
-        hookNewsClick();
     });
 }
