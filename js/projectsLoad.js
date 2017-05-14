@@ -11,7 +11,7 @@ function loadProjects() {
     
         var items = [];
         $.each(data, function(index, projectDetails) {
-            items.push( "<li id=project_" + projectDetails.Id + ">" + projectDetails.Description + "</li>" );
+            items.push( "<li id=project_" + projectDetails.Id + ">" + projectDetails.Title + " - " + projectDetails.Subtitle + "</li>" );
         });
         
         var allProjects = items.join("");
@@ -23,7 +23,7 @@ function loadProjects() {
 
 function hookProjectsClick() {
      $("ul li[id^='project_']").click(function(e) {
-        // todo: navigate to project details page
-        alert('certain project clicked');
+        var projectId = this.id.substring(this.id.indexOf('project_') + 8);
+        location.href = "project.html?id=" + projectId;
      });
 }

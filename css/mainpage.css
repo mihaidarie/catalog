@@ -32,6 +32,7 @@
 
 .projects li {
     text-align: right;
+    cursor: pointer;
 }
 
 .updatesHeader, .projectsHeader, .requestHeader {
@@ -51,6 +52,7 @@
     height: 82%;
     overflow-y: auto;
     margin-top: 8%;
+    list-style-type: none;
 }
 
 .projectsList, .updatesContent, .requestBody {
