@@ -8,6 +8,8 @@ var mv = require('mv');
 
 var photosFolder = '/catalog/images/gallery/';
 var photoClientPath = '/images/gallery/';
+var projectsFolder = '/Catalog/images/projects/';
+var projectsClientPath = '/images/projects/';
 var newsFilePath = '/catalog/database/news/news.json';
 var projectsFilePath = '/catalog/database/projects/projects.json';
 
@@ -310,6 +312,7 @@ app.post('/upload', function(req, res) {
   // store all uploads in the /uploads directory
   form.profileUploadDir = path.join(__dirname, '/images/profiles/large');
   form.galleryUploadDir = path.join(__dirname, photoClientPath);
+  form.projectsUploadDir = path.join(__dirname, projectsClientPath);
 
   // every time a file has been uploaded successfully,
   // rename it to it's orignal name
@@ -330,8 +333,6 @@ app.post('/upload', function(req, res) {
         if (err) { throw err; }
         console.log('profile file moved successfully');
       });
-      
-      //fs.rename(file.path, newFilePath);
 
       console.log('saved profile foto');
     }
@@ -349,6 +350,23 @@ app.post('/upload', function(req, res) {
       console.log('saved gallery foto');
     }
 
+    if(uploadType == 'project') {
+      var files = fs.readdirSync(projectsFolder);
+      var numberOfFiles = files.length;
+      var newPhotoPath = path.join(form.projectsUploadDir, numberOfFiles + "_" + file.name);
+
+      mv(file.path, newPhotoPath, function(err) {
+        if (err) { 
+          throw err;
+        }
+
+        console.log('profile file moved successfully');
+
+        console.log('saved project foto');
+      });
+    }
+
+    res.sendStatus(200);
   });
 
   // log any errors that occur

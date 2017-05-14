@@ -12,6 +12,8 @@ function setupPageElements() {
     loadHeader();
     loadProjectDetails();
     wireUpHandlers();
+    var uploadType = "project";
+    setupUploadControls(uploadType);
 }
 
 function wireUpHandlers() {

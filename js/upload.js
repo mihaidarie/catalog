@@ -1,41 +1,16 @@
-URI.prototype.getParameter = function(key) {
-    var paramValue = this.query(true)[key];
-    return paramValue;
-};
-
-$(document).ready(function() {
-   
-    var uri = URI(window.location.href);
-    var profileId = uri.getParameter('id');
-    var profileClass = uri.getParameter('class');
-    var uploadType = uri.getParameter('type');
-      
-    $("header").load('header.html', loadHeader);
-    $("footer").load('footer.html');
-
+function setupUploadControls(uploadType, profileId, profileClass) {
     $('#upload-btn').on('click', function () {
 
-        // todo: verify logged in user to be same as class and ID from URL
+        // todo: verify logged in user to be same as class and ID from URL, or admin - based on upload type
 
         $('#upload-input').click();
         $('.progress-bar').text('0%');
         $('.progress-bar').width('0%');
     });
 
-    $('#btnBack').on('click', function () {
+    $('#upload-input').on('change', function() {
 
-      if(uploadType == 'profile') {
-        window.location.href = "profile.html?class=" + profileClass + "&id=" + profileId;
-      }
-
-      if(uploadType == 'gallery') {
-        window.location.href = "gallery.html";
-      }
-    });
-
-    $('#upload-input').on('change', function(){
-
-      // todo: verify logged in user to be same as class and ID from URL
+      // todo: verify logged in user to be same as class and ID from URL, or admin - based on upload type
 
       var files = $(this).get(0).files;
 
@@ -57,7 +32,7 @@ $(document).ready(function() {
           postUrl = '/upload?type=' + uploadType + '&profileId=' + profileId + '&profileClass=' + profileClass;
         }
 
-        if(uploadType == 'gallery') {
+        if(uploadType == 'gallery' || uploadType == 'project') {
           postUrl = '/upload?type=' + uploadType;
         }
 
@@ -102,8 +77,6 @@ $(document).ready(function() {
             return xhr;
           }
         });
-
       }
     });
-});
-
+}
