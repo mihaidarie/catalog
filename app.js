@@ -85,6 +85,18 @@ function createEmailMessage(firstname, lastname, email, subject, body, adminEmai
   return mailOptions;
 }
 
+function compareNewsIds(a, b) {
+  if (a < b) {
+    return -1;
+  }
+  if (a > b) {
+    return 1;
+  }
+
+  // a must be equal to b
+  return 0;
+}
+
 app.get('/', function(req, res){
   res.sendFile(path.join(__dirname, '/FileUpload.html'));
 });
@@ -109,7 +121,26 @@ app.post('/saveContacts', function(req, res){
 });
 
 app.post('/saveNews', function(req, res) {
-  var postedNews = JSON.stringify(req.body);
+  var parsedNews = req.body;
+
+  parsedNews.existingData.sort(compareNewsIds);
+
+  if(parsedNews.newData) {
+    var newNews = parsedNews.newData;
+    var lastId = 0;
+    if(parsedNews.existingData.length > 0) {
+      lastId = parsedNews.existingData[parsedNews.existingData.length - 1].Id;
+    }
+    
+    var newNewsItem = {
+      Id : lastId + 1,
+      Description : newNews
+    };
+
+    parsedNews.existingData.push(newNewsItem);
+  }
+
+  var postedNews = JSON.stringify(parsedNews.existingData);
 
   fs.writeFileSync(newsFilePath, postedNews);
   res.sendStatus(200);

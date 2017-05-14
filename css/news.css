@@ -30,6 +30,7 @@ center label:first-of-type {
     resize: none;
     height: 10em;
     overflow: auto;
+    float: left;
 }
 
 #newsList li:not(:last-child) {
