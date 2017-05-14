@@ -17,16 +17,17 @@ function setupPageElements() {
 }
 
 function wireUpHandlers() {
-    $("#btnUpload").click(function() {
-        // todo: save project details to file
-    });
-
     $("#btnSave").click(function() {
         // todo: save project details to file
+
     });
 
     $("#btnCancel").click(function() {
         window.location.href = window.location.href;
+    });
+
+    $('#btnBack').on('click', function () {
+        window.location.href = 'index.html';
     });
 }
 
@@ -48,5 +49,23 @@ function loadProjectDetails() {
 
         // todo: form mode setup
 
+    });
+
+    loadPhotos();
+}
+
+function loadPhotos() {
+    var photosArray = [];
+    $.getJSON('/getProjectPhotos', function(photosPathsArray) {
+        $.each( photosPathsArray, function( key, elem ) {
+            var newPhoto = '<li><img src="' + elem + '" /></li>';
+            photosArray.push(newPhoto);
+        });
+
+        var allPhotos = photosArray.join("");
+        $('<ul />', {
+            "id": "allPhotos",
+            html: allPhotos
+        }).insertAfter("#uploadContent");
     });
 }

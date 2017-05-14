@@ -32,6 +32,7 @@
 
 .projects li {
     text-align: right;
+    cursor: pointer;
 }
 
 .updatesHeader, .projectsHeader, .requestHeader {

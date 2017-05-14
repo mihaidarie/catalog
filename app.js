@@ -101,7 +101,7 @@ function compareIds(a, b) {
 }
 
 app.get('/', function(req, res){
-  res.sendFile(path.join(__dirname, '/FileUpload.html'));
+  res.sendFile(path.join(__dirname, '/Index.html'));
 });
 
 // handler for sending suggestions to administrator
@@ -283,6 +283,21 @@ app.get('/gallery', function(req, res) {
     if(files) {
       files.forEach(file => {
         photosList.push(photoClientPath + file);
+      });
+    }
+
+    res.send(JSON.stringify(photosList));
+});
+
+app.get('/getProjectPhotos', function(req, res) {
+    res.setHeader('Content-Type', 'application/json');
+    var photosList = [];
+
+    var files = fs.readdirSync(projectsFolder);
+
+    if(files) {
+      files.forEach(file => {
+        photosList.push(projectsClientPath + file);
       });
     }
 

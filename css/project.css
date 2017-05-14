@@ -1,0 +1,58 @@
+#upload-input {
+    display: none !important;
+}
+
+#projectDetails {
+    width: 58%;
+    padding: 1em;
+}
+
+#projectDetails input:nth-child(-n+3), textarea {
+    display: inherit;
+    text-align: center;
+}
+
+#projectDetails textarea {
+    resize: none;
+    width: 50em;
+    max-width: 50em;
+    min-width: 50em;
+    height: 30em;
+    max-height: 50em;
+    overflow: auto;
+}
+
+#title {
+    width: 10em;
+}
+
+#subtitle {
+    width: 20em;
+}
+
+.progress {
+    width: 12em;
+}
+
+#projectDetails > * {
+    margin-bottom: 1em;
+}
+
+#uploadContent > * {
+    margin-bottom: 1em;
+}
+
+#uploadContent {
+    height: auto;
+}
+
+#allPhotos {
+    list-style-type: none;
+    margin-top: 1em;
+}
+
+#allPhotos img {
+    height: 24em;
+    width: 38em;
+    border: solid;
+}
