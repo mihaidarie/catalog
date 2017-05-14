@@ -9,6 +9,7 @@ var mv = require('mv');
 var photosFolder = '/catalog/images/gallery/';
 var photoClientPath = '/images/gallery/';
 var newsFilePath = '/catalog/database/news/news.json';
+var projectsFilePath = '/catalog/database/projects/projects.json';
 
 'use strict';
 const nodemailer = require('nodemailer');
@@ -167,6 +168,35 @@ app.post('/removeNews', function(req, res) {
   });
 
   fs.writeFileSync(newsFilePath, JSON.stringify(newsArray));
+  res.sendStatus(200);
+});
+
+app.post('/saveProjects', function(req, res) {
+  var postedProjecs = JSON.parse(req.body.ProjectsDetails);
+
+});
+
+app.post('/removeProjects', function(req, res) {
+  var postedProjects = req.body;
+
+  var itemsToRemove = [];
+  var projectsFileContent = fs.readFileSync(projectsFilePath);
+  var projectsArray = JSON.parse(projectsFileContent); 
+
+  projectsArray.forEach(currentItem => {
+      postedProjects.forEach(itemToRemove => {
+        if(currentItem.Id == itemToRemove) {
+          itemsToRemove.push(currentItem);
+        }  
+      });
+    });
+
+  itemsToRemove.forEach(itemToRemove => {
+    var index = projectsArray.indexOf(itemToRemove);
+    projectsArray.splice(index, 1);
+  });
+
+  fs.writeFileSync(projectsFilePath, JSON.stringify(projectsArray));
   res.sendStatus(200);
 });
 
