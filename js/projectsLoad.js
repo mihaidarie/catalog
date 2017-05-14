@@ -23,7 +23,7 @@ function loadProjects() {
 
 function hookProjectsClick() {
      $("ul li[id^='project_']").click(function(e) {
-        // todo: navigate to project details page
-        alert('certain project clicked');
+        var projectId = this.id.substring(this.id.indexOf('project_') + 8);
+        location.href = "project.html?id=" + projectId;
      });
 }
