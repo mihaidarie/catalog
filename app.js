@@ -160,7 +160,7 @@ function scheduleTokenRemoval(token) {
     console.log("invalidating password reset link for token: " + token);
     var resetAttempt = passwordResetTokens[token];
     if(resetAttempt) {
-      delete passwordResetTokens[resetAttempt];
+      delete passwordResetTokens[token];
     }
   }, timeoutInterval);
 }

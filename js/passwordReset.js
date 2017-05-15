@@ -11,6 +11,8 @@ $(document).ready(function() {
     var token = uri.getParameter('token');
 
     if(token && token != '') {
+        // todo: validate token expiration
+
         $('#performPasswordReset').show();
         $('#startPasswordReset').hide();
 
@@ -34,7 +36,7 @@ $(document).ready(function() {
                     contentType: 'application/json',
                     success: function(result) {
                         result = JSON.parse(result);
-                        if(result.success && result.success == false) {
+                        if(result.success == false) {
                             $('#result').text(result.message);
                             setTimeout(function() {
                                 location.href = "PasswordReset.html";
@@ -80,7 +82,7 @@ $(document).ready(function() {
                 contentType: 'application/json',
                 success: function(result) {
                     result = JSON.parse(result);
-                    if(result.isValid && result.isValid == false) {
+                    if(result.isValid == false) {
                         $('#result').text(result.message);
                     } else {
                         if(result.isValid && result.isValid == true) {
