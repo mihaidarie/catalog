@@ -5,6 +5,8 @@ var formidable = require('formidable');
 var fs = require('fs');
 var bodyParser = require('body-parser');
 var mv = require('mv');
+var timer = require('timers');
+var uuid = require('uuid');
 
 var photosFolder = '/catalog/images/gallery/';
 var photoClientPath = '/images/gallery/';
@@ -12,6 +14,7 @@ var projectsFolder = '/Catalog/images/projects/';
 var projectsClientPath = '/images/projects/';
 var newsFilePath = '/catalog/database/news/news.json';
 var projectsFilePath = '/catalog/database/projects/projects.json';
+var accountsFilePath = "/catalog/database/accounts/accounts.json";
 
 'use strict';
 const nodemailer = require('nodemailer');
@@ -41,7 +44,7 @@ function setupTransporter(service, user, password) {
 
 function sendMailToAdmin(firstname, lastname, email, subject, body) {
   var settingsDoc = JSON.parse(fs.readFileSync("/catalog/database/appconfig.json"));
-  var accounts = JSON.parse(fs.readFileSync("/catalog/database/accounts/accounts.json"));
+  var accounts = JSON.parse(fs.readFileSync(accountsFilePath));
   
   var settingsDocResult = [];
   var accountsResult = [];
@@ -51,12 +54,13 @@ function sendMailToAdmin(firstname, lastname, email, subject, body) {
     var accountType = accounts[i].AccountType;
     if(accountType == 'admin') {
       adminEmail = accounts[i].Email;
+      break;
     }
   }
 
   if(adminEmail != "") {
     var transporter = setupTransporter(settingsDoc.Service, settingsDoc.Username, settingsDoc.Password);
-    var mailDetails = createEmailMessage(firstname, lastname, email, subject, body, adminEmail);
+    var mailDetails = createSuggestionEmailMessage(firstname, lastname, email, subject, body, adminEmail);
     
     // send mail with defined transport object
     transporter.sendMail(mailDetails, (error, info) => {
@@ -69,7 +73,7 @@ function sendMailToAdmin(firstname, lastname, email, subject, body) {
   }
 }
 
-function createEmailMessage(firstname, lastname, email, subject, body, adminEmail) {
+function createSuggestionEmailMessage(firstname, lastname, email, subject, body, adminEmail) {
   // setup email data with unicode symbols
   var friendlyName= '"' + firstname + ' ' + lastname + '"';
   var mailForBody = friendlyName + ' ' + email;
@@ -82,7 +86,53 @@ function createEmailMessage(firstname, lastname, email, subject, body, adminEmai
       subject: subject, // Subject line
       text: bodyHeader + body, // plain text body
       replyTo: email
-      // ,html: '<b>Iti sugerez sa dai jos site-ul!!!</b>' // html body
+      // ,html: bodyHeader + body // html body
+  };
+
+  return mailOptions;
+}
+
+function sendMailToUser(email, subject, body) {
+  var settingsDoc = JSON.parse(fs.readFileSync("/catalog/database/appconfig.json"));
+  var accounts = JSON.parse(fs.readFileSync(accountsFilePath));
+  
+  var settingsDocResult = [];
+
+  var adminEmail = "";
+  for (var i = 0, len = accounts.length; i < len; i++) {
+    var accountType = accounts[i].AccountType;
+    if(accountType == 'admin') {
+      adminEmail = accounts[i].Email;
+      break;
+    }
+  }
+
+  if(adminEmail != "") {
+    var transporter = setupTransporter(settingsDoc.Service, settingsDoc.Username, settingsDoc.Password);
+    var mailDetails = createPasswordResetEmailMessage(email, subject, body, adminEmail);
+    
+    // send mail with defined transport object
+    transporter.sendMail(mailDetails, (error, info) => {
+        if (error) {
+            return console.log(error);
+        }
+
+        console.log('Message %s sent: %s', info.messageId, info.response);
+    });
+  }
+}
+
+function createPasswordResetEmailMessage(emailTo, subject, body, adminEmail) {
+  // setup email data with unicode symbols
+  var from =  'Administrator ' + adminEmail;
+
+  let mailOptions = {
+      from: from, // sender address
+      to: emailTo, // list of receivers
+      subject: subject, // Subject line
+      //text: bodyHeader + body, // plain text body
+      replyTo: adminEmail,
+      html: body // html body
   };
 
   return mailOptions;
@@ -102,6 +152,122 @@ function compareIds(a, b) {
 
 app.get('/', function(req, res){
   res.sendFile(path.join(__dirname, '/Index.html'));
+});
+
+function scheduleTokenRemoval(token) {
+  var timeoutInterval = 1 * 60 * 1000;
+  setTimeout(function() {
+    console.log("invalidating password reset link for token: " + token);
+    var resetAttempt = passwordResetTokens[token];
+    if(resetAttempt) {
+      delete passwordResetTokens[resetAttempt];
+    }
+  }, timeoutInterval);
+}
+
+var passwordResetTokens = [];
+
+function findPersonByEmail(email, className) {
+  var classPersons = JSON.parse(fs.readFileSync("/catalog/database/classes/" + className + ".json"));
+  var personDetails = {};
+
+  for (var i = 0, len = classPersons[0].Profiles.length; i < len; i++) {
+    var currentPerson = classPersons[0].Profiles[i];
+    var personEmail = currentPerson.Email;
+    if(email == personEmail) {
+      personDetails = currentPerson;
+      break;
+    }
+  }
+
+  return personDetails;
+}
+
+app.post('/sendResetPassword', function(req, res) {
+  var email = req.body.email;
+  var className = req.body.className;
+  var returnMessage;
+
+  if(email && email != '' && className && className != '') {
+    var personDetails = findPersonByEmail(email, className);
+
+    var subject = "Resetare parola";
+    var body = "<html>Salut " + personDetails.FirstName + " " + personDetails.LastName + ",\n";
+    var passwordResetToken = uuid.v1();
+
+    var passwordResetAttempt = {
+      personId: personDetails.Id,
+      className: className
+    };
+
+    try {
+      passwordResetTokens[passwordResetToken] = passwordResetAttempt;
+
+      body = body + "\nAici e link-ul pentru resetarea parolei: <a href='http://localhost:3000/PasswordReset.html?token=" + passwordResetToken + "'>Resetare parola</a></html>"
+      sendMailToUser(email, subject, body);
+    }
+    catch(ex){
+      console.log(ex);
+    }
+
+    scheduleTokenRemoval(passwordResetToken);
+
+    returnMessage = {
+      isValid: true
+    };
+  } else {
+    // send missing details response
+    returnMessage = {
+      isValid: false,
+      message: 'Email incorect sau clasa incorecta, nu exista in baza de date.'
+    };
+  }
+
+  // res.setHeader('Content-Type', 'application/json');
+  // res.sendStatus(200);
+  // res.write(JSON.stringify(returnMessage));
+
+  res.json(JSON.stringify(returnMessage));
+});
+
+app.post('/resetPassword', function(req, res){
+  var newPassword = req.body.newPassword;
+  var token = req.body.token;
+
+  var tokenDetails = passwordResetTokens[token];
+  var returnResult;
+
+  if(tokenDetails) {
+    var personId = tokenDetails.personId;
+    var className = tokenDetails.className;
+    var accountsContent = fs.readFileSync(accountsFilePath);
+    var accounts = JSON.parse(accountsContent);
+
+    for (var i = 0, len = accounts.length; i < len; i++) {
+      var currentPersonId = accounts[i].Id;
+      var currentPersonClass = accounts[i].Class;
+      if(className == currentPersonClass && personId == currentPersonId) {
+        accounts[i].Password = newPassword;
+        break;
+      }
+    }
+
+    fs.writeFileSync(accountsFilePath, JSON.stringify(accounts));
+    returnResult = {
+      success: true
+    };
+  } else {
+    returnResult = {
+      success: false,
+      message: 'Token-ul a expirat. Reincercati resetarea.'
+    };
+  }
+
+  // res.setHeader('Content-Type', 'application/json');
+  // res.sendStatus(200);
+  // res.write(JSON.stringify(returnResult));
+
+  res.json(JSON.stringify(returnResult));
 });
 
 // handler for sending suggestions to administrator
@@ -254,6 +420,7 @@ app.post('/saveProfile', function(req, res) {
         profileDetails.FacebookPublic = postedProfile.FacebookPublic;
         profileDetails.JobPublic = postedProfile.JobPublic;
         profileDetails.EmailPublic = postedProfile.EmailPublic;
+        break;
     }
   }
 
