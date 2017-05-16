@@ -392,6 +392,46 @@ app.post('/removeProjects', function(req, res) {
   res.sendStatus(200);
 });
 
+app.post('/validateEmailUnicity', function(req, res) {
+  var email = req.body.email;
+  var profileClass = req.body.profileClass;
+  var profileId = req.body.profileId;
+
+  var classesFilePath = '/catalog/database/classes/';
+  var allClasses = fs.readdirSync(classesFilePath);
+
+  var isEmailUnique = true;
+
+  for (var i = 0, len = allClasses.length ; i < len; i++) {
+    var className = allClasses[i];
+    if(className) {
+      var classDetails = JSON.parse(fs.readFileSync(classesFilePath + className));
+
+      for (var j = 0, len = classDetails[0].Profiles.length; j < len; j++) {
+        var profileDetails = classDetails[0].Profiles[j];
+        if(profileDetails.Email == email) {
+          if(profileClass + ".json" == className && profileDetails.Id == profileId) {
+            continue;
+          } else {
+            isEmailUnique = false;
+            break;
+          }
+        }
+      }
+
+      if(isEmailUnique == false) {
+        break;
+      }
+    }
+  }
+  
+  var result = {
+    isEmailUnique: isEmailUnique
+  };
+
+  res.send(JSON.stringify(result));
+});
+
 app.post('/saveProfile', function(req, res) {
   var postedProfile = JSON.parse(req.body.ProfileDetails);
   var className = req.query.className;
@@ -445,7 +485,7 @@ app.get('/gallery', function(req, res) {
     res.setHeader('Content-Type', 'application/json');
     var photosList = [];
 
-    var files = fs.readdirSync(photosFolder);
+    var files = fs.readdirSync(classesFilePath);
 
     if(files) {
       files.forEach(file => {

@@ -151,57 +151,63 @@ function renderProfileData(profileId, profileClass) {
             // save profile details to file
 
             // verify logged in user to be same as profile ID or to be admin
-
+            $('#result').text('');
             var isRightUserLoggedIn = verifyLoggedInUser();
             if(isRightUserLoggedIn == true) {
-
-                var profile = {};
-                profile.FirstName = $('#firstname').text();
-                profile.LastName = $('#lastname').text();
-                profile.Phone = $('#phoneNumber').val();
-                profile.Address = $('#address').val();
-                profile.Country = $('#country').val();
-                profile.LinkedIn = $('#linkedinUrl').val();
-                profile.Facebook = $('#facebookUrl').val();
-                profile.job = $('#job').val();
-                profile.Email = $('#email').val();
-                profile.Description = $('#description').val();
-                profile.Other = $('#otherInfo').text();
-
-                profile.PhonePublic = $('#phonePublic')[0].checked;
-                profile.AddressPublic = $('#addressPublic')[0].checked;
-                profile.CountryPublic = $('#countryPublic')[0].checked;
-                profile.LinkedInPublic = $('#linkedInPublic')[0].checked;
-                profile.FacebookPublic = $('#facebookPublic')[0].checked;
-                profile.JobPublic = $('#jobPublic')[0].checked;
-                profile.EmailPublic = $('#emailPublic')[0].checked;
-
+                
                 var uri = URI(window.location.href);
                 var profileId = uri.getParameter('id');
                 var profileClass = uri.getParameter('class');
-                profile.Id = profileId;
+                var email = $('#email').val();
 
-                var profileJson = JSON.stringify(profile);
-                var postedProfile = { ProfileDetails : profileJson};
-                var postedData = JSON.stringify(postedProfile);
+                var isEmailUnique = validateEmailUnicity(profileId, profileClass, email);
 
-                var postUrl = "/saveProfile?className=" + profileClass;
-                $.ajax({
-                    url: postUrl,
-                    type: 'POST',
-                    data: postedData,
-                    contentType: 'application/json',
-                    error: function(jqXHR, textStatus, errorThrown ) {
-                        alert('jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
-                        //$('#emailResult').text('Trimitere esuata! Contactati administratorul.');
-                    },
-                    success: function() {
-                        console.log("success!");         
-                    },
-                    complete: function() {
-                        console.log("completed!");         
-                    }
-                });
+                if(isEmailUnique === true) {
+                    var profile = {};
+                    profile.FirstName = $('#firstname').text();
+                    profile.LastName = $('#lastname').text();
+                    profile.Phone = $('#phoneNumber').val();
+                    profile.Address = $('#address').val();
+                    profile.Country = $('#country').val();
+                    profile.LinkedIn = $('#linkedinUrl').val();
+                    profile.Facebook = $('#facebookUrl').val();
+                    profile.job = $('#job').val();
+                    profile.Email = email;
+                    profile.Description = $('#description').val();
+                    profile.Other = $('#otherInfo').text();
+
+                    profile.PhonePublic = $('#phonePublic')[0].checked;
+                    profile.AddressPublic = $('#addressPublic')[0].checked;
+                    profile.CountryPublic = $('#countryPublic')[0].checked;
+                    profile.LinkedInPublic = $('#linkedInPublic')[0].checked;
+                    profile.FacebookPublic = $('#facebookPublic')[0].checked;
+                    profile.JobPublic = $('#jobPublic')[0].checked;
+                    profile.EmailPublic = $('#emailPublic')[0].checked;
+                    profile.Id = profileId;
+
+                    var profileJson = JSON.stringify(profile);
+                    var postedProfile = { ProfileDetails : profileJson};
+                    var postedData = JSON.stringify(postedProfile);
+
+                    var postUrl = "/saveProfile?className=" + profileClass;
+                    $.ajax({
+                        url: postUrl,
+                        type: 'POST',
+                        data: postedData,
+                        contentType: 'application/json',
+                        error: function(jqXHR, textStatus, errorThrown ) {
+                            alert('jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
+                        },
+                        success: function() {
+                            console.log("success!");         
+                        },
+                        complete: function() {
+                            console.log("completed!");         
+                        }
+                    });  
+                } else {
+                    $('#result').text('Email-ul este folosit deja!');
+                }
             }
         });
 
@@ -209,6 +215,37 @@ function renderProfileData(profileId, profileClass) {
             window.location.href = window.location.href;
         });
     }
+}
+
+function validateEmailUnicity(profileId, profileClass, email) {
+    var postedProfile = {
+        email: email,
+        profileId: profileId, 
+        profileClass: profileClass
+    };
+
+    var postedData = JSON.stringify(postedProfile);
+
+    var isEmailUnique = false;
+    var postUrl = "/validateEmailUnicity";
+    $.ajax({
+        url: postUrl,
+        type: 'POST',
+        data: postedData,
+        contentType: 'application/json',
+        error: function(jqXHR, textStatus, errorThrown ) {
+            alert('Error validating email unicity!');
+        },
+        success: function(result) {
+            isEmailUnique = JSON.parse(result).isEmailUnique;  
+        },
+        complete: function() {
+            console.log("completed!");         
+        },
+        async: false
+    }); 
+
+    return isEmailUnique;
 }
 
 function verifyLoggedInUser() {
