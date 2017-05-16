@@ -94,7 +94,7 @@ body {
     width: 100%;
 }
 
-#profileDescription label:first-of-type {
+#profileDescription label:first-of-type:not(:last-child) {
     font-weight: bold;
 }
 

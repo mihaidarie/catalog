@@ -6,12 +6,6 @@ $(document).ready(function() {
     if(isUserLoggedIn == true) {
         wireupSessionTimer();
     }
-
-    $('#loginReset').click(function() {
-        alert('reset login');
-
-        // todo: generate new password and send via email
-    });
 });
 
 function wireupSessionTimer() {
@@ -89,18 +83,27 @@ function refreshLoginCookie() {
     }
 }
 
+function logout() {
+    removeLoginCookie();
+    isUserLoggedIn = checkCookie();
+    setLoginButtonText(isUserLoggedIn);
+}
+
 function wireupHeaderButtons() {
      $(".promotion button").click(function() {
         var className = this.firstChild.data;
         window.location.href = "class.html?name=" + className;
     });
 
+    $('#loginReset').click(function() {
+        logout();
+        location.href = "PasswordReset.html";
+    });
+
     $("#loginOK").click(function() {
         var isUserLoggedIn = checkCookie();
         if(isUserLoggedIn == true) {
-            removeLoginCookie();
-            isUserLoggedIn = checkCookie();
-            setLoginButtonText(isUserLoggedIn);
+            logout();
             window.location.href = "index.html";
         }
         else {

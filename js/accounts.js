@@ -1,74 +1,32 @@
 var accountsFileName = "database/accounts/accounts.json";
 
 function validateCredentials(username, password){
-    var loginResultOK = {
-                        IsLoginOk: true,
-                        UserId: "",
-                        Class: "" 
-                };
-
-    var loginResultFailed =  {
-          IsLoginOk: false
-        };
-
-    var userId = "";
-    var userClass = "";
-
-    var loginResult = loginResultFailed;
+    var loginResult = {
+            IsLoginOk: false,
+            UserId: "",
+            Class: "" 
+    };
 
     $.ajax({
         dataType: "json",
-        url: accountsFileName,
-        data: '',
+        type: 'POST',
+        url: '/validateCredentials',
+        data: {
+            username: username,
+            password: password
+        },
         async: false,
-        success: function(allAccounts) {
-
-        $.each(allAccounts, function(key, value) {
-            // todo: decrypt stored password
-            var readUsername = value.Username;
-            var readPassword = value.Password;
-
-            var isValid = readUsername == username && readPassword == password;
-            
-            if(isValid) {
-                userId = value.Id;
-                userClass = value.Class;
-                loginResult = loginResultOK;
+        success: function(loginResultData) {
+            loginResultData = JSON.parse(loginResultData);
+            if(loginResultData.isValid === true) {
+                loginResult.IsLoginOk = loginResultData.isValid;
+                loginResult.UserId = loginResultData.profileId;
+                loginResult.Class = loginResultData.className;
             }
-        });
-    }
+        }
     });
-
-    if(loginResult == loginResultOK) {
-        loginResult.UserId = userId;
-        loginResult.Class = userClass;
-    }
 
     return loginResult;
-}
-
-function validateNewCredentials(username, password) {
-    
-    // todo: replace with synchronous ajax call
-    $.getJSON(accountsFileName, function(allAccounts) {
-        $.each(allAccounts, function(key, value) {
-            if(value.AccountType == "admin") {
-                var adminUsername = value.Username;
-                var adminPassword = value.Password;
-                
-                // todo: decrypt stored password
-                if(username == adminUsername || password == adminPassword) {
-                    return false;
-                }
-            }
-
-            if(value.Username == username) {
-                return false;
-            }
-        });
-        
-        return true;
-    });
 }
 
 function saveAccounts(newAccountsData) {

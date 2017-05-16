@@ -8,15 +8,15 @@
 {
 	"Id":"1",
 	"Class":"A",
-	"Username":"user12",
-	"Password":"user12",
+	"Username":"user2",
+	"Password":"pass2",
 	"AccountType":"regular"
 },
 {
 	"Id":"1",
 	"Class":"B",
-	"Username":"user13",
-	"Password":"user13",
+	"Username":"user2",
+	"Password":"pass2",
 	"AccountType":"regular"
 },
 {
