@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var mv = require('mv');
 var timer = require('timers');
 var uuid = require('uuid');
+var SHA3 = require("crypto-js/sha3");
 
 var photosFolder = '/catalog/images/gallery/';
 var photoClientPath = '/images/gallery/';
@@ -15,6 +16,10 @@ var projectsClientPath = '/images/projects/';
 var newsFilePath = '/catalog/database/news/news.json';
 var projectsFilePath = '/catalog/database/projects/projects.json';
 var accountsFilePath = "/catalog/database/accounts/accounts.json";
+
+function createLogins() {
+  
+}
 
 'use strict';
 const nodemailer = require('nodemailer');
@@ -182,6 +187,36 @@ function findPersonByEmail(email, className) {
 
   return personDetails;
 }
+
+app.post('/validateCredentials', function(req, res) {
+  var username = req.body.username;
+  var password = req.body.password;
+  var className = '';
+  var profileId = '';
+
+  var accountsContent = fs.readFileSync(accountsFilePath);
+  var accounts = JSON.parse(accountsContent);
+
+  var isValid = false;
+  for (var i = 0, len = accounts.length; i < len; i++) {
+    var currentUsername = accounts[i].Username;
+    var currentPassword = accounts[i].Password;
+    if(username == currentUsername && password == currentPassword) {
+      isValid = true;
+      className = accounts[i].Class;
+      profileId = accounts[i].Id;
+      break;
+    }
+  }
+
+  var returnMessage = {
+    isValid: isValid,
+    className: className,
+    profileId: profileId
+  };
+
+  res.json(JSON.stringify(returnMessage));
+});
 
 app.post('/sendResetPassword', function(req, res) {
   var email = req.body.email;
