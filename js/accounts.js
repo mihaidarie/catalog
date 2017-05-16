@@ -29,30 +29,6 @@ function validateCredentials(username, password){
     return loginResult;
 }
 
-function validateNewCredentials(username, password) {
-    
-    // todo: replace with synchronous ajax call
-    $.getJSON(accountsFileName, function(allAccounts) {
-        $.each(allAccounts, function(key, value) {
-            if(value.AccountType == "admin") {
-                var adminUsername = value.Username;
-                var adminPassword = value.Password;
-                
-                // todo: decrypt stored password
-                if(username == adminUsername || password == adminPassword) {
-                    return false;
-                }
-            }
-
-            if(value.Username == username) {
-                return false;
-            }
-        });
-        
-        return true;
-    });
-}
-
 function saveAccounts(newAccountsData) {
     // todo: overwrite accounts.json
 }

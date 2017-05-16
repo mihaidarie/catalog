@@ -3,6 +3,36 @@ URI.prototype.getParameter = function(key) {
     return paramValue;
 };
 
+function validateToken(token) {
+    var postUrl = "/validateResetPasswordToken";
+                    
+    var jsonBody = JSON.stringify({ token: token } );
+
+    $.ajax({
+        url: postUrl,
+        type: 'POST',
+        data: jsonBody,
+        contentType: 'application/json',
+        success: function(result) {
+            result = JSON.parse(result);
+            if(result.success == false) {
+                return false;
+            } else {
+                if(result.success && result.success == true) {
+                    return true;
+                } 
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown ) {
+            alert('jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
+        },
+        complete: function() {
+            console.log("completed!");
+        },
+        async: false
+    });
+}
+
 $(document).ready(function() {
     $("header").load('header.html', loadHeader);
     $("footer").load('footer.html');
@@ -11,56 +41,62 @@ $(document).ready(function() {
     var token = uri.getParameter('token');
 
     if(token && token != '') {
-        // todo: validate token expiration
+        // validate token expiration
 
-        $('#performPasswordReset').show();
-        $('#startPasswordReset').hide();
+        var isTokenValid = validateToken(token);
+        if(isTokenValid === true) {
+            $('#performPasswordReset').show();
+            $('#startPasswordReset').hide();
 
-        $("#btnSave").click(function () {
-            var password1 = $('#password1').val();
-            var password2 = $('#password2').val();
+            $("#btnSave").click(function () {
+                var password1 = $('#password1').val();
+                var password2 = $('#password2').val();
 
-            if(password1 != password2) {
-                $('#result').text('Parolele nu coincid, va rugam reintroduceti.');
-            } else {
-                // has token, try to reset
+                if(password1 != password2) {
+                    $('#result').text('Parolele nu coincid, va rugam reintroduceti.');
+                } else {
+                    // has token, try to reset
 
-                var postUrl = "/resetPassword";
-                
-                var jsonBody = JSON.stringify({ token: token, newPassword: password1 } );
+                    var postUrl = "/resetPassword";
+                    
+                    var jsonBody = JSON.stringify({ token: token, newPassword: password1 } );
 
-                $.ajax({
-                    url: postUrl,
-                    type: 'POST',
-                    data: jsonBody,
-                    contentType: 'application/json',
-                    success: function(result) {
-                        result = JSON.parse(result);
-                        if(result.success == false) {
-                            $('#result').text(result.message);
-                            setTimeout(function() {
-                                location.href = "PasswordReset.html";
-                            }, 3000);
-                        } else {
-                            if(result.success && result.success == true) {
-                                $('#result').text('Parola salvata! Incercati sa va logati, dupa 3 secunde.');
-                                $('#password1').text('');
-                                $('#password2').text('');
+                    $.ajax({
+                        url: postUrl,
+                        type: 'POST',
+                        data: jsonBody,
+                        contentType: 'application/json',
+                        success: function(result) {
+                            result = JSON.parse(result);
+                            if(result.success == false) {
+                                $('#result').text(result.message);
                                 setTimeout(function() {
-                                    location.href = "index.html";
-                                }, 3000)
-                            } 
+                                    location.href = "PasswordReset.html";
+                                }, 3000);
+                            } else {
+                                if(result.success && result.success == true) {
+                                    $('#result').text('Parola salvata! Incercati sa va logati, dupa 3 secunde.');
+                                    $('#password1').text('');
+                                    $('#password2').text('');
+                                    setTimeout(function() {
+                                        location.href = "index.html";
+                                    }, 3000)
+                                } 
+                            }
+                        },
+                        error: function(jqXHR, textStatus, errorThrown ) {
+                            alert('jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
+                        },
+                        complete: function() {
+                            console.log("completed!");
                         }
-                    },
-                    error: function(jqXHR, textStatus, errorThrown ) {
-                        alert('jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
-                    },
-                    complete: function() {
-                        console.log("completed!");
-                    }
-                });
-            }
-        });
+                    });
+                }
+            });
+        } else {
+            location.href = "index.html";
+        }
+        
     } else {
         // don't have token, start reset process
 

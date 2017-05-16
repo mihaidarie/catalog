@@ -18,8 +18,33 @@ var projectsFilePath = '/catalog/database/projects/projects.json';
 var accountsFilePath = "/catalog/database/accounts/accounts.json";
 
 function createLogins() {
-  
+
 }
+
+// TODO: decide what to do with this function
+// function validateNewCredentials(username, password) {
+    
+//     // todo: replace with synchronous ajax call
+//     $.getJSON(accountsFileName, function(allAccounts) {
+//         $.each(allAccounts, function(key, value) {
+//             if(value.AccountType == "admin") {
+//                 var adminUsername = value.Username;
+//                 var adminPassword = value.Password;
+                
+//                 // todo: decrypt stored password
+//                 if(username == adminUsername || password == adminPassword) {
+//                     return false;
+//                 }
+//             }
+
+//             if(value.Username == username) {
+//                 return false;
+//             }
+//         });
+        
+//         return true;
+//     });
+// }
 
 'use strict';
 const nodemailer = require('nodemailer');
@@ -265,6 +290,26 @@ app.post('/sendResetPassword', function(req, res) {
   res.json(JSON.stringify(returnMessage));
 });
 
+app.post('/validateResetPasswordToken', function(req, res){
+  var token = req.body.token;
+
+  var tokenDetails = passwordResetTokens[token];
+  var returnResult;
+
+  if(tokenDetails) {
+    returnResult = {
+      success: true
+    };
+  } else {
+    returnResult = {
+      success: false,
+      message: 'Token-ul a expirat. Reincercati resetarea.'
+    };
+  }
+  
+  res.json(JSON.stringify(returnResult));
+});
+
 app.post('/resetPassword', function(req, res){
   var newPassword = req.body.newPassword;
   var token = req.body.token;
@@ -297,10 +342,6 @@ app.post('/resetPassword', function(req, res){
       message: 'Token-ul a expirat. Reincercati resetarea.'
     };
   }
-
-  // res.setHeader('Content-Type', 'application/json');
-  // res.sendStatus(200);
-  // res.write(JSON.stringify(returnResult));
 
   res.json(JSON.stringify(returnResult));
 });
