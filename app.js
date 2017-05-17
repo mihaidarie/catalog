@@ -581,7 +581,13 @@ app.get('/gallery', function(req, res) {
 
     if(files) {
       files.forEach(file => {
-        photosList.push(photoClientPath + file);
+        if(files.length > 1) {
+          if(file != 'NoPhoto.png') {
+            photosList.push(photoClientPath + file);
+          }
+        } else {
+          photosList.push(photoClientPath + file);
+        }
       });
     }
 

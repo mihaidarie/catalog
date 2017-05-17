@@ -41,9 +41,15 @@ function loadPhotos() {
     // get current photos paths from server
 
     $.getJSON("/gallery", function(data) {
+        
+        var thumbnailsArray = [];
+        $.each( data, function(key, val) {
+            thumbnailsArray.push('<li><img src="' + val + '" alt="" /><</li>');
+        });
+        
         var items = [];
         $.each( data, function(key, val) {
-            items.push('<li><img src="' + val + '" alt="" /></li>');
+            items.push('<li><a data-lightbox="roadtrip" href="' + val + '"><img src="' + val + '" alt="" /></a><</li>');
         });
         
         var images = items.join( "" );
@@ -56,9 +62,10 @@ function loadPhotos() {
         $('<div class="pxs_navigation"><span class="pxs_next"></span><span class="pxs_prev"></span></div>')
         .appendTo( "#allPhotos" );
 
+        var thumbnails = thumbnailsArray.join("");
         $('<ul />', {
             "class": "pxs_thumbnails",
-            html: images
+            html: thumbnails
         }).appendTo( "#allPhotos" );
         
         loadPhotosSlider();
