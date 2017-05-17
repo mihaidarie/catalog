@@ -8,1345 +8,1345 @@
 {
 	"Id":"1",
 	"Class":"A",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"GigelBaciu",
+	"Password":"GigelBaciu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"1",
 	"Class":"B",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"BogdanBarboiu",
+	"Password":"BogdanBarboiu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"1",
 	"Class":"C",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"FlorinAiliesei",
+	"Password":"FlorinAiliesei2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"1",
 	"Class":"D",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"CameliaAlistar",
+	"Password":"CameliaAlistar2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"1",
 	"Class":"E",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"ConstantinAmihaesei",
+	"Password":"ConstantinAmihaesei2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"1",
 	"Class":"F",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"MihaelaAgape",
+	"Password":"MihaelaAgape2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"1",
 	"Class":"G",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"IoanArhip",
+	"Password":"IoanArhip2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"1",
 	"Class":"H",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"DoinaAlexa",
+	"Password":"DoinaAlexa2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"2",
 	"Class":"A",
-	"Username":"user1",
-	"Password":"pass1",
+	"Username":"VirgilAxinia",
+	"Password":"VirgilAxinia2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"2",
 	"Class":"B",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"IustinRBojoi",
+	"Password":"IustinRBojoi2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"2",
 	"Class":"C",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"DanielaAmariei",
+	"Password":"DanielaAmariei2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"2",
 	"Class":"D",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"MonicaArustei",
+	"Password":"MonicaArustei2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"2",
 	"Class":"E",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"DanAnistoroaiei",
+	"Password":"DanAnistoroaiei2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"2",
 	"Class":"F",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"IrinaBobulescu",
+	"Password":"IrinaBobulescu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"2",
 	"Class":"G",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"MihaelaBalta",
+	"Password":"MihaelaBalta2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"2",
 	"Class":"H",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"FlorinAndrei",
+	"Password":"FlorinAndrei2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"3",
 	"Class":"A",
-	"Username":"user1",
-	"Password":"pass1",
+	"Username":"CatalinAdam",
+	"Password":"CatalinAdam2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"3",
 	"Class":"B",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"LaviniaCBurtan",
+	"Password":"LaviniaCBurtan2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"3",
 	"Class":"C",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"CarmenBarbarasa",
+	"Password":"CarmenBarbarasa2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"3",
 	"Class":"D",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"LauraBriota",
+	"Password":"LauraBriota2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"3",
 	"Class":"E",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"OctavianBarnuschi",
+	"Password":"OctavianBarnuschi2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"3",
 	"Class":"F",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"ConstantinBunduc",
+	"Password":"ConstantinBunduc2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"3",
 	"Class":"G",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"DamianBorseri",
+	"Password":"DamianBorseri2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"3",
 	"Class":"H",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"BeatriceDBarboi",
+	"Password":"BeatriceDBarboi2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"4",
 	"Class":"A",
-	"Username":"user1",
-	"Password":"pass1",
+	"Username":"IrinaABarabula",
+	"Password":"IrinaABarabula2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"4",
 	"Class":"B",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"DanGCroitoru",
+	"Password":"DanGCroitoru2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"4",
 	"Class":"C",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"LuciaBotosineanu",
+	"Password":"LuciaBotosineanu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"4",
 	"Class":"D",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"LauraCaranfil",
+	"Password":"LauraCaranfil2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"4",
 	"Class":"E",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"CarmenBejenariu",
+	"Password":"CarmenBejenariu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"4",
 	"Class":"F",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"OtiliaBulai",
+	"Password":"OtiliaBulai2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"4",
 	"Class":"G",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"ConstantinBuica",
+	"Password":"ConstantinBuica2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"4",
 	"Class":"H",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"CorneliuBitica",
+	"Password":"CorneliuBitica2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"5",
 	"Class":"A",
-	"Username":"user1",
-	"Password":"pass1",
+	"Username":"SergiuDBarna",
+	"Password":"SergiuDBarna2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"5",
 	"Class":"B",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"CiprianIEne",
+	"Password":"CiprianIEne2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"5",
 	"Class":"C",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"RaduBuzenchi",
+	"Password":"RaduBuzenchi2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"5",
 	"Class":"D",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"AlexandruCasapu",
+	"Password":"AlexandruCasapu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"5",
 	"Class":"E",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"SimonaBoldisor",
+	"Password":"SimonaBoldisor2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"5",
 	"Class":"F",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"DanielaBulinschi",
+	"Password":"DanielaBulinschi2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"5",
 	"Class":"G",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"DanielBurlica",
+	"Password":"DanielBurlica2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"5",
 	"Class":"H",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"GabrielRBargaoanu",
+	"Password":"GabrielRBargaoanu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"6",
 	"Class":"A",
-	"Username":"user1",
-	"Password":"pass1",
+	"Username":"DianaBorcea",
+	"Password":"DianaBorcea2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"6",
 	"Class":"B",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"EduardGall",
+	"Password":"EduardGall2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"6",
 	"Class":"C",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"LucianCiobanu",
+	"Password":"LucianCiobanu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"6",
 	"Class":"D",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"OanaComan",
+	"Password":"OanaComan2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"6",
 	"Class":"E",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"CatalinBurlacu",
+	"Password":"CatalinBurlacu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"6",
 	"Class":"F",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"AliceCalugaru",
+	"Password":"AliceCalugaru2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"6",
 	"Class":"G",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"CorneliuCiofu",
+	"Password":"CorneliuCiofu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"6",
 	"Class":"H",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"IoanBrosteanu",
+	"Password":"IoanBrosteanu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"7",
 	"Class":"A",
-	"Username":"user1",
-	"Password":"pass1",
+	"Username":"FlorinCiobanu",
+	"Password":"FlorinCiobanu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"7",
 	"Class":"B",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"ElenyNIonel",
+	"Password":"ElenyNIonel2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"7",
 	"Class":"C",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"GeorgelCiornei",
+	"Password":"GeorgelCiornei2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"7",
 	"Class":"D",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"MihaiCozmei",
+	"Password":"MihaiCozmei2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"7",
 	"Class":"E",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"FlorinCiobanu",
+	"Password":"FlorinCiobanu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"7",
 	"Class":"F",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"VeronicaCearda",
+	"Password":"VeronicaCearda2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"7",
 	"Class":"G",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"GabrielChihaia",
+	"Password":"GabrielChihaia2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"7",
 	"Class":"H",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"CodrinBurduja",
+	"Password":"CodrinBurduja2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"8",
 	"Class":"A",
-	"Username":"user1",
-	"Password":"pass1",
+	"Username":"FlorentinaCercel",
+	"Password":"FlorentinaCercel2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"8",
 	"Class":"B",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"IoanMarcu",
+	"Password":"IoanMarcu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"8",
 	"Class":"C",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"GretaCozaru",
+	"Password":"GretaCozaru2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"8",
 	"Class":"D",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"DanCristian",
+	"Password":"DanCristian2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"8",
 	"Class":"E",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"LilianaChiriac",
+	"Password":"LilianaChiriac2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"8",
 	"Class":"F",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"ValentinSChiriac",
+	"Password":"ValentinSChiriac2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"8",
 	"Class":"G",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"MihaiCitea",
+	"Password":"MihaiCitea2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"8",
 	"Class":"H",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"ConstantinCerbu",
+	"Password":"ConstantinCerbu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"9",
 	"Class":"A",
-	"Username":"user1",
-	"Password":"pass1",
+	"Username":"MihaelaBorcea",
+	"Password":"MihaelaBorcea2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"9",
 	"Class":"B",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"MariusMarinescu",
+	"Password":"MariusMarinescu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"9",
 	"Class":"C",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"BogdanCozmescu",
+	"Password":"BogdanCozmescu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"9",
 	"Class":"D",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"PetruCurelariu",
+	"Password":"PetruCurelariu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"9",
 	"Class":"E",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"DanielaCozmiuc",
+	"Password":"DanielaCozmiuc2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"9",
 	"Class":"F",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"MonicaLCojocaru",
+	"Password":"MonicaLCojocaru2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"9",
 	"Class":"G",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"MihaitaCodreanu",
+	"Password":"MihaitaCodreanu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"9",
 	"Class":"H",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"AndyCiobanu",
+	"Password":"AndyCiobanu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"10",
 	"Class":"A",
-	"Username":"user1",
-	"Password":"pass1",
+	"Username":"MihailECiocan",
+	"Password":"MihailECiocan2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"10",
 	"Class":"B",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"RoxanaMacarescu",
+	"Password":"RoxanaMacarescu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"10",
 	"Class":"C",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"AdrianaFlorea",
+	"Password":"AdrianaFlorea2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"10",
 	"Class":"D",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"GabrielDamian",
+	"Password":"GabrielDamian2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"10",
 	"Class":"E",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"DanDuda",
+	"Password":"DanDuda2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"10",
 	"Class":"F",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"ValentinCondrea",
+	"Password":"ValentinCondrea2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"10",
 	"Class":"G",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"SilviuCosovanu",
+	"Password":"SilviuCosovanu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"10",
 	"Class":"H",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"IonelCozma",
+	"Password":"IonelCozma2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"11",
 	"Class":"A",
-	"Username":"user1",
-	"Password":"pass1",
+	"Username":"OanaDCiobanu",
+	"Password":"OanaDCiobanu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"11",
 	"Class":"B",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"MihaelaMitrica",
+	"Password":"MihaelaMitrica2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"11",
 	"Class":"C",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"StefanGalatanu",
+	"Password":"StefanGalatanu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"11",
 	"Class":"D",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"GeorgeDragoi",
+	"Password":"GeorgeDragoi2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"11",
 	"Class":"E",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"DumitruEntuc",
+	"Password":"DumitruEntuc2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"11",
 	"Class":"F",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"IvonaDDorogan",
+	"Password":"IvonaDDorogan2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"11",
 	"Class":"G",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"DianaDigeratu",
+	"Password":"DianaDigeratu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"11",
 	"Class":"H",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"IulianaDavid",
+	"Password":"IulianaDavid2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"12",
 	"Class":"A",
-	"Username":"user1",
-	"Password":"pass1",
+	"Username":"GabrielCostachescu",
+	"Password":"GabrielCostachescu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"12",
 	"Class":"B",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"MihailMitrica",
+	"Password":"MihailMitrica2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"12",
 	"Class":"C",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"AncaGeorgescu",
+	"Password":"AncaGeorgescu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"12",
 	"Class":"D",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"IoanaFrolov",
+	"Password":"IoanaFrolov2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"12",
 	"Class":"E",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"AnisoaraHerciu",
+	"Password":"AnisoaraHerciu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"12",
 	"Class":"F",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"NinaLDoroftei",
+	"Password":"NinaLDoroftei2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"12",
 	"Class":"G",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"GabrielaDima",
+	"Password":"GabrielaDima2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"12",
 	"Class":"H",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"EusebiuDisca",
+	"Password":"EusebiuDisca2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"13",
 	"Class":"A",
-	"Username":"user1",
-	"Password":"pass1",
+	"Username":"MihaelaDimitriu",
+	"Password":"MihaelaDimitriu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"13",
 	"Class":"B",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"IonelaMocanul",
+	"Password":"IonelaMocanul2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"13",
 	"Class":"C",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"DanGitlan",
+	"Password":"DanGitlan2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"13",
 	"Class":"D",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"IonelaGalita",
+	"Password":"IonelaGalita2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"13",
 	"Class":"E",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"LuminitaHliboceanu",
+	"Password":"LuminitaHliboceanu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"13",
 	"Class":"F",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"AlexandruDudnic",
+	"Password":"AlexandruDudnic2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"13",
 	"Class":"G",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"CristianDragut",
+	"Password":"CristianDragut2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"13",
 	"Class":"H",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"AdrianGazea",
+	"Password":"AdrianGazea2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"14",
 	"Class":"A",
-	"Username":"user1",
-	"Password":"pass1",
+	"Username":"CristinaDulman",
+	"Password":"CristinaDulman2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"14",
 	"Class":"B",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"LiviuCNechita",
+	"Password":"LiviuCNechita2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"14",
 	"Class":"C",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"IoanGordin",
+	"Password":"IoanGordin2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"14",
 	"Class":"D",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"RominGiumali",
+	"Password":"RominGiumali2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"14",
 	"Class":"E",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"GabrielaHogas",
+	"Password":"GabrielaHogas2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"14",
 	"Class":"F",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"MihaelaFoca",
+	"Password":"MihaelaFoca2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"14",
 	"Class":"G",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"CatalinFronea",
+	"Password":"CatalinFronea2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"14",
 	"Class":"H",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"RaduGalateanu",
+	"Password":"RaduGalateanu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"15",
 	"Class":"A",
-	"Username":"user1",
-	"Password":"pass1",
+	"Username":"MioaraFoia",
+	"Password":"MioaraFoia2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"15",
 	"Class":"B",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"IulianaNica",
+	"Password":"IulianaNica2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"15",
 	"Class":"C",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"SeverusGrigoriu",
+	"Password":"SeverusGrigoriu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"15",
 	"Class":"D",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"AdrianGrigoras",
+	"Password":"AdrianGrigoras2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"15",
 	"Class":"E",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"AnatolieLupu",
+	"Password":"AnatolieLupu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"15",
 	"Class":"F",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"LenutaFormagiu",
+	"Password":"LenutaFormagiu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"15",
 	"Class":"G",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"ArianaGurgea",
+	"Password":"ArianaGurgea2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"15",
 	"Class":"H",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"MihaiHatmanu",
+	"Password":"MihaiHatmanu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"16",
 	"Class":"A",
-	"Username":"user1",
-	"Password":"pass1",
+	"Username":"CatalinGalu",
+	"Password":"CatalinGalu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"16",
 	"Class":"B",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"DanCNiculae",
+	"Password":"DanCNiculae2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"16",
 	"Class":"C",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"LilianaHarabagiu",
+	"Password":"LilianaHarabagiu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"16",
 	"Class":"D",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"ConstantinGrigoras",
+	"Password":"ConstantinGrigoras2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"16",
 	"Class":"E",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"FlorinMarcelli",
+	"Password":"FlorinMarcelli2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"16",
 	"Class":"F",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"CristianGaman",
+	"Password":"CristianGaman2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"16",
 	"Class":"G",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"MariaGorovei",
+	"Password":"MariaGorovei2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"16",
 	"Class":"H",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"FlorinCHrebenciuc",
+	"Password":"FlorinCHrebenciuc2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"17",
 	"Class":"A",
-	"Username":"user1",
-	"Password":"pass1",
+	"Username":"CristinaGodvinschi",
+	"Password":"CristinaGodvinschi2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"17",
 	"Class":"B",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"SerbanAOarza",
+	"Password":"SerbanAOarza2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"17",
 	"Class":"C",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"DanielaHendres",
+	"Password":"DanielaHendres2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"17",
 	"Class":"D",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"LuanaHertanu",
+	"Password":"LuanaHertanu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"17",
 	"Class":"E",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"DanielMocanu",
+	"Password":"DanielMocanu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"17",
 	"Class":"F",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"AncaGorgos",
+	"Password":"AncaGorgos2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"17",
 	"Class":"G",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"CristinaIgnat",
+	"Password":"CristinaIgnat2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"17",
 	"Class":"H",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"MariusIonescu",
+	"Password":"MariusIonescu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"18",
 	"Class":"A",
-	"Username":"user1",
-	"Password":"pass1",
+	"Username":"AdrianHelesteanu",
+	"Password":"AdrianHelesteanu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"18",
 	"Class":"B",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"MariusPetrariu",
+	"Password":"MariusPetrariu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"18",
 	"Class":"C",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"GabrielIordacheanu",
+	"Password":"GabrielIordacheanu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"18",
 	"Class":"D",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"VladHomutescu",
+	"Password":"VladHomutescu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"18",
 	"Class":"E",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"IrinaMosorocianu",
+	"Password":"IrinaMosorocianu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"18",
 	"Class":"F",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"MagdalenaHolca",
+	"Password":"MagdalenaHolca2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"18",
 	"Class":"G",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"MihaelaMihai",
+	"Password":"MihaelaMihai2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"18",
 	"Class":"H",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"CarmenIonita",
+	"Password":"CarmenIonita2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"19",
 	"Class":"A",
-	"Username":"user1",
-	"Password":"pass1",
+	"Username":"EduardIorga",
+	"Password":"EduardIorga2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"19",
 	"Class":"B",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"CristinaPopa",
+	"Password":"CristinaPopa2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"19",
 	"Class":"C",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"AncaMironescu",
+	"Password":"AncaMironescu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"19",
 	"Class":"D",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"NicolaeIonescu",
+	"Password":"NicolaeIonescu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"19",
 	"Class":"E",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"ValentinNagacevschi",
+	"Password":"ValentinNagacevschi2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"19",
 	"Class":"F",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"MihaelaCJuncanaru",
+	"Password":"MihaelaCJuncanaru2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"19",
 	"Class":"G",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"AlinaObreja",
+	"Password":"AlinaObreja2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"19",
 	"Class":"H",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"ValericaMaroleanu",
+	"Password":"ValericaMaroleanu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"20",
 	"Class":"A",
-	"Username":"user1",
-	"Password":"pass1",
+	"Username":"RobertNegru",
+	"Password":"RobertNegru2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"20",
 	"Class":"B",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"ElenaSPopescu",
+	"Password":"ElenaSPopescu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"20",
 	"Class":"C",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"DanielaNacu",
+	"Password":"DanielaNacu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"20",
 	"Class":"D",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"MihaelaIrimiea",
+	"Password":"MihaelaIrimiea2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"20",
 	"Class":"E",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"LeonardPopa",
+	"Password":"LeonardPopa2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"20",
 	"Class":"F",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"CostantinManastireanu",
+	"Password":"CostantinManastireanu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"20",
 	"Class":"G",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"DoruPalaghiu",
+	"Password":"DoruPalaghiu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"20",
 	"Class":"H",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"VasileMatei",
+	"Password":"VasileMatei2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"21",
 	"Class":"A",
-	"Username":"user1",
-	"Password":"pass1",
+	"Username":"OanaANicola",
+	"Password":"OanaANicola2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"21",
 	"Class":"B",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"OctavianRRadu",
+	"Password":"OctavianRRadu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"21",
 	"Class":"C",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"GabrielPetcu",
+	"Password":"GabrielPetcu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"21",
 	"Class":"D",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"DanielaMangalagiu",
+	"Password":"DanielaMangalagiu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"21",
 	"Class":"E",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"AnaPopovici",
+	"Password":"AnaPopovici2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"21",
 	"Class":"F",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"RaduAMereuta",
+	"Password":"RaduAMereuta2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"21",
 	"Class":"G",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"ToniPochim",
+	"Password":"ToniPochim2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"21",
 	"Class":"H",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"DanielFNeagoe",
+	"Password":"DanielFNeagoe2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"22",
 	"Class":"A",
-	"Username":"user1",
-	"Password":"pass1",
+	"Username":"AdrianOnciu",
+	"Password":"AdrianOnciu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"22",
 	"Class":"B",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"MihaelaRusu",
+	"Password":"MihaelaRusu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"22",
 	"Class":"C",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"DanielaPicincu",
+	"Password":"DanielaPicincu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"22",
 	"Class":"D",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"AlinaMiftode",
+	"Password":"AlinaMiftode2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"22",
 	"Class":"E",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"ElenaRosu",
+	"Password":"ElenaRosu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"22",
 	"Class":"F",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"DeliaMuresan",
+	"Password":"DeliaMuresan2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"22",
 	"Class":"G",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"CorneliuPopa",
+	"Password":"CorneliuPopa2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"22",
 	"Class":"H",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"CatalinPopa",
+	"Password":"CatalinPopa2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"23",
 	"Class":"A",
-	"Username":"user1",
-	"Password":"pass1",
+	"Username":"SorinOprisanu",
+	"Password":"SorinOprisanu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"23",
 	"Class":"B",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"CalinStanciu",
+	"Password":"CalinStanciu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"23",
 	"Class":"C",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"ConstantinPintilei",
+	"Password":"ConstantinPintilei2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"23",
 	"Class":"D",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"DanielMiron",
+	"Password":"DanielMiron2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"23",
 	"Class":"E",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"OanaRusu",
+	"Password":"OanaRusu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"23",
 	"Class":"F",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"ValentinaOlga",
+	"Password":"ValentinaOlga2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"23",
 	"Class":"G",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"AngelaRinca",
+	"Password":"AngelaRinca2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"23",
 	"Class":"H",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"MihaelaPrisecariu",
+	"Password":"MihaelaPrisecariu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"24",
 	"Class":"A",
-	"Username":"user1",
-	"Password":"pass1",
+	"Username":"AntoanelaPatras",
+	"Password":"AntoanelaPatras2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"24",
 	"Class":"B",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"TudorStanciu",
+	"Password":"TudorStanciu2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"24",
 	"Class":"C",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"GabrielaPlacinta",
+	"Password":"GabrielaPlacinta2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"24",
 	"Class":"D",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"EduardNaum",
+	"Password":"EduardNaum2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"24",
 	"Class":"E",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"LilianaSibechi",
+	"Password":"LilianaSibechi2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"24",
 	"Class":"F",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"DanutAPavel",
+	"Password":"DanutAPavel2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"24",
 	"Class":"G",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"MihaelaRosca",
+	"Password":"MihaelaRosca2017",
 	"AccountType":"regular"
 },
 {
 	"Id":"24",
 	"Class":"H",
-	"Username":"user2",
-	"Password":"pass2",
+	"Username":"AlexandraPuscasiu",
+	"Password":"AlexandraPuscasiu2017",
 	"AccountType":"regular"
 },
 {
