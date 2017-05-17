@@ -46,7 +46,11 @@ function renderProfileData(profileId, profileClass) {
                 $('#email').val(profile.Email);
                 $('#description').val(profile.Description);
                 $('#profilePhoto').attr("src", profile.ProfilePhotoPath);
-                $('#recentPhoto').attr("src", profile.RecentPhotoPath);
+                var recentPhotoPath = "/images/profiles/large/placeholder.png";
+                if(profile.RecentPhotoPath && profile.RecentPhotoPath != '') {
+                    recentPhotoPath = profile.RecentPhotoPath;
+                }
+                $('#recentPhoto').attr("src", recentPhotoPath);
                 $('#otherInfo').text(profile.Other);
                 $('#address').val(profile.Address);
                 
