@@ -21,6 +21,8 @@ function wireUpHandlers() {
         window.location.href = 'index.html';
     });
 
+    $('#upload-btn').click(loadProjectPhotos);
+    
     $('#btnRemove').click(function() {
         var checkedImagesNames = [];
         $.each($('#allPhotos input:checked'), function(i, elem) {
@@ -62,7 +64,6 @@ function loadProjectDetails() {
                 $('#title').val(project.Title);
                 $('#subtitle').val(project.Subtitle);
                 $('#description').text(project.Description);
-                $('#photo').attr('src', project.PhotoPath);
             }
         });
 
@@ -90,7 +91,7 @@ function loadProjectPhotos() {
 
     $.getJSON('/getProjectPhotos', function(photosPathsArray) {
         $.each( photosPathsArray, function( key, elem ) {
-            var newPhoto = '<li><img src="' + elem + '" /><input type="checkbox" /></li>';
+            var newPhoto = '<li><a data-lightbox="roadtrip" href="' + elem + '"><img src="' + elem + '" /></a><input type="checkbox" /></li>';
             photosArray.push(newPhoto);
         });
 

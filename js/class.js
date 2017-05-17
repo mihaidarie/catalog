@@ -34,7 +34,7 @@ function loadClassInfo() {
 
                 var profileId = "personprofile" + profile.Id;
                 items.push( "<div data-id='" + profile.Id + "' id='" + profileId + "'><img src=" + profile.ProfilePhotoPath + 
-                    "></img><label>" + profile.LastName + " " + profile.FirstName + "</label></div>" );
+                    "></img><label>" + profile.FirstName + " " + profile.LastName + "</label></div>" );
             });
         });
         

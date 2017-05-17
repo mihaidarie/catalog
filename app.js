@@ -16,6 +16,8 @@ var projectsClientPath = '/images/projects/';
 var newsFilePath = '/catalog/database/news/news.json';
 var projectsFilePath = '/catalog/database/projects/projects.json';
 var accountsFilePath = "/catalog/database/accounts/accounts.json";
+var classesFilePath = '/catalog/database/classes/';
+var recentPhotosPath = '/images/profiles/large/';
 
 function createLogins() {
 
@@ -70,6 +72,21 @@ function setupTransporter(service, user, password) {
   });
 
   return transporter;
+}
+
+function updateRecentPhotoPath(newFilePath, profileIdParam, classParam) {
+  var classFilePath = classesFilePath + classParam + ".json";
+  var classDetails = JSON.parse(fs.readFileSync(classFilePath));
+  
+  for (var i = 0, len = classDetails[0].Profiles.length; i < len; i++) {
+    var currentPersonId = classDetails[0].Profiles[i].Id;
+    if(currentPersonId == profileIdParam) {
+      classDetails[0].Profiles[i].RecentPhotoPath = newFilePath;
+      break;
+    }
+  }
+
+  fs.writeFileSync(classFilePath, JSON.stringify(classDetails));
 }
 
 function sendMailToAdmin(firstname, lastname, email, subject, body) {
@@ -473,7 +490,6 @@ app.post('/validateEmailUnicity', function(req, res) {
   var profileClass = req.body.profileClass;
   var profileId = req.body.profileId;
 
-  var classesFilePath = '/catalog/database/classes/';
   var allClasses = fs.readdirSync(classesFilePath);
 
   var isEmailUnique = true;
@@ -561,7 +577,7 @@ app.get('/gallery', function(req, res) {
     res.setHeader('Content-Type', 'application/json');
     var photosList = [];
 
-    var files = fs.readdirSync(classesFilePath);
+    var files = fs.readdirSync(photosFolder);
 
     if(files) {
       files.forEach(file => {
@@ -622,7 +638,7 @@ app.post('/upload', function(req, res) {
   form.multiples = true;
 
   // store all uploads in the /uploads directory
-  form.profileUploadDir = path.join(__dirname, '/images/profiles/large');
+  form.profileUploadDir = path.join(__dirname, recentPhotosPath);
   form.galleryUploadDir = path.join(__dirname, photoClientPath);
   form.projectsUploadDir = path.join(__dirname, projectsClientPath);
 
@@ -640,9 +656,15 @@ app.post('/upload', function(req, res) {
       
       var newFileName = classParam + profileIdParam + fileExtension;
       var newFilePath = path.join(form.profileUploadDir, newFileName);
+      var newFileClientPath = recentPhotosPath + newFileName;
       
       mv(file.path, newFilePath, function(err) {
-        if (err) { throw err; }
+        if (err) { 
+          throw err; 
+        }
+
+        updateRecentPhotoPath(newFileClientPath, profileIdParam, classParam);
+
         console.log('profile file moved successfully');
       });
 

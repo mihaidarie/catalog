@@ -24,10 +24,12 @@
 
 #title {
     width: 10em;
+    font-weight: bold;
 }
 
 #subtitle {
     width: 20em;
+    font-style: italic;
 }
 
 .progress {
@@ -41,6 +43,7 @@
 
 #allPhotos li > * {
     margin-right: 1em;
+    cursor: pointer;
 }
 
 #uploadContent > * {
