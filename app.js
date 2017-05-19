@@ -18,6 +18,7 @@ var projectsFilePath = '/catalog/database/projects/projects.json';
 var accountsFilePath = "/catalog/database/accounts/accounts.json";
 var classesFilePath = '/catalog/database/classes/';
 var recentPhotosPath = '/images/profiles/large/';
+var linksFilePath = "/catalog/database/links/links.json";
 
 function createLogins() {
 
@@ -199,6 +200,24 @@ function compareIds(a, b) {
 
 app.get('/', function(req, res){
   res.sendFile(path.join(__dirname, '/Index.html'));
+});
+
+app.get('/getLinks', function(req, res) {
+  var links = fs.readFileSync(linksFilePath, 'utf8');
+  var returnResult = {
+      AllLinks: links
+  }
+  
+  res.json(returnResult);
+});
+
+app.post('/saveLinks', function(req, res){
+
+  var links = req.body.AllLinks;
+
+  fs.writeFileSync(linksFilePath, links);
+
+  res.sendStatus(200);
 });
 
 app.post('/isAdmin', function(req, res){

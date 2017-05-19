@@ -119,7 +119,6 @@ function wireupHeaderButtons() {
                 wireupSessionTimer();
                 window.location.href = window.location.href;
             } else {
-                // todo: replace with label
                 alert("invalid credentials");
             }
         }

@@ -1,7 +1,3 @@
-function saveProfiles(filePath, newProfilesData) {
-    // todo: overwrite classes.json
-}
-
 function modifyProfile(profilesData, newProfile) {
     $.each(profilesData, function(key, value) {
         if(value.Id == newProfile.Id) {

@@ -9,32 +9,66 @@ $(document).ready(function() {
 
     // todo: hide upload and remove photos buttons if admin not logged in
 
-    $('#galleryLinks button').click(function() {
-        alert('saving links!');
-        // todo: save links text if admin is logged-in
-    });
+    var isAdminUserLoggedIn = isAdminLoggedIn();
 
-    $('#uploadPhoto').click(function() {
-        // todo: redirect if admin is logged-in
-        
-        var redirectUrl = "FileUpload.html?type=gallery";
-        window.location.href = redirectUrl;
-    });
-    
-    $('#removePhoto').click(function() {
-        // todo: validate if admin is logged-in
-        
-        var imageName = $('ul.pxs_thumbnails li.selected img').attr('src').split('/').pop();
+    if(isAdminUserLoggedIn == true) {
+        $('#photoButtons').show();
 
-        $.post("/removephoto?photoName=" + imageName, function() {
-            window.location.href = window.location.href;
+        $('#uploadPhoto').click(function() {
+            var isAdminUserLoggedIn = isAdminLoggedIn();
+            if(isAdminUserLoggedIn == true) {
+                var redirectUrl = "FileUpload.html?type=gallery";
+                window.location.href = redirectUrl;
+            }
         });
-    });
+        
+        $('#removePhoto').click(function() {
+            var isAdminUserLoggedIn = isAdminLoggedIn();
+            if(isAdminUserLoggedIn == true) {
+                var imageName = $('ul.pxs_thumbnails li.selected img').attr('src').split('/').pop();
+
+                $.post("/removephoto?photoName=" + imageName, function() {
+                    window.location.href = window.location.href;
+                });
+            }
+        });
+    } else {
+        $('#photoButtons').hide();
+    }
 });
 
 function loadLinks() {
-    // todo: load links and make editable + show/hide save button, if admin is logged-in
+    $.getJSON("/getLinks", function(data) {
+        $('#freeLinks').val(data.AllLinks);
 
+        var isAdminUserLoggedIn = isAdminLoggedIn();
+        if(isAdminUserLoggedIn == true) {
+            $('#freeLinks').removeAttr('readonly');
+            $('#btnSaveLinks').show();
+
+            
+            $('#galleryLinks button').click(function() {
+                var isAdminUserLoggedIn = isAdminLoggedIn();
+                if(isAdminUserLoggedIn == true) {
+                    var linksValue = $('#freeLinks').val();
+
+                    var data = { AllLinks : linksValue };
+                    $.ajax({
+                        type: "POST",
+                        url: "/saveLinks",
+                        contentType: 'application/json',
+                        data: JSON.stringify(data),
+                        success: function(r) {
+                            loadLinks();
+                        }
+                    });
+                }
+            });
+        } else {
+            $('#freeLinks').attr('readonly', 'readonly');
+            $('#btnSaveLinks').hide();
+        }
+    });
 }
 
 function loadPhotos() {
