@@ -7,8 +7,6 @@ $(document).ready(function() {
     loadLinks();
     loadPhotos();
 
-    // todo: hide upload and remove photos buttons if admin not logged in
-
     var isAdminUserLoggedIn = isAdminLoggedIn();
 
     if(isAdminUserLoggedIn == true) {
