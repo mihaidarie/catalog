@@ -265,11 +265,8 @@ function verifyLoggedInUser() {
         var profileId = uri.getParameter('id');
         var profileClass = uri.getParameter('class');
 
-        // todo: get admin ID from file
-
-        var adminId = 0;
-
-        isRightUserLoggedIn = (adminId == loggedInUserId) || (loggedInUserId == profileId && loggedInUserClass == profileClass);
+        var isAdminUserLoggedIn = isAdminLoggedIn();
+        isRightUserLoggedIn = (isAdminUserLoggedIn == true) || (loggedInUserId == profileId && loggedInUserClass == profileClass);
     }
 
     return isRightUserLoggedIn;

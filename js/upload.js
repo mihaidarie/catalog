@@ -1,17 +1,11 @@
 function setupUploadControls(uploadType, profileId, profileClass) {
     $('#upload-btn').on('click', function () {
-
-        // todo: verify logged in user to be same as class and ID from URL, or admin - based on upload type
-
         $('#upload-input').click();
         $('.progress-bar').text('0%');
         $('.progress-bar').width('0%');
     });
 
     $('#upload-input').on('change', function() {
-
-      // todo: verify logged in user to be same as class and ID from URL, or admin - based on upload type
-
       var files = $(this).get(0).files;
 
       if (files.length > 0) {
@@ -43,8 +37,6 @@ function setupUploadControls(uploadType, profileId, profileClass) {
           processData: false,
           contentType: false,
           success: function(data) {
-              // TODO: change recent photo path in profiles
-
               if(loadProjectPhotos) {
                 loadProjectPhotos();
               }

@@ -201,6 +201,29 @@ app.get('/', function(req, res){
   res.sendFile(path.join(__dirname, '/Index.html'));
 });
 
+app.post('/isAdmin', function(req, res){
+
+  var adminId = -1;
+  var accounts = JSON.parse(fs.readFileSync(accountsFilePath));
+
+  for (var i = 0, len = accounts.length; i < len; i++) {
+    var accountType = accounts[i].AccountType;
+    if(accountType == 'admin') {
+      adminId = accounts[i].Id;
+      break;
+    }
+  }
+
+  var loggedInUserId = req.body.userId;
+  var isAdmin = adminId == loggedInUserId;
+
+  var returnMessage = {
+    IsAdmin: isAdmin
+  };
+
+  res.json(returnMessage);
+});
+
 function scheduleTokenRemoval(token) {
   var timeoutInterval = 1 * 60 * 1000;
   setTimeout(function() {
