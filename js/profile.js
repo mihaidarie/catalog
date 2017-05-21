@@ -3,6 +3,8 @@ URI.prototype.getParameter = function(key) {
     return paramValue;
 };
 
+var oldEmailValue = '';
+
 $(document).ready(function() {
     $('#profileDescription').elastic();
     $('#otherInfo').elastic();
@@ -44,6 +46,7 @@ function renderProfileData(profileId, profileClass) {
                 $('#facebookUrl').val(profile.Facebook);
                 $('#job').val(profile.Job);
                 $('#email').val(profile.Email);
+                oldEmailValue = profile.Email;
                 $('#description').val(profile.Description);
                 $('#profilePhoto').attr("src", profile.ProfilePhotoPath);
                 var recentPhotoPath = "/images/profiles/large/placeholder.png";
@@ -222,6 +225,11 @@ function renderProfileData(profileId, profileClass) {
 }
 
 function validateEmailUnicity(profileId, profileClass, email) {
+    
+    if(oldEmailValue == email) {
+        return true;
+    }
+    
     var postedProfile = {
         email: email,
         profileId: profileId, 
