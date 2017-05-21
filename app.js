@@ -24,6 +24,8 @@ var appconfigFilePath = "/catalog/database/appconfig.json";
 var appconfig = JSON.parse(fs.readFileSync(appconfigFilePath));
 var sitePort = appconfig.ListeningPort;
 
+var passwordResetTokens = [];
+
 var crypto = require('crypto'),
   algorithm = 'aes-256-ctr',
   password = 'd6F3Efeq';
@@ -57,30 +59,16 @@ function createLogins() {
   fs.writeFileSync(accountsFilePath, JSON.stringify(accounts));
 }
 
-// TODO: validate new user + pass to be different than admins credentials
-// function validateNewCredentials(username, password) {
-    
-//     // todo: replace with synchronous ajax call
-//     $.getJSON(accountsFileName, function(allAccounts) {
-//         $.each(allAccounts, function(key, value) {
-//             if(value.AccountType == "admin") {
-//                 var adminUsername = value.Username;
-//                 var adminPassword = value.Password;
-                
-//                 // todo: decrypt stored password
-//                 if(username == adminUsername || password == adminPassword) {
-//                     return false;
-//                 }
-//             }
+function isDifferentThanAdmin(usernameOrEmail, password) {
+  var adminDetails = getAdminDetails();
+  var isDifferent = true;
+  var adminUser = adminDetails.Username;
+  var adminEmail = adminDetails.Email;
+  var adminPassword = adminDetails.Password;
 
-//             if(value.Username == username) {
-//                 return false;
-//             }
-//         });
-        
-//         return true;
-//     });
-// }
+  isDifferent = adminUser != usernameOrEmail && adminEmail != usernameOrEmail && adminPassword != password;
+  return isDifferent;
+}
 
 'use strict';
 const nodemailer = require('nodemailer');
@@ -265,7 +253,7 @@ app.post('/saveLinks', function(req, res) {
 
 app.post('/isAdmin', function(req, res){
   sem.take(function() {
-    var adminId = getAdminId();
+    var adminId = getAdminDetails().Id;
 
     var loggedInUserId = req.body.userId;
     var isAdmin = adminId == loggedInUserId;
@@ -279,19 +267,19 @@ app.post('/isAdmin', function(req, res){
   });
 });
 
-function getAdminId() {
-  var adminId = -1;
+function getAdminDetails() {
+  var adminDetails;
   var accounts = JSON.parse(fs.readFileSync(accountsFilePath));
 
   for (var i = 0, len = accounts.length; i < len; i++) {
     var accountType = accounts[i].AccountType;
     if(accountType == 'admin') {
-      adminId = accounts[i].Id;
+      adminDetails = accounts[i];
       break;
     }
   }
 
-  return adminId;
+  return adminDetails;
 }
 
 function scheduleTokenRemoval(token) {
@@ -305,7 +293,29 @@ function scheduleTokenRemoval(token) {
   }, timeoutInterval);
 }
 
-var passwordResetTokens = [];
+function findPersonByClassAndId(className, personId) {
+  var classFilePath = "/catalog/database/classes/" + className + ".json";
+  var fileExists = fs.existsSync(classFilePath);
+
+  if(fileExists == true) {
+    var classPersons = JSON.parse(fs.readFileSync(classFilePath));
+    var personDetails = {};
+
+    for (var i = 0, len = classPersons[0].Profiles.length; i < len; i++) {
+      var currentPerson = classPersons[0].Profiles[i];
+      var currentPersonId = currentPerson.Id;
+      if(currentPersonId == personId) {
+        personDetails = currentPerson;
+        personDetails.IsFound = true;
+        break;
+      }
+    }
+  } else {
+    personDetails.IsFound = false;
+  }
+
+  return personDetails;
+}
 
 function findPersonByEmail(email, className) {
   var classFilePath = "/catalog/database/classes/" + className + ".json";
@@ -517,15 +527,32 @@ app.post('/resetPassword', function(req, res) {
           var hash = crypto.createHash('sha256');
           hash.update(newPassword);
           var hashedPassword = hash.digest('hex');
-          accounts[i].Password = hashedPassword;
+
+          var username = accounts[i].Username;
+          var personDetails = findPersonByClassAndId(className, personId);
+          var email = personDetails.Email;
+          var isEmailPasswordDifferentThanAdmin = isDifferentThanAdmin(email, hashedPassword);
+          var isUsernamePasswordDifferentThanAdmin = isDifferentThanAdmin(username, hashedPassword);
+          
+          if(isEmailPasswordDifferentThanAdmin == true && isUsernamePasswordDifferentThanAdmin) {
+            accounts[i].Password = hashedPassword;
+          } else {
+            returnResult = {
+              success: false,
+              message: 'Credentiale folosite deja. Reluati resetarea.'
+            };
+          }
+
           break;
         }
       }
 
-      fs.writeFileSync(accountsFilePath, JSON.stringify(accounts));
-      returnResult = {
-        success: true
-      };
+      if(returnResult.success != false) {
+        fs.writeFileSync(accountsFilePath, JSON.stringify(accounts));
+        returnResult = {
+          success: true
+        };
+      }
     } else {
       returnResult = {
         success: false,
@@ -859,7 +886,7 @@ function isAdminLoggedIn(req) {
   var loggedInDetails = req.cookies.login;
   if(loggedInDetails) {
     var userDetails = JSON.parse(loggedInDetails);
-    var adminId = getAdminId();
+    var adminId = getAdminDetails().Id;
     isUserAdmin = userDetails.UserId == adminId;
   }
 

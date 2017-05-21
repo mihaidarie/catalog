@@ -3,6 +3,18 @@ URI.prototype.getParameter = function(key) {
     return paramValue;
 };
 
+function kickoffTokenValidationTimer() {
+    setInterval(function() {
+        var uri = URI(window.location.href);
+        var token = uri.getParameter('token');
+        var isTokenValid = validateToken(token);
+        
+        if(isTokenValid == false) {
+            location.href = "Index.html";
+        }
+    }, 30 * 1000);
+}
+
 function validateToken(token) {
     var postUrl = "/validateResetPasswordToken";
     var isTokenValid = false;        
@@ -52,6 +64,8 @@ $(document).ready(function() {
         if(isTokenValid === true) {
             $('#performPasswordReset').show();
             $('#startPasswordReset').hide();
+
+            kickoffTokenValidationTimer();
 
             $("#btnSave").click(function () {
                 var password1 = $('#password1').val();
@@ -139,7 +153,5 @@ $(document).ready(function() {
                 }
             });
         });
-    }
-
-    
+    }    
 });
