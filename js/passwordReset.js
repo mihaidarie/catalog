@@ -5,7 +5,7 @@ URI.prototype.getParameter = function(key) {
 
 function validateToken(token) {
     var postUrl = "/validateResetPasswordToken";
-                    
+    var isTokenValid = false;        
     var jsonBody = JSON.stringify({ token: token } );
 
     $.ajax({
@@ -16,21 +16,26 @@ function validateToken(token) {
         success: function(result) {
             result = JSON.parse(result);
             if(result.success == false) {
-                return false;
+                isTokenValid = false;
             } else {
                 if(result.success && result.success == true) {
-                    return true;
-                } 
+                    isTokenValid = true;
+                } else {
+                    isTokenValid = false;
+                }
             }
         },
         error: function(jqXHR, textStatus, errorThrown ) {
             alert('jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
+            isTokenValid = false;
         },
         complete: function() {
             console.log("completed!");
         },
         async: false
     });
+
+    return isTokenValid;
 }
 
 $(document).ready(function() {

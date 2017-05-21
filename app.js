@@ -40,7 +40,18 @@ function decrypt(text) {
 }
 
 function createLogins() {
+  var accounts = JSON.parse(fs.readFileSync(accountsFilePath));
+  
+  for (var i = 0, len = accounts.length; i < len; i++) {
+      var password = accounts[i].Password;
+      var hash = crypto.createHash('sha256');
+      hash.update(password);
+      var hashedPassword = hash.digest('hex');
+      console.log(hashedPassword);
+      accounts[i].Password = hashedPassword;
+  }
 
+  fs.writeFileSync(accountsFilePath, JSON.stringify(accounts));
 }
 
 // TODO: decide what to do with this function
@@ -291,16 +302,23 @@ function scheduleTokenRemoval(token) {
 var passwordResetTokens = [];
 
 function findPersonByEmail(email, className) {
-  var classPersons = JSON.parse(fs.readFileSync("/catalog/database/classes/" + className + ".json"));
-  var personDetails = {};
+  var classFilePath = "/catalog/database/classes/" + className + ".json";
+  var fileExists = fs.existsSync(classFilePath);
+  if(fileExists == true) {
+    var classPersons = JSON.parse(fs.readFileSync(classFilePath));
+    var personDetails = {};
 
-  for (var i = 0, len = classPersons[0].Profiles.length; i < len; i++) {
-    var currentPerson = classPersons[0].Profiles[i];
-    var personEmail = currentPerson.Email;
-    if(email == personEmail) {
-      personDetails = currentPerson;
-      break;
+    for (var i = 0, len = classPersons[0].Profiles.length; i < len; i++) {
+      var currentPerson = classPersons[0].Profiles[i];
+      var personEmail = currentPerson.Email;
+      if(email == personEmail) {
+        personDetails = currentPerson;
+        personDetails.IsFound = true;
+        break;
+      }
     }
+  } else {
+    personDetails.IsFound = false;
   }
 
   return personDetails;
@@ -340,6 +358,9 @@ function getPersonDetailsByMail(email) {
 }
 
 app.post('/validateCredentials', function(req, res) {
+
+  //createLogins();
+
   var username = req.body.username;
   var password = req.body.password;
   var className = '';
@@ -358,7 +379,10 @@ app.post('/validateCredentials', function(req, res) {
     for (var i = 0, len = accounts.length; i < len; i++) {
       var currentUsername = accounts[i].Username;
       var currentPassword = accounts[i].Password;
-      if(username == currentUsername && password == currentPassword) {
+      var hash = crypto.createHash('sha256');
+      hash.update(password);
+      var hashedPassword = hash.digest('hex');
+      if(username == currentUsername && hashedPassword == currentPassword) {
         isValid = true;
         className = accounts[i].Class;
         profileId = accounts[i].Id;
@@ -384,30 +408,38 @@ app.post('/sendResetPassword', function(req, res) {
   if(email && email != '' && className && className != '') {
     var personDetails = findPersonByEmail(email, className);
 
-    var subject = "Resetare parola";
-    var body = "<html>Salut " + personDetails.FirstName + " " + personDetails.LastName + ",\n";
-    var passwordResetToken = uuid.v1();
+    if(personDetails.IsFound == true) {
+      var subject = "Resetare parola";
+      var body = "<html>Salut " + personDetails.FirstName + " " + personDetails.LastName + ",\n";
+      var passwordResetToken = uuid.v1();
 
-    var passwordResetAttempt = {
-      personId: personDetails.Id,
-      className: className
-    };
+      var passwordResetAttempt = {
+        personId: personDetails.Id,
+        className: className
+      };
 
-    try {
-      passwordResetTokens[passwordResetToken] = passwordResetAttempt;
+      try {
+        passwordResetTokens[passwordResetToken] = passwordResetAttempt;
 
-      body = body + "\nAici e link-ul pentru resetarea parolei: <a href='http://localhost:3000/PasswordReset.html?token=" + passwordResetToken + "'>Resetare parola</a></html>"
-      sendMailToUser(email, subject, body);
+        body = body + "\nAici e link-ul pentru resetarea parolei: <a href='http://localhost:3000/PasswordReset.html?token=" + passwordResetToken + "'>Resetare parola</a></html>"
+        sendMailToUser(email, subject, body);
+      }
+      catch(ex) {
+        console.log(ex);
+      }
+
+      scheduleTokenRemoval(passwordResetToken);
+
+      returnMessage = {
+        isValid: true
+      };
+    } else {
+      // send missing details response
+      returnMessage = {
+        isValid: false,
+        message: 'Email incorect sau clasa incorecta, nu exista in baza de date.'
+      };
     }
-    catch(ex){
-      console.log(ex);
-    }
-
-    scheduleTokenRemoval(passwordResetToken);
-
-    returnMessage = {
-      isValid: true
-    };
   } else {
     // send missing details response
     returnMessage = {
@@ -460,7 +492,10 @@ app.post('/resetPassword', function(req, res){
       var currentPersonId = accounts[i].Id;
       var currentPersonClass = accounts[i].Class;
       if(className == currentPersonClass && personId == currentPersonId) {
-        accounts[i].Password = newPassword;
+        var hash = crypto.createHash('sha256');
+        hash.update(newPassword);
+        var hashedPassword = hash.digest('hex');
+        accounts[i].Password = hashedPassword;
         break;
       }
     }
