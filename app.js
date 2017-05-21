@@ -7,8 +7,10 @@ var bodyParser = require('body-parser');
 var mv = require('mv');
 var timer = require('timers');
 var uuid = require('uuid');
-var SHA3 = require("crypto-js/sha3");
 var cookieParser = require('cookie-parser');
+var crypto = require('crypto'),
+  algorithm = 'aes-256-ctr',
+  password = 'd6F3Efeq';
 
 var photosFolder = '/catalog/images/gallery/';
 var photoClientPath = '/images/gallery/';
@@ -20,12 +22,27 @@ var accountsFilePath = "/catalog/database/accounts/accounts.json";
 var classesFilePath = '/catalog/database/classes/';
 var recentPhotosPath = '/images/profiles/large/';
 var linksFilePath = "/catalog/database/links/links.json";
+var appconfigFilePath = "/catalog/database/appconfig.json";
 
 function createLogins() {
 
 }
 
-// TODO: decide what to do with this function
+function encrypt(text) {
+  var cipher = crypto.createCipher(algorithm,password)
+  var crypted = cipher.update(text,'utf8','hex')
+  crypted += cipher.final('hex');
+  return crypted;
+}
+ 
+function decrypt(text) {
+  var decipher = crypto.createDecipher(algorithm,password)
+  var dec = decipher.update(text,'hex','utf8')
+  dec += decipher.final('utf8');
+  return dec;
+}
+
+// TODO: prevent email & password combination from being same as admin
 // function validateNewCredentials(username, password) {
     
 //     // todo: replace with synchronous ajax call
@@ -63,14 +80,18 @@ app.use(express.static(path.join(__dirname, '')));
 
 function setupTransporter(service, user, password) {
 
-  //todo: read mail account from app config
+  var appconfig = JSON.parse(fs.readFileSync(appconfigFilePath));
+  var adminEmail = appconfig.SmtpUsername;
+  var adminPassword = appconfig.SmptPassword;
+  
+  var decryptedAdminPassword = decrypt(adminPassword);
 
   // create reusable transporter object using the default SMTP transport
   let transporter = nodemailer.createTransport({
-      service: 'Yahoo',
+      service: appconfig.SmtpService,
       auth: {
-          user: 'mihai_darie2@yahoo.com',
-          pass: 'Maymay2017'
+          user: adminEmail,
+          pass: decryptedAdminPassword
       }
   });
 
