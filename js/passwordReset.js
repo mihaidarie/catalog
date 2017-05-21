@@ -3,9 +3,21 @@ URI.prototype.getParameter = function(key) {
     return paramValue;
 };
 
+function kickoffTokenValidationTimer() {
+    setInterval(function() {
+        var uri = URI(window.location.href);
+        var token = uri.getParameter('token');
+        var isTokenValid = validateToken(token);
+        
+        if(isTokenValid == false) {
+            location.href = "Index.html";
+        }
+    }, 30 * 1000);
+}
+
 function validateToken(token) {
     var postUrl = "/validateResetPasswordToken";
-                    
+    var isTokenValid = false;        
     var jsonBody = JSON.stringify({ token: token } );
 
     $.ajax({
@@ -16,21 +28,26 @@ function validateToken(token) {
         success: function(result) {
             result = JSON.parse(result);
             if(result.success == false) {
-                return false;
+                isTokenValid = false;
             } else {
                 if(result.success && result.success == true) {
-                    return true;
-                } 
+                    isTokenValid = true;
+                } else {
+                    isTokenValid = false;
+                }
             }
         },
         error: function(jqXHR, textStatus, errorThrown ) {
             alert('jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
+            isTokenValid = false;
         },
         complete: function() {
             console.log("completed!");
         },
         async: false
     });
+
+    return isTokenValid;
 }
 
 $(document).ready(function() {
@@ -47,6 +64,8 @@ $(document).ready(function() {
         if(isTokenValid === true) {
             $('#performPasswordReset').show();
             $('#startPasswordReset').hide();
+
+            kickoffTokenValidationTimer();
 
             $("#btnSave").click(function () {
                 var password1 = $('#password1').val();
@@ -134,7 +153,5 @@ $(document).ready(function() {
                 }
             });
         });
-    }
-
-    
+    }    
 });
