@@ -21,6 +21,8 @@ var classesFilePath = '/catalog/database/classes/';
 var recentPhotosPath = '/images/profiles/large/';
 var linksFilePath = "/catalog/database/links/links.json";
 var appconfigFilePath = "/catalog/database/appconfig.json";
+var appconfig = JSON.parse(fs.readFileSync(appconfigFilePath));
+var sitePort = appconfig.ListeningPort;
 
 var crypto = require('crypto'),
   algorithm = 'aes-256-ctr',
@@ -92,8 +94,6 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 app.use(express.static(path.join(__dirname, '')));
 
 function setupTransporter(service, user, password) {
-
-  var appconfig = JSON.parse(fs.readFileSync(appconfigFilePath));
   var adminEmail = appconfig.SmtpUsername;
   var adminPassword = appconfig.SmptPassword;
   var service = appconfig.SmtpService;
@@ -128,7 +128,7 @@ function updateRecentPhotoPath(newFilePath, profileIdParam, classParam) {
 }
 
 function sendMailToAdmin(firstname, lastname, email, subject, body) {
-  var settingsDoc = JSON.parse(fs.readFileSync("/catalog/database/appconfig.json"));
+  var settingsDoc = appconfig;
   var accounts = JSON.parse(fs.readFileSync(accountsFilePath));
   
   var settingsDocResult = [];
@@ -178,7 +178,7 @@ function createSuggestionEmailMessage(firstname, lastname, email, subject, body,
 }
 
 function sendMailToUser(email, subject, body) {
-  var settingsDoc = JSON.parse(fs.readFileSync("/catalog/database/appconfig.json"));
+  var settingsDoc = appconfig;
   var accounts = JSON.parse(fs.readFileSync(accountsFilePath));
   
   var settingsDocResult = [];
@@ -427,14 +427,13 @@ app.post('/sendResetPassword', function(req, res) {
 
         try {
           passwordResetTokens[passwordResetToken] = passwordResetAttempt;
-          var appconfig = JSON.parse(fs.readFileSync(appconfigFilePath));
+          
           var hostDomain = req.headers.host;
           var portIndex = hostDomain.indexOf(":");
           if(portIndex >= 0) {
             hostDomain = hostDomain.substring(0, portIndex);
           }
 
-          var sitePort = appconfig.ListeningPort;
           var isSecured = appconfig.IsSecured;
           var protocol = "http://";
           if(isSecured == true) {
@@ -1056,6 +1055,6 @@ app.post('/upload', function(req, res) {
   });
 });
 
-var server = app.listen(3000, function(){
-  console.log('Server listening on port 3000');
+var server = app.listen(sitePort, function(){
+  console.log('Server listening on port ' + sitePort);
 });
