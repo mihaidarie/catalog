@@ -8,9 +8,6 @@ var mv = require('mv');
 var timer = require('timers');
 var uuid = require('uuid');
 var cookieParser = require('cookie-parser');
-var crypto = require('crypto'),
-  algorithm = 'aes-256-ctr',
-  password = 'd6F3Efeq';
 
 var photosFolder = '/catalog/images/gallery/';
 var photoClientPath = '/images/gallery/';
@@ -24,9 +21,9 @@ var recentPhotosPath = '/images/profiles/large/';
 var linksFilePath = "/catalog/database/links/links.json";
 var appconfigFilePath = "/catalog/database/appconfig.json";
 
-function createLogins() {
-
-}
+var crypto = require('crypto'),
+  algorithm = 'aes-256-ctr',
+  password = 'd6F3Efeq';
 
 function encrypt(text) {
   var cipher = crypto.createCipher(algorithm,password)
@@ -42,7 +39,11 @@ function decrypt(text) {
   return dec;
 }
 
-// TODO: prevent email & password combination from being same as admin
+function createLogins() {
+
+}
+
+// TODO: decide what to do with this function
 // function validateNewCredentials(username, password) {
     
 //     // todo: replace with synchronous ajax call
@@ -83,12 +84,13 @@ function setupTransporter(service, user, password) {
   var appconfig = JSON.parse(fs.readFileSync(appconfigFilePath));
   var adminEmail = appconfig.SmtpUsername;
   var adminPassword = appconfig.SmptPassword;
+  var service = appconfig.SmtpService;
   
   var decryptedAdminPassword = decrypt(adminPassword);
 
   // create reusable transporter object using the default SMTP transport
   let transporter = nodemailer.createTransport({
-      service: appconfig.SmtpService,
+      service: service,
       auth: {
           user: adminEmail,
           pass: decryptedAdminPassword
