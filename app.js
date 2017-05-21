@@ -458,17 +458,34 @@ app.post('/resetPassword', function(req, res){
 
 // handler for sending suggestions to administrator
 app.post('/emailadmin', function(req, res) {
+  var isCaptchaValid = validateCaptchaCookie(req);
 
-  // todo: verify captcha cookie here, to prevent spam
+  if(isCaptchaValid == true) {
+    res.cookie('suggestionsCaptcha', { IsValid: false }, { expires: new Date(Date.now()) });
 
-  var firstname = req.query.firstname;
-  var lastname = req.query.lastname;
-  var email = req.query.email;
-  var subject = req.query.subject;
-  var body = req.body.emailBody;
+    var firstname = req.query.firstname;
+    var lastname = req.query.lastname;
+    var email = req.query.email;
+    var subject = req.query.subject;
+    var body = req.body.emailBody;
 
-  sendMailToAdmin(firstname, lastname, email, subject, body);
+    sendMailToAdmin(firstname, lastname, email, subject, body);
+  } else {
+    res.sendStatus(401);
+  }
 });
+
+function validateCaptchaCookie(req) {
+  var captchaCookie = req.cookies.suggestionsCaptcha;
+  if(captchaCookie) {
+    var captchaCookieValue = JSON.parse(captchaCookie);
+    if(captchaCookieValue.IsValid == true) {
+      return true;
+    }
+  }
+
+  return false;
+}
 
 app.post('/saveContacts', function(req, res){
 
