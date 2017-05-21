@@ -283,24 +283,64 @@ function findPersonByEmail(email, className) {
   return personDetails;
 }
 
+function getPersonDetailsByMail(email) {
+  var allClasses = fs.readdirSync(classesFilePath);
+
+  var personDetails = {
+    IsValid: false,
+    Class: '',
+    UserId: ''
+  };
+
+  for (var i = 0, len = allClasses.length ; i < len; i++) {
+    var className = allClasses[i];
+    if(className) {
+      var classDetails = JSON.parse(fs.readFileSync(classesFilePath + className));
+
+      for (var j = 0, len = classDetails[0].Profiles.length; j < len; j++) {
+        var profileDetails = classDetails[0].Profiles[j];
+        if(profileDetails.Email == email) {
+          personDetails.Class = className.replace('.json', '');
+          personDetails.UserId = profileDetails.Id;
+          personDetails.IsValid = true;
+          break;
+        }
+      }
+
+      if(personDetails.IsValid == true) {
+        break;
+      }
+    }
+  }
+
+  return personDetails;
+}
+
 app.post('/validateCredentials', function(req, res) {
   var username = req.body.username;
   var password = req.body.password;
   var className = '';
   var profileId = '';
+  var isValid = false;
 
   var accountsContent = fs.readFileSync(accountsFilePath);
   var accounts = JSON.parse(accountsContent);
 
-  var isValid = false;
-  for (var i = 0, len = accounts.length; i < len; i++) {
-    var currentUsername = accounts[i].Username;
-    var currentPassword = accounts[i].Password;
-    if(username == currentUsername && password == currentPassword) {
-      isValid = true;
-      className = accounts[i].Class;
-      profileId = accounts[i].Id;
-      break;
+  var personDetails = getPersonDetailsByMail(username);
+  if(personDetails.IsValid == true) {
+    isValid = personDetails.IsValid;
+    className = personDetails.Class;
+    profileId = personDetails.UserId;
+  } else {
+    for (var i = 0, len = accounts.length; i < len; i++) {
+      var currentUsername = accounts[i].Username;
+      var currentPassword = accounts[i].Password;
+      if(username == currentUsername && password == currentPassword) {
+        isValid = true;
+        className = accounts[i].Class;
+        profileId = accounts[i].Id;
+        break;
+      }
     }
   }
 
