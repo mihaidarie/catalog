@@ -17,13 +17,18 @@ $(document).ready(function() {
             $('#emailResult').text('Numar de verificare incorect!');
         }
         else {
-            //alert("Correct Input!!!");
+            setCaptchaValidCookie();
             sendMail();
         }  
 
         generateCaptcha();
     });
 });
+
+function setCaptchaValidCookie() {
+    var in1Minute = 1/55;
+    Cookies.set('suggestionsCaptcha', { IsValid: true }, { expires: in1Minute });
+}
 
 function sendMail() {
     var firstname = $('#firstname').val();
@@ -66,6 +71,8 @@ function generateCaptcha() {
     $("#txtNewInput").css({ 'width': '100px', 'border': 'none', 'color': 'black' });
     $("#txtNewInput").val(iNumber);
     $("#txtNewInput").prop('disabled', true);
+
+    Cookies.set('suggestionsCaptcha', { IsValid: false }, { expires: new Date(Date.now()) });
 
     var wrongInput = function () {  
         if ($("#captchaInput").val() != iNumber) {  

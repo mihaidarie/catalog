@@ -119,7 +119,6 @@ function wireupHeaderButtons() {
                 wireupSessionTimer();
                 window.location.href = window.location.href;
             } else {
-                // todo: replace with label
                 alert("invalid credentials");
             }
         }
@@ -165,7 +164,18 @@ function isAdminLoggedIn() {
     var cookieValue = Cookies.getJSON('login');
     var loggedInUserId = cookieValue.UserId;
 
-    var adminId = 0; //  todo: get admin ID from file
+    var isAdmin = false;
 
-    return adminId == loggedInUserId;
+    $.ajax({
+        type: 'POST',
+        url: '/isAdmin',
+        dataType: 'json',
+        success: function(data) {
+            isAdmin = data.IsAdmin;
+         },
+        data: { userId : loggedInUserId },
+        async: false
+    });
+
+    return isAdmin;
 }

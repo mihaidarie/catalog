@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 var mv = require('mv');
 var timer = require('timers');
 var uuid = require('uuid');
-var SHA3 = require("crypto-js/sha3");
+var cookieParser = require('cookie-parser');
 
 var photosFolder = '/catalog/images/gallery/';
 var photoClientPath = '/images/gallery/';
@@ -16,6 +16,28 @@ var projectsClientPath = '/images/projects/';
 var newsFilePath = '/catalog/database/news/news.json';
 var projectsFilePath = '/catalog/database/projects/projects.json';
 var accountsFilePath = "/catalog/database/accounts/accounts.json";
+var classesFilePath = '/catalog/database/classes/';
+var recentPhotosPath = '/images/profiles/large/';
+var linksFilePath = "/catalog/database/links/links.json";
+var appconfigFilePath = "/catalog/database/appconfig.json";
+
+var crypto = require('crypto'),
+  algorithm = 'aes-256-ctr',
+  password = 'd6F3Efeq';
+
+function encrypt(text) {
+  var cipher = crypto.createCipher(algorithm,password)
+  var crypted = cipher.update(text,'utf8','hex')
+  crypted += cipher.final('hex');
+  return crypted;
+}
+ 
+function decrypt(text) {
+  var decipher = crypto.createDecipher(algorithm,password)
+  var dec = decipher.update(text,'hex','utf8')
+  dec += decipher.final('utf8');
+  return dec;
+}
 
 function createLogins() {
 
@@ -48,6 +70,7 @@ function createLogins() {
 
 'use strict';
 const nodemailer = require('nodemailer');
+app.use(cookieParser());
 
 app.use(bodyParser.json());       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
@@ -58,18 +81,38 @@ app.use(express.static(path.join(__dirname, '')));
 
 function setupTransporter(service, user, password) {
 
-  //todo: read mail account from app config
+  var appconfig = JSON.parse(fs.readFileSync(appconfigFilePath));
+  var adminEmail = appconfig.SmtpUsername;
+  var adminPassword = appconfig.SmptPassword;
+  var service = appconfig.SmtpService;
+  
+  var decryptedAdminPassword = decrypt(adminPassword);
 
   // create reusable transporter object using the default SMTP transport
   let transporter = nodemailer.createTransport({
-      service: 'Yahoo',
+      service: service,
       auth: {
-          user: 'mihai_darie2@yahoo.com',
-          pass: 'Maymay2017'
+          user: adminEmail,
+          pass: decryptedAdminPassword
       }
   });
 
   return transporter;
+}
+
+function updateRecentPhotoPath(newFilePath, profileIdParam, classParam) {
+  var classFilePath = classesFilePath + classParam + ".json";
+  var classDetails = JSON.parse(fs.readFileSync(classFilePath));
+  
+  for (var i = 0, len = classDetails[0].Profiles.length; i < len; i++) {
+    var currentPersonId = classDetails[0].Profiles[i].Id;
+    if(currentPersonId == profileIdParam) {
+      classDetails[0].Profiles[i].RecentPhotoPath = newFilePath;
+      break;
+    }
+  }
+
+  fs.writeFileSync(classFilePath, JSON.stringify(classDetails));
 }
 
 function sendMailToAdmin(firstname, lastname, email, subject, body) {
@@ -184,6 +227,56 @@ app.get('/', function(req, res){
   res.sendFile(path.join(__dirname, '/Index.html'));
 });
 
+app.get('/getLinks', function(req, res) {
+  var links = fs.readFileSync(linksFilePath, 'utf8');
+  var returnResult = {
+      AllLinks: links
+  }
+  
+  res.json(returnResult);
+});
+
+app.post('/saveLinks', function(req, res){
+
+  var isUserAdmin = isAdminLoggedIn(req);
+  if(isUserAdmin == true) {
+    var links = req.body.AllLinks;
+    fs.writeFileSync(linksFilePath, links);
+    res.sendStatus(200);
+  } else {
+    res.sendStatus(401);
+  }
+});
+
+app.post('/isAdmin', function(req, res){
+
+  var adminId = getAdminId();
+
+  var loggedInUserId = req.body.userId;
+  var isAdmin = adminId == loggedInUserId;
+
+  var returnMessage = {
+    IsAdmin: isAdmin
+  };
+
+  res.json(returnMessage);
+});
+
+function getAdminId() {
+  var adminId = -1;
+  var accounts = JSON.parse(fs.readFileSync(accountsFilePath));
+
+  for (var i = 0, len = accounts.length; i < len; i++) {
+    var accountType = accounts[i].AccountType;
+    if(accountType == 'admin') {
+      adminId = accounts[i].Id;
+      break;
+    }
+  }
+
+  return adminId;
+}
+
 function scheduleTokenRemoval(token) {
   var timeoutInterval = 1 * 60 * 1000;
   setTimeout(function() {
@@ -213,24 +306,64 @@ function findPersonByEmail(email, className) {
   return personDetails;
 }
 
+function getPersonDetailsByMail(email) {
+  var allClasses = fs.readdirSync(classesFilePath);
+
+  var personDetails = {
+    IsValid: false,
+    Class: '',
+    UserId: ''
+  };
+
+  for (var i = 0, len = allClasses.length ; i < len; i++) {
+    var className = allClasses[i];
+    if(className) {
+      var classDetails = JSON.parse(fs.readFileSync(classesFilePath + className));
+
+      for (var j = 0, len = classDetails[0].Profiles.length; j < len; j++) {
+        var profileDetails = classDetails[0].Profiles[j];
+        if(profileDetails.Email == email) {
+          personDetails.Class = className.replace('.json', '');
+          personDetails.UserId = profileDetails.Id;
+          personDetails.IsValid = true;
+          break;
+        }
+      }
+
+      if(personDetails.IsValid == true) {
+        break;
+      }
+    }
+  }
+
+  return personDetails;
+}
+
 app.post('/validateCredentials', function(req, res) {
   var username = req.body.username;
   var password = req.body.password;
   var className = '';
   var profileId = '';
+  var isValid = false;
 
   var accountsContent = fs.readFileSync(accountsFilePath);
   var accounts = JSON.parse(accountsContent);
 
-  var isValid = false;
-  for (var i = 0, len = accounts.length; i < len; i++) {
-    var currentUsername = accounts[i].Username;
-    var currentPassword = accounts[i].Password;
-    if(username == currentUsername && password == currentPassword) {
-      isValid = true;
-      className = accounts[i].Class;
-      profileId = accounts[i].Id;
-      break;
+  var personDetails = getPersonDetailsByMail(username);
+  if(personDetails.IsValid == true) {
+    isValid = personDetails.IsValid;
+    className = personDetails.Class;
+    profileId = personDetails.UserId;
+  } else {
+    for (var i = 0, len = accounts.length; i < len; i++) {
+      var currentUsername = accounts[i].Username;
+      var currentPassword = accounts[i].Password;
+      if(username == currentUsername && password == currentPassword) {
+        isValid = true;
+        className = accounts[i].Class;
+        profileId = accounts[i].Id;
+        break;
+      }
     }
   }
 
@@ -347,225 +480,316 @@ app.post('/resetPassword', function(req, res){
 });
 
 // handler for sending suggestions to administrator
-app.post('/emailadmin', function(req, res){
-  var firstname = req.query.firstname;
-  var lastname = req.query.lastname;
-  var email = req.query.email;
-  var subject = req.query.subject;
-  var body = req.body.emailBody;
+app.post('/emailadmin', function(req, res) {
+  var isCaptchaValid = validateCaptchaCookie(req);
 
-  sendMailToAdmin(firstname, lastname, email, subject, body);
+  if(isCaptchaValid == true) {
+    res.cookie('suggestionsCaptcha', { IsValid: false }, { expires: new Date(Date.now()) });
+
+    var firstname = req.query.firstname;
+    var lastname = req.query.lastname;
+    var email = req.query.email;
+    var subject = req.query.subject;
+    var body = req.body.emailBody;
+
+    sendMailToAdmin(firstname, lastname, email, subject, body);
+  } else {
+    res.sendStatus(401);
+  }
 });
 
+function validateCaptchaCookie(req) {
+  var captchaCookie = req.cookies.suggestionsCaptcha;
+  if(captchaCookie) {
+    var captchaCookieValue = JSON.parse(captchaCookie);
+    if(captchaCookieValue.IsValid == true) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
 app.post('/saveContacts', function(req, res){
-  var body = req.body;
-  
-  var contactsFilePath = '/catalog/database/contacts/contacts.json';
-  fs.writeFileSync(contactsFilePath, JSON.stringify(body));
-  res.sendStatus(200);
+
+  var isUserAdmin = isAdminLoggedIn(req);
+  if(isUserAdmin == true) {
+    var body = req.body;
+    
+    var contactsFilePath = '/catalog/database/contacts/contacts.json';
+    fs.writeFileSync(contactsFilePath, JSON.stringify(body));
+    res.sendStatus(200);
+  } else {
+    res.sendStatus(401);
+  }
+
 });
 
 app.post('/saveNews', function(req, res) {
-  var parsedNews = req.body;
+  var isUserAdmin = isAdminLoggedIn(req);
+  if(isUserAdmin == true) {
+    var parsedNews = req.body;
 
-  parsedNews.existingData.sort(compareIds);
+    parsedNews.existingData.sort(compareIds);
 
-  if(parsedNews.newData) {
-    var newNews = parsedNews.newData;
-    var lastId = 0;
-    if(parsedNews.existingData.length > 0) {
-      lastId = parsedNews.existingData[parsedNews.existingData.length - 1].Id;
+    if(parsedNews.newData) {
+      var newNews = parsedNews.newData;
+      var lastId = 0;
+      if(parsedNews.existingData.length > 0) {
+        lastId = parsedNews.existingData[parsedNews.existingData.length - 1].Id;
+      }
+      
+      var newNewsItem = {
+        Id : lastId + 1,
+        Description : newNews
+      };
+
+      parsedNews.existingData.push(newNewsItem);
     }
-    
-    var newNewsItem = {
-      Id : lastId + 1,
-      Description : newNews
-    };
 
-    parsedNews.existingData.push(newNewsItem);
+    var postedNews = JSON.stringify(parsedNews.existingData);
+
+    fs.writeFileSync(newsFilePath, postedNews);
+    res.sendStatus(200);
+  } else {
+    res.sendStatus(401);
   }
-
-  var postedNews = JSON.stringify(parsedNews.existingData);
-
-  fs.writeFileSync(newsFilePath, postedNews);
-  res.sendStatus(200);
 });
 
 app.post('/removeNews', function(req, res) {
-  var postedNews = req.body;
+  var isUserAdmin = isAdminLoggedIn(req);
+  if(isUserAdmin == true) {
+    var postedNews = req.body;
 
-  var itemsToRemove = [];
-  var newsFileContent = fs.readFileSync(newsFilePath);
-  var newsArray = JSON.parse(newsFileContent); 
+    var itemsToRemove = [];
+    var newsFileContent = fs.readFileSync(newsFilePath);
+    var newsArray = JSON.parse(newsFileContent); 
 
-  newsArray.forEach(currentItem => {
-      postedNews.forEach(itemToRemove => {
-        if(currentItem.Id == itemToRemove) {
-          itemsToRemove.push(currentItem);
-        }  
+    newsArray.forEach(currentItem => {
+        postedNews.forEach(itemToRemove => {
+          if(currentItem.Id == itemToRemove) {
+            itemsToRemove.push(currentItem);
+          }  
+        });
       });
+
+    itemsToRemove.forEach(itemToRemove => {
+      var index = newsArray.indexOf(itemToRemove);
+      newsArray.splice(index, 1);
     });
 
-  itemsToRemove.forEach(itemToRemove => {
-    var index = newsArray.indexOf(itemToRemove);
-    newsArray.splice(index, 1);
-  });
-
-  fs.writeFileSync(newsFilePath, JSON.stringify(newsArray));
-  res.sendStatus(200);
+    fs.writeFileSync(newsFilePath, JSON.stringify(newsArray));
+    res.sendStatus(200);
+  } else {
+    res.sendStatus(401);
+  }
 });
 
 app.post('/saveProjects', function(req, res) {
-  var postedProjects = req.body;
+  var isUserAdmin = isAdminLoggedIn(req);
+  if(isUserAdmin == true) {
+    var postedProjects = req.body;
 
-  postedProjects.existingData.sort(compareIds);
+    postedProjects.existingData.sort(compareIds);
 
-  if(postedProjects.newData) {
-    var newProject = postedProjects.newData;
-    var lastId = 0;
-    if(postedProjects.existingData.length > 0) {
-      lastId = postedProjects.existingData[postedProjects.existingData.length - 1].Id;
+    if(postedProjects.newData) {
+      var newProject = postedProjects.newData;
+      var lastId = 0;
+      if(postedProjects.existingData.length > 0) {
+        lastId = postedProjects.existingData[postedProjects.existingData.length - 1].Id;
+      }
+      
+      var newProjectItem = {
+        Id : lastId + 1,
+        Title : newProject.Title,
+        Subtitle: newProject.Subtitle,
+        Description : newProject.Description
+      };
+
+      postedProjects.existingData.push(newProjectItem);
     }
-    
-    var newProjectItem = {
-      Id : lastId + 1,
-      Title : newProject.Title,
-      Subtitle: newProject.Subtitle,
-      Description : newProject.Description
-    };
 
-    postedProjects.existingData.push(newProjectItem);
+    var postedProjectsJson = JSON.stringify(postedProjects.existingData);
+
+    fs.writeFileSync(projectsFilePath, postedProjectsJson);
+    res.sendStatus(200);
+  } else {
+    res.sendStatus(401);
   }
-
-  var postedProjectsJson = JSON.stringify(postedProjects.existingData);
-
-  fs.writeFileSync(projectsFilePath, postedProjectsJson);
-  res.sendStatus(200);
-
 });
 
 app.post('/removeProjects', function(req, res) {
-  var postedProjects = req.body;
+  var isUserAdmin = isAdminLoggedIn(req);
+  if(isUserAdmin == true) {
+    var postedProjects = req.body;
 
-  var itemsToRemove = [];
-  var projectsFileContent = fs.readFileSync(projectsFilePath);
-  var projectsArray = JSON.parse(projectsFileContent); 
+    var itemsToRemove = [];
+    var projectsFileContent = fs.readFileSync(projectsFilePath);
+    var projectsArray = JSON.parse(projectsFileContent); 
 
-  projectsArray.forEach(currentItem => {
-      postedProjects.forEach(itemToRemove => {
-        if(currentItem.Id == itemToRemove) {
-          itemsToRemove.push(currentItem);
-        }  
+    projectsArray.forEach(currentItem => {
+        postedProjects.forEach(itemToRemove => {
+          if(currentItem.Id == itemToRemove) {
+            itemsToRemove.push(currentItem);
+          }  
+        });
       });
+
+    itemsToRemove.forEach(itemToRemove => {
+      var index = projectsArray.indexOf(itemToRemove);
+      projectsArray.splice(index, 1);
     });
 
-  itemsToRemove.forEach(itemToRemove => {
-    var index = projectsArray.indexOf(itemToRemove);
-    projectsArray.splice(index, 1);
-  });
-
-  fs.writeFileSync(projectsFilePath, JSON.stringify(projectsArray));
-  res.sendStatus(200);
+    fs.writeFileSync(projectsFilePath, JSON.stringify(projectsArray));
+    res.sendStatus(200);  
+  } else {
+    res.sendStatus(401);
+  }
 });
 
 app.post('/validateEmailUnicity', function(req, res) {
-  var email = req.body.email;
-  var profileClass = req.body.profileClass;
-  var profileId = req.body.profileId;
+    var email = req.body.email;
+    var profileClass = req.body.profileClass;
+    var profileId = req.body.profileId;
 
-  var classesFilePath = '/catalog/database/classes/';
-  var allClasses = fs.readdirSync(classesFilePath);
+    var allClasses = fs.readdirSync(classesFilePath);
 
-  var isEmailUnique = true;
+    var isEmailUnique = true;
 
-  for (var i = 0, len = allClasses.length ; i < len; i++) {
-    var className = allClasses[i];
-    if(className) {
-      var classDetails = JSON.parse(fs.readFileSync(classesFilePath + className));
+    for (var i = 0, len = allClasses.length ; i < len; i++) {
+      var className = allClasses[i];
+      if(className) {
+        var classDetails = JSON.parse(fs.readFileSync(classesFilePath + className));
 
-      for (var j = 0, len = classDetails[0].Profiles.length; j < len; j++) {
-        var profileDetails = classDetails[0].Profiles[j];
-        if(profileDetails.Email == email) {
-          if(profileClass + ".json" == className && profileDetails.Id == profileId) {
-            continue;
-          } else {
-            isEmailUnique = false;
-            break;
+        for (var j = 0, len = classDetails[0].Profiles.length; j < len; j++) {
+          var profileDetails = classDetails[0].Profiles[j];
+          if(profileDetails.Email == email) {
+            if(profileClass + ".json" == className && profileDetails.Id == profileId) {
+              continue;
+            } else {
+              isEmailUnique = false;
+              break;
+            }
           }
         }
-      }
 
-      if(isEmailUnique == false) {
-        break;
+        if(isEmailUnique == false) {
+          break;
+        }
       }
     }
-  }
-  
-  var result = {
-    isEmailUnique: isEmailUnique
-  };
+    
+    var result = {
+      isEmailUnique: isEmailUnique
+    };
 
-  res.send(JSON.stringify(result));
+    res.send(JSON.stringify(result));
 });
 
-app.post('/saveProfile', function(req, res) {
-  var postedProfile = JSON.parse(req.body.ProfileDetails);
-  var className = req.query.className;
-  var classesFilePath = '/catalog/database/classes/' + className + ".json";
-  var classDetails = JSON.parse(fs.readFileSync(classesFilePath));
+function isExpectedUser(className, profileId, req) {
+  var loginCookie = req.cookies.login;
 
-  for (var i = 0, len = classDetails[0].Profiles.length; i < len; i++) {
-    var profileDetails = classDetails[0].Profiles[i];
-    if(postedProfile.Id == profileDetails.Id) {
-        profileDetails.FirstName = postedProfile.FirstName;
-        profileDetails.LastName = postedProfile.LastName;
-        profileDetails.Phone = postedProfile.Phone;
-        profileDetails.Address = postedProfile.Address;
-        profileDetails.Country = postedProfile.Country;
-        profileDetails.LinkedIn = postedProfile.LinkedIn;
-        profileDetails.Facebook = postedProfile.Facebook;
-        profileDetails.Occupation = postedProfile.Occupation;
-        profileDetails.Email = postedProfile.Email;
-        profileDetails.Description = postedProfile.Description;
-        profileDetails.Other = postedProfile.Other;
-
-        profileDetails.PhonePublic = postedProfile.PhonePublic;
-        profileDetails.AddressPublic = postedProfile.AddressPublic;
-        profileDetails.CountryPublic = postedProfile.CountryPublic;
-        profileDetails.LinkedInPublic = postedProfile.LinkedInPublic;
-        profileDetails.FacebookPublic = postedProfile.FacebookPublic;
-        profileDetails.JobPublic = postedProfile.JobPublic;
-        profileDetails.EmailPublic = postedProfile.EmailPublic;
-        break;
+  if(loginCookie) {
+    var parsedLogin = JSON.parse(loginCookie);
+    if(parsedLogin.UserId == profileId && parsedLogin.Class == className) {
+      return true;
     }
   }
 
-  fs.writeFileSync(classesFilePath, JSON.stringify(classDetails));
-  res.sendStatus(200);
+  return false;
+}
+
+app.post('/saveProfile', function(req, res) {
+  var isUserAdmin = isAdminLoggedIn(req);
+  var postedProfile = JSON.parse(req.body.ProfileDetails);
+  var className = req.query.className;
+  var profileId = postedProfile.Id;
+
+  var isExpectedUserLoggedIn = isExpectedUser(className, profileId, req);
+  if(isUserAdmin == true || isExpectedUserLoggedIn == true) {
+  
+    var classesFilePath = '/catalog/database/classes/' + className + ".json";
+    var classDetails = JSON.parse(fs.readFileSync(classesFilePath));
+
+    for (var i = 0, len = classDetails[0].Profiles.length; i < len; i++) {
+      var profileDetails = classDetails[0].Profiles[i];
+      if(postedProfile.Id == profileDetails.Id) {
+          profileDetails.FirstName = postedProfile.FirstName;
+          profileDetails.LastName = postedProfile.LastName;
+          profileDetails.Phone = postedProfile.Phone;
+          profileDetails.Address = postedProfile.Address;
+          profileDetails.Country = postedProfile.Country;
+          profileDetails.LinkedIn = postedProfile.LinkedIn;
+          profileDetails.Facebook = postedProfile.Facebook;
+          profileDetails.Occupation = postedProfile.Occupation;
+          profileDetails.Email = postedProfile.Email;
+          profileDetails.Description = postedProfile.Description;
+          profileDetails.Other = postedProfile.Other;
+
+          profileDetails.PhonePublic = postedProfile.PhonePublic;
+          profileDetails.AddressPublic = postedProfile.AddressPublic;
+          profileDetails.CountryPublic = postedProfile.CountryPublic;
+          profileDetails.LinkedInPublic = postedProfile.LinkedInPublic;
+          profileDetails.FacebookPublic = postedProfile.FacebookPublic;
+          profileDetails.JobPublic = postedProfile.JobPublic;
+          profileDetails.EmailPublic = postedProfile.EmailPublic;
+          break;
+      }
+    }
+
+    fs.writeFileSync(classesFilePath, JSON.stringify(classDetails));
+    res.sendStatus(200);  
+  } else {
+    res.sendStatus(401);
+  }
 });
 
 app.post('/saveClass', function(req, res) {
-  var classDescription = req.body.description.trim();
-  var className = req.query.className;
-  var classesFilePath = '/catalog/database/classes/' + className + ".json";
-  var classDetails = JSON.parse(fs.readFileSync(classesFilePath));
+  var isUserAdmin = isAdminLoggedIn(req);
+  if(isUserAdmin == true) {
+    var classDescription = req.body.description.trim();
+    var className = req.query.className;
+    var classesFilePath = '/catalog/database/classes/' + className + ".json";
+    var classDetails = JSON.parse(fs.readFileSync(classesFilePath));
 
-  classDetails[0].Description = classDescription;
+    classDetails[0].Description = classDescription;
 
-  fs.writeFileSync(classesFilePath, JSON.stringify(classDetails));
-  res.sendStatus(200);
+    fs.writeFileSync(classesFilePath, JSON.stringify(classDetails));
+    res.sendStatus(200);  
+  } else {
+    res.sendStatus(401);
+  }
 });
+
+function isAdminLoggedIn(req) {
+  var isUserAdmin = false;
+  var loggedInDetails = req.cookies.login;
+  if(loggedInDetails) {
+    var userDetails = JSON.parse(loggedInDetails);
+    var adminId = getAdminId();
+    isUserAdmin = userDetails.UserId == adminId;
+  }
+
+  return isUserAdmin;
+}
 
 // handler for getting gallery phothos paths
 app.get('/gallery', function(req, res) {
     res.setHeader('Content-Type', 'application/json');
+  
     var photosList = [];
 
-    var files = fs.readdirSync(classesFilePath);
+    var files = fs.readdirSync(photosFolder);
 
     if(files) {
       files.forEach(file => {
-        photosList.push(photoClientPath + file);
+        if(files.length > 1) {
+          if(file != 'NoPhoto.png') {
+            photosList.push(photoClientPath + file);
+          }
+        } else {
+          photosList.push(photoClientPath + file);
+        }
       });
     }
 
@@ -588,28 +812,38 @@ app.get('/getProjectPhotos', function(req, res) {
 });
 
 app.post('/removePhoto', function(req, res) {
-  var photoName = req.query.photoName;
+  var isUserAdmin = isAdminLoggedIn(req);
+  if(isUserAdmin == true) {
+    var photoName = req.query.photoName;
 
-  if(photoName != "NoPhoto.png") {
-    var photoPath = photosFolder + photoName;
-
-    fs.unlinkSync(photoPath);
-
-    res.sendStatus(200);
-  }
-});
-
-app.post('/removeProjectPhoto', function(req, res) {
-  var photoNames = req.body;
-  for (var i = 0, len = photoNames.length; i < len; i++) {
-    var photoName = photoNames[i];
     if(photoName != "NoPhoto.png") {
-      var photoPath = projectsFolder + photoName;
+      var photoPath = photosFolder + photoName;
 
       fs.unlinkSync(photoPath);
 
       res.sendStatus(200);
     }
+  } else {
+    res.sendStatus(401);
+  }
+});
+
+app.post('/removeProjectPhoto', function(req, res) {
+  var isUserAdmin = isAdminLoggedIn(req);
+  if(isUserAdmin == true) {
+    var photoNames = req.body;
+    for (var i = 0, len = photoNames.length; i < len; i++) {
+      var photoName = photoNames[i];
+      if(photoName != "NoPhoto.png") {
+        var photoPath = projectsFolder + photoName;
+
+        fs.unlinkSync(photoPath);
+
+        res.sendStatus(200);
+      }
+    }  
+  } else {
+    res.sendStatus(401);
   }
 });
 
@@ -622,7 +856,7 @@ app.post('/upload', function(req, res) {
   form.multiples = true;
 
   // store all uploads in the /uploads directory
-  form.profileUploadDir = path.join(__dirname, '/images/profiles/large');
+  form.profileUploadDir = path.join(__dirname, recentPhotosPath);
   form.galleryUploadDir = path.join(__dirname, photoClientPath);
   form.projectsUploadDir = path.join(__dirname, projectsClientPath);
 
@@ -635,47 +869,70 @@ app.post('/upload', function(req, res) {
     var uploadType = req.query.type;
 
     if(uploadType == 'profile') {
+      var isUserAdmin = isAdminLoggedIn(req);
       var classParam = req.query.profileClass;
       var profileIdParam = req.query.profileId;
-      
-      var newFileName = classParam + profileIdParam + fileExtension;
-      var newFilePath = path.join(form.profileUploadDir, newFileName);
-      
-      mv(file.path, newFilePath, function(err) {
-        if (err) { throw err; }
-        console.log('profile file moved successfully');
-      });
 
-      console.log('saved profile foto');
+      var isExpectedUserLoggedIn = isExpectedUser(classParam, profileIdParam, req);
+      if(isUserAdmin == true) {
+        
+        var newFileName = classParam + profileIdParam + fileExtension;
+        var newFilePath = path.join(form.profileUploadDir, newFileName);
+        var newFileClientPath = recentPhotosPath + newFileName;
+        
+        mv(file.path, newFilePath, function(err) {
+          if (err) { 
+            throw err; 
+          }
+
+          updateRecentPhotoPath(newFileClientPath, profileIdParam, classParam);
+
+          console.log('profile file moved successfully');
+        });
+
+        console.log('saved profile foto');  
+      } else {
+        res.sendStatus(401);
+      }
     }
 
     if(uploadType == 'gallery') {
-      var files = fs.readdirSync(photosFolder);
-      var numberOfFiles = files.length;
-      var newPhotoPath = path.join(form.galleryUploadDir, numberOfFiles + "_" + file.name);
+      var isUserAdmin = isAdminLoggedIn(req);
+      if(isUserAdmin == true) {
+        var files = fs.readdirSync(photosFolder);
+        var numberOfFiles = files.length;
+        var newPhotoPath = path.join(form.galleryUploadDir, numberOfFiles + "_" + file.name);
 
-      mv(file.path, newPhotoPath, function(err) {
-        if (err) { throw err; }
-        console.log('profile file moved successfully');
-      });
+        mv(file.path, newPhotoPath, function(err) {
+          if (err) { throw err; }
+          console.log('profile file moved successfully');
+        });
 
-      console.log('saved gallery foto');
+        console.log('saved gallery foto');  
+      } else {
+        res.sendStatus(401);
+      }
     }
 
     if(uploadType == 'project') {
-      var files = fs.readdirSync(projectsFolder);
-      var numberOfFiles = files.length;
-      var newPhotoPath = path.join(form.projectsUploadDir, numberOfFiles + "_" + file.name);
+      var isUserAdmin = isAdminLoggedIn(req);
+      if(isUserAdmin == true) {
+        var files = fs.readdirSync(projectsFolder);
+        var numberOfFiles = files.length;
+        var newPhotoPath = path.join(form.projectsUploadDir, numberOfFiles + "_" + file.name);
 
-      mv(file.path, newPhotoPath, function(err) {
-        if (err) { 
-          throw err;
-        }
+        mv(file.path, newPhotoPath, function(err) {
+          if (err) { 
+            throw err;
+          }
 
-        console.log('profile file moved successfully');
+          console.log('profile file moved successfully');
 
-        console.log('saved project foto');
-      });
+          console.log('saved project foto');
+        });
+      } else {
+        res.sendStatus(401);
+      }
     }
 
     res.sendStatus(200);

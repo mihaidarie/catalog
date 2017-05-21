@@ -29,10 +29,6 @@ function validateCredentials(username, password){
     return loginResult;
 }
 
-function saveAccounts(newAccountsData) {
-    // todo: overwrite accounts.json
-}
-
 function modifyAccount(accountsData, newAccountData) {
     $.each(accountsData, function(key, value) {
         if(value.Id == newAccountData.Id && value.Class == newAccountData.Class) {

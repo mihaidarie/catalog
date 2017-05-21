@@ -3,6 +3,8 @@ URI.prototype.getParameter = function(key) {
     return paramValue;
 };
 
+var oldEmailValue = '';
+
 $(document).ready(function() {
     $('#profileDescription').elastic();
     $('#otherInfo').elastic();
@@ -44,9 +46,14 @@ function renderProfileData(profileId, profileClass) {
                 $('#facebookUrl').val(profile.Facebook);
                 $('#job').val(profile.Job);
                 $('#email').val(profile.Email);
+                oldEmailValue = profile.Email;
                 $('#description').val(profile.Description);
                 $('#profilePhoto').attr("src", profile.ProfilePhotoPath);
-                $('#recentPhoto').attr("src", profile.RecentPhotoPath);
+                var recentPhotoPath = "/images/profiles/large/placeholder.png";
+                if(profile.RecentPhotoPath && profile.RecentPhotoPath != '') {
+                    recentPhotoPath = profile.RecentPhotoPath;
+                }
+                $('#recentPhoto').attr("src", recentPhotoPath);
                 $('#otherInfo').text(profile.Other);
                 $('#address').val(profile.Address);
                 
@@ -218,6 +225,11 @@ function renderProfileData(profileId, profileClass) {
 }
 
 function validateEmailUnicity(profileId, profileClass, email) {
+    
+    if(oldEmailValue == email) {
+        return true;
+    }
+    
     var postedProfile = {
         email: email,
         profileId: profileId, 
@@ -261,11 +273,8 @@ function verifyLoggedInUser() {
         var profileId = uri.getParameter('id');
         var profileClass = uri.getParameter('class');
 
-        // todo: get admin ID from file
-
-        var adminId = 0;
-
-        isRightUserLoggedIn = (adminId == loggedInUserId) || (loggedInUserId == profileId && loggedInUserClass == profileClass);
+        var isAdminUserLoggedIn = isAdminLoggedIn();
+        isRightUserLoggedIn = (isAdminUserLoggedIn == true) || (loggedInUserId == profileId && loggedInUserClass == profileClass);
     }
 
     return isRightUserLoggedIn;

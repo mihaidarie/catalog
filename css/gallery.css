@@ -7,7 +7,8 @@
     width: 100%;
     min-width: 100%;
     max-width: 100%;
-    height: auto;
+    min-height: 10em;
+    height: 33em;
     max-height: 33em;
     overflow: auto !important;
     margin-top: 1em;
