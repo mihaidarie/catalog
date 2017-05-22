@@ -115,6 +115,7 @@ input[type='checkbox'] {
     width: 50%;
     height: 15%;
     margin-left: 23%;
+    margin-top: 1em;
 }
 
 #buttons button {
@@ -123,4 +124,11 @@ input[type='checkbox'] {
 
 #changePhoto {
     margin-top: 1em;
+}
+
+#otherInfo {
+    overflow: auto;
+    min-height: 10.5em;
+    height: 10.5em;
+    max-height: 10.5em;
 }

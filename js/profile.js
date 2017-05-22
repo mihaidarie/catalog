@@ -7,7 +7,6 @@ var oldEmailValue = '';
 
 $(document).ready(function() {
     $('#profileDescription').elastic();
-    $('#otherInfo').elastic();
     var uri = URI(window.location.href);
     var profileId = uri.getParameter('id');
     var profileClass = uri.getParameter('class');
@@ -181,7 +180,7 @@ function renderProfileData(profileId, profileClass) {
                     profile.job = $('#job').val();
                     profile.Email = email;
                     profile.Description = $('#description').val();
-                    profile.Other = $('#otherInfo').text();
+                    profile.Other = $('#otherInfo').val();
 
                     profile.PhonePublic = $('#phonePublic')[0].checked;
                     profile.AddressPublic = $('#addressPublic')[0].checked;
