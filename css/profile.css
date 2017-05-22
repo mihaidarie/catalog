@@ -113,7 +113,7 @@ input[type='checkbox'] {
 #buttons {
     float: left !important;
     width: 50%;
-    height: 15%;
+    height: 20%;
     margin-left: 23%;
     margin-top: 1em;
 }
@@ -131,4 +131,8 @@ input[type='checkbox'] {
     min-height: 10.5em;
     height: 10.5em;
     max-height: 10.5em;
+}
+
+#result {
+    float: none !important;
 }

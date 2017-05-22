@@ -39,7 +39,7 @@ function wireUpHandlers() {
                 data: JSON.stringify(checkedImagesNames),
                 contentType: 'application/json',
                 error: function(jqXHR, textStatus, errorThrown ) {
-                    alert('jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
+                    console.log('jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
                 },
                 success: function() {
                     loadProjectPhotos();

@@ -283,7 +283,7 @@ function getAdminDetails() {
 }
 
 function scheduleTokenRemoval(token) {
-  var timeoutInterval = 1 * 60 * 1000;
+  var timeoutInterval = 5 * 60 * 1000;
   setTimeout(function() {
     console.log("invalidating password reset link for token: " + token);
     var resetAttempt = passwordResetTokens[token];
@@ -512,7 +512,7 @@ app.post('/resetPassword', function(req, res) {
     var token = req.body.token;
 
     var tokenDetails = passwordResetTokens[token];
-    var returnResult;
+    var returnResult = { success: false };
 
     if(tokenDetails) {
       var personId = tokenDetails.personId;
@@ -536,6 +536,7 @@ app.post('/resetPassword', function(req, res) {
           
           if(isEmailPasswordDifferentThanAdmin == true && isUsernamePasswordDifferentThanAdmin) {
             accounts[i].Password = hashedPassword;
+            returnResult.success = true;
           } else {
             returnResult = {
               success: false,
@@ -547,7 +548,7 @@ app.post('/resetPassword', function(req, res) {
         }
       }
 
-      if(returnResult.success != false) {
+      if(returnResult.success == true) {
         fs.writeFileSync(accountsFilePath, JSON.stringify(accounts));
         returnResult = {
           success: true
@@ -835,7 +836,7 @@ app.post('/saveProfile', function(req, res) {
             profileDetails.Country = postedProfile.Country;
             profileDetails.LinkedIn = postedProfile.LinkedIn;
             profileDetails.Facebook = postedProfile.Facebook;
-            profileDetails.Occupation = postedProfile.Occupation;
+            profileDetails.Job = postedProfile.Job;
             profileDetails.Email = postedProfile.Email;
             profileDetails.Description = postedProfile.Description;
             profileDetails.Other = postedProfile.Other;

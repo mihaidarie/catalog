@@ -193,7 +193,7 @@ function loadPhotosSlider() {
 
 					}
 				}).error(function(e){
-					alert('error: ' + e);
+					console.log('error: ' + e);
 				}).attr('src',$img.attr('src'));
 			});
 				

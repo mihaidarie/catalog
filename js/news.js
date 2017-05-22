@@ -39,7 +39,7 @@ function renderNewsForm() {
                 data: postedNewsJson,
                 contentType: 'application/json',
                 error: function(jqXHR, textStatus, errorThrown ) {
-                    alert('jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
+                    console.log('jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
                 },
                 success: function() {
                     console.log("success!");
@@ -72,7 +72,7 @@ function renderNewsForm() {
                 data: postedData,
                 contentType: 'application/json',
                 error: function(jqXHR, textStatus, errorThrown ) {
-                    alert('jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
+                    console.log('jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
                 },
                 success: function() {
                     console.log("success!");
