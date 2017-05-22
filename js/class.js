@@ -26,7 +26,7 @@ function loadClassInfo() {
         var items = [];
         $.each(data, function(index, classDetails) {
 
-            items.push( "<div id='classDescription'><textarea class='description'>" + classDetails.Description + "</textarea><button id='saveDescription'>Salveaza descriere</button></div>" );
+            items.push( "<div id='classDescription'><textarea class='description'>" + classDetails.Description + "</textarea><button class='roundedCorners' id='saveDescription'>Salveaza descriere</button></div>" );
 
             //items.push( '');
 
