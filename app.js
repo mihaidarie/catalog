@@ -580,6 +580,7 @@ app.post('/emailadmin', function(req, res) {
       var body = req.body.emailBody;
 
       sendMailToAdmin(firstname, lastname, email, subject, body);
+      res.sendStatus(200);
     } else {
       res.sendStatus(401);
     }
@@ -1017,7 +1018,9 @@ app.post('/upload', function(req, res) {
             console.log('profile file moved successfully');
           });
 
-          console.log('saved profile foto');  
+          console.log('saved profile foto'); 
+
+          res.sendStatus(200); 
         } else {
           res.sendStatus(401);
         }
@@ -1035,7 +1038,9 @@ app.post('/upload', function(req, res) {
             console.log('profile file moved successfully');
           });
 
-          console.log('saved gallery foto');  
+          console.log('saved gallery foto'); 
+
+          res.sendStatus(200); 
         } else {
           res.sendStatus(401);
         }
@@ -1056,13 +1061,13 @@ app.post('/upload', function(req, res) {
             console.log('profile file moved successfully');
 
             console.log('saved project foto');
+
+            res.sendStatus(200);
           });
         } else {
           res.sendStatus(401);
         }
       }
-
-      res.sendStatus(200);
     });
 
     // log any errors that occur
