@@ -695,18 +695,39 @@ app.post('/saveProjects', function(req, res) {
 
       postedProjects.existingData.sort(compareIds);
 
-      if(postedProjects.newData) {
+      var isTitle = postedProjects.newData.Title && postedProjects.newData.Title != '';
+      var isSubtitle = postedProjects.newData.Subtitle && postedProjects.newData.Subtitle != '';
+      var isDescription = postedProjects.newData.Description && postedProjects.newData.Description != '';
+      
+      var isAnyFieldPresent = isTitle || isSubtitle || isDescription;
+
+      if(postedProjects.newData && (isAnyFieldPresent == true)) {
         var newProject = postedProjects.newData;
         var lastId = 0;
         if(postedProjects.existingData.length > 0) {
           lastId = postedProjects.existingData[postedProjects.existingData.length - 1].Id;
         }
         
+        var newTitle = newProject.Title;
+        if(isTitle == false) {
+          newTitle = '';
+        }
+
+        var newSubTitle = newProject.Subtitle;
+        if(isSubtitle == false) {
+          newSubTitle = '';
+        }
+
+        var newDescription = newProject.Description;
+        if(isDescription == false) {
+          newDescription = '';
+        }
+
         var newProjectItem = {
           Id : lastId + 1,
-          Title : newProject.Title,
-          Subtitle: newProject.Subtitle,
-          Description : newProject.Description
+          Title : newTitle,
+          Subtitle: newSubTitle,
+          Description : newDescription
         };
 
         postedProjects.existingData.push(newProjectItem);

@@ -61,10 +61,12 @@
 
 .updatesContent {
     float: left;
+    width: 20em;
 }
 
 .projectsList li {
     padding-bottom: 1.6%;
+    word-break: break-all;
 }
 
 .request {

@@ -48,14 +48,13 @@ function sendMail() {
         contentType: 'application/json',
         error: function(jqXHR, textStatus, errorThrown ) {
             console.log('jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
-            //$('#emailResult').text('Trimitere esuata! Contactati administratorul.');
+            $('#emailResult').text('Trimitere esuata! Contactati administratorul.');
         },
         complete: function() {
-            console.log("completed!");         
+            $('#emailResult').text('Mesaj expediat!');
         }
-    });  
-    
-    $('#emailResult').text('Mesaj expediat!');
+    });
+
     $('#captchaInput').val('');
     setTimeout(function() {
         window.location.href = window.location.href;

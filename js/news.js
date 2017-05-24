@@ -3,6 +3,12 @@ $(document).ready(function() {
     $("footer").load('footer.html');
 });
  
+function SortById(a, b){
+  var aName = a.Id;
+  var bName = b.Id; 
+  return ((aName < bName) ? -1 : ((aName > bName) ? 1 : 0));
+}
+
 function renderNewsForm() {
     loadHeader();
     loadNews();
@@ -40,15 +46,25 @@ function renderNewsForm() {
                 contentType: 'application/json',
                 error: function(jqXHR, textStatus, errorThrown ) {
                     console.log('jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
+                    $('#result').text('Salvare esuata! Contactati administratorul.');
+                    $('#result').css('color', 'red');
+                    resetResultMessage();
                 },
                 success: function() {
                     console.log("success!");
-                    loadNews();     
+                    $('#result').text('Salvare reusita!');
+                    $('#result').css('color', 'green');
+                    resetResultMessage();
+                    loadNews(true);
                 },
                 complete: function() {
-                    console.log("completed!");      
+                    console.log("completed!");
+                    scrollToResult();
                 }
             });
+        } else {
+            $('#result').text('Salvare esuata! Va rugam sa va logati.');
+            $('#result').css('color', 'red');
         }
     });
     
@@ -73,20 +89,27 @@ function renderNewsForm() {
                 contentType: 'application/json',
                 error: function(jqXHR, textStatus, errorThrown ) {
                     console.log('jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
+                    $('#result').text('Stergere esuata! Contactati administratorul.');
+                    $('#result').css('color', 'red');
+                    resetResultMessage();
                 },
                 success: function() {
                     console.log("success!");
-                    loadNews();
+                    $('#result').text('Stergere reusita!');
+                    $('#result').css('color', 'green');
+                    resetResultMessage();
+                    loadNews(true);
                 },
                 complete: function() {
-                    console.log("completed!");      
+                    console.log("completed!");
+                    scrollToResult();
                 }
             });
         }
     });
 }
 
-function loadNews() {
+function loadNews(shouldScroll) {
     var newsFileName = "database/news/news.json";
     
     $('#newsList').empty();
@@ -109,6 +132,10 @@ function loadNews() {
         renderNewNewsElement();
 
         setupFormMode();
+
+        if(shouldScroll == true) {
+            scrollToResult();
+        }
     });
 }
 

@@ -119,15 +119,30 @@ function wireupHeaderButtons() {
                 wireupSessionTimer();
                 window.location.href = window.location.href;
             } else {
-                // TODO: REPLACE with label maybe
-                alert("invalid credentials");
+                alert("User inexistent sau parola incorecta! Folositi butonul Reset pt a seta o parola noua, in caz ca ati uitat-o.");
             }
         }
     });
 }
 
+function resetResultMessage() {
+    setTimeout(function() {
+        $('#result').text('');
+    }, 5000);
+}
+
 function removeLoginCookie() {
     Cookies.remove('login');
+    logout();
+}
+
+function scrollToResult() {
+    var scrollTo = $('#result');
+    var scrollTopPosition = scrollTo.position().top;
+    $('html, body').animate({
+        scrollTop: scrollTopPosition },
+        2000
+    );
 }
 
 function setLoginCookie(loginDetails) {

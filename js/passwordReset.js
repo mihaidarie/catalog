@@ -152,6 +152,7 @@ $(document).ready(function() {
                 },
                 error: function(jqXHR, textStatus, errorThrown ) {
                     console.log('jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
+                    $('#result').text('Trimitere esuata! Contactati administratorul.');
                 },
                 complete: function() {
                     console.log("completed!");         
