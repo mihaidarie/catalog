@@ -13,7 +13,7 @@ function loadNews() {
         var sorted = data.sort(SortById);
         $.each(data, function(index, newsDetails) {
             if(newsDetails.Id && newsDetails.Id != '' && newsDetails.Description && newsDetails.Description != '') {
-                items.push( "<li id=news_" + newsDetails.Id + ">" + newsDetails.Description + "</li>" );
+                items.push( "<li id=news_" + newsDetails.Id + "><textarea readonly>" + newsDetails.Description + "</textarea></li>" );
             }
         });
         
