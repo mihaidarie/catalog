@@ -205,6 +205,9 @@ function renderProfileData(profileId, profileClass) {
                             console.log('jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
                             $('#result').text('Salvare esuata! Contactati administratorul.');
                             $('#result').css('color', 'red');
+                            setTimeout(function() {
+                                 $('#result').text('');
+                            }, 5000);
                         },
                         success: function() {
                             $('#result').text('Salvat!');
@@ -257,6 +260,11 @@ function validateEmailUnicity(profileId, profileClass, email) {
         contentType: 'application/json',
         error: function(jqXHR, textStatus, errorThrown ) {
             console.log('Error validating email unicity! jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
+            $('#result').text('Salvare esuata! Contactati administratorul.');
+            $('#result').css('color', 'red');
+            setTimeout(function() {
+                    $('#result').text('');
+            }, 5000);
         },
         success: function(result) {
             isEmailUnique = JSON.parse(result).isEmailUnique;  

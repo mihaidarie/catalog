@@ -108,6 +108,8 @@ $(document).ready(function() {
                         },
                         error: function(jqXHR, textStatus, errorThrown ) {
                             console.log('jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
+                            $('#result').text('Salvare esuata! Contactati administratorul.');
+                            $('#result').css('color', 'red');
                         },
                         complete: function() {
                             console.log("completed!");
@@ -153,9 +155,10 @@ $(document).ready(function() {
                 error: function(jqXHR, textStatus, errorThrown ) {
                     console.log('jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
                     $('#result').text('Trimitere esuata! Contactati administratorul.');
+                    $('#result').css('color', 'red');
                 },
                 complete: function() {
-                    console.log("completed!");         
+                    console.log("completed!");
                 }
             });
         });
