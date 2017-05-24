@@ -68,14 +68,14 @@ function loadClassInfo() {
                     error: function(jqXHR, textStatus, errorThrown ) {
                         $('#result').text('Salvare esuata! Contactati administratorul.');
                         $('#result').css('color', 'red');
-                        scrollToResult();
+                        scrollToDescription();
                         resetResultMessage();
                     },
                     success: function() {
                         console.log("success!");
                         $('#result').text('Salvare reusita!');
                         $('#result').css('color', 'green');
-                        scrollToResult();
+                        scrollToDescription();
                         resetResultMessage();
                     },
                     complete: function() {
@@ -84,11 +84,20 @@ function loadClassInfo() {
                 });
             } else {
                 $('#result').text('Va rugam sa va logati.');
-                scrollToResult();
+                scrollToDescription();
                 $('#result').css('color', 'red');
             }
         });
     });
+}
+
+function scrollToDescription() {
+    var scrollTo = $('#classDescription');
+    var scrollTopPosition = scrollTo.position().top;
+    $('html, body').animate({
+        scrollTop: scrollTopPosition },
+        2000
+    );
 }
 
 function hookProfileClick() {
