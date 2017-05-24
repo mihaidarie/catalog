@@ -985,10 +985,10 @@ app.post('/removeProjectPhoto', function(req, res) {
           var photoPath = projectsFolder + photoName;
 
           fs.unlinkSync(photoPath);
-
-          res.sendStatus(200);
         }
-      }  
+      }
+
+      res.sendStatus(200);  
     } else {
       res.sendStatus(401);
     }
