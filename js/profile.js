@@ -205,6 +205,7 @@ function renderProfileData(profileId, profileClass) {
                             console.log('jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
                             $('#result').text('Salvare esuata! Contactati administratorul.');
                             $('#result').css('color', 'red');
+                            scrollToResult();
                             setTimeout(function() {
                                  $('#result').text('');
                             }, 5000);
@@ -212,6 +213,7 @@ function renderProfileData(profileId, profileClass) {
                         success: function() {
                             $('#result').text('Salvat!');
                             $('#result').css('color', 'green');
+                            scrollToResult();
                             setTimeout(function() {
                                  $('#result').text('');
                             }, 5000);
@@ -225,6 +227,7 @@ function renderProfileData(profileId, profileClass) {
                 } else {
                     $('#result').text('Email-ul este folosit deja!');
                     $('#result').css('color', 'red');
+                    scrollToResult();
                 }
             } else {
                 location.href = "Index.html";
@@ -262,6 +265,7 @@ function validateEmailUnicity(profileId, profileClass, email) {
             console.log('Error validating email unicity! jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
             $('#result').text('Salvare esuata! Contactati administratorul.');
             $('#result').css('color', 'red');
+            scrollToResult();
             setTimeout(function() {
                     $('#result').text('');
             }, 5000);

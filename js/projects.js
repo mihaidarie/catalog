@@ -58,6 +58,7 @@ function renderProjectsForm() {
                     console.log('jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
                     $('#result').text('Salvare esuata! Contactati administratorul.');
                     $('#result').css('color', 'red');
+                    scrollToResult();
                     resetResultMessage();
                 },
                 success: function() {
@@ -74,6 +75,7 @@ function renderProjectsForm() {
         } else {
             $('#result').text('Stergere esuata! Va rugam sa va logati.');
             $('#result').css('color', 'red');
+            scrollToResult();
             resetResultMessage();
         }
     });
@@ -101,6 +103,7 @@ function renderProjectsForm() {
                     console.log('jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
                     $('#result').text('Stergere esuata! Contactati administratorul.');
                     $('#result').css('color', 'red');
+                    scrollToResult();
                     resetResultMessage();
                 },
                 success: function() {
@@ -117,6 +120,7 @@ function renderProjectsForm() {
         } else {
             $('#result').text('Stergere esuata! Va rugam sa va logati.');
             $('#result').css('color', 'red');
+            scrollToResult();
             resetResultMessage();
         }
     });

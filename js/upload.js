@@ -1,8 +1,7 @@
 function setupUploadControls(uploadType, profileId, profileClass) {
     $('#upload-btn').on('click', function () {
         $('#upload-input').click();
-        $('.progress-bar').text('0%');
-        $('.progress-bar').width('0%');
+        resetProgressBar();
     });
 
     $('#upload-input').on('change', function() {
@@ -63,6 +62,7 @@ function setupUploadControls(uploadType, profileId, profileClass) {
                 // once the upload reaches 100%, set the progress bar text to done
                 if (percentComplete === 100) {
                   $('.progress-bar').html('Incarcare reusita!');
+                  setTimeout(resetProgressBar, 5000);
                 }
 
               }
@@ -74,4 +74,9 @@ function setupUploadControls(uploadType, profileId, profileClass) {
         });
       }
     });
+}
+
+function resetProgressBar() {
+  $('.progress-bar').text('0%');
+  $('.progress-bar').width('0%');
 }

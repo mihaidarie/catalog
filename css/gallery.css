@@ -1,6 +1,11 @@
 .gallery {
     width: 58%;
-    height: 88em;
+    height: 99em;
+}
+
+#resultContainer {
+    height: 2em;
+    margin-top: 1em;
 }
 
 #freeLinks {

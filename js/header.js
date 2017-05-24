@@ -33,16 +33,13 @@ function wireupSessionTimer() {
                 
                 var isIdle = $.idleTimer("isIdle");
                 if(isIdle) {
-
-                    // remove login cookie
-                    removeLoginCookie();
-    
                     // stop the timer, removes data, removes event bindings
                     // to come back from this you will need to instantiate again
                     // returns: jQuery
                     $.idleTimer("destroy");
 
-                    window.location.href = "index.html";
+                    // remove login cookie
+                    logout(true);
                 }
             }, 8 * 1000);
         }
@@ -133,7 +130,6 @@ function resetResultMessage() {
 
 function removeLoginCookie() {
     Cookies.remove('login');
-    logout(true);
 }
 
 function scrollToResult() {

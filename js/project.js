@@ -30,10 +30,11 @@ function wireUpHandlers() {
 
         }
         else {
-            location.href = "index.html";
             $('#result').text('Incarcare esuata! Va rugam sa va logati.');
             $('#result').css('color', 'red');
+            scrollToResult();
             resetResultMessage();
+            location.href = "index.html";
         }
     });
 

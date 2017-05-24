@@ -57,7 +57,18 @@ function loadLinks() {
                         contentType: 'application/json',
                         data: JSON.stringify(data),
                         success: function(r) {
+                            $('#result').text('Salvare reusita!');
+                            $('#result').css('color', 'green');
+                            resetResultMessage();
                             loadLinks();
+                            scrollToResult();
+                        },
+                        error: function(jqXHR, textStatus, errorThrown ) {
+                            console.log('jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
+                            $('#result').text('Salvare esuata! Contactati administratorul.');
+                            $('#result').css('color', 'red');
+                            scrollToResult();
+                            resetResultMessage();
                         }
                     });
                 }
