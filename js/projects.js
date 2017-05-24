@@ -71,6 +71,10 @@ function renderProjectsForm() {
                     console.log("completed!");
                 }
             });
+        } else {
+            $('#result').text('Stergere esuata! Va rugam sa va logati.');
+            $('#result').css('color', 'red');
+            resetResultMessage();
         }
     });
     
@@ -110,6 +114,10 @@ function renderProjectsForm() {
                     console.log("completed!");
                 }
             });
+        } else {
+            $('#result').text('Stergere esuata! Va rugam sa va logati.');
+            $('#result').css('color', 'red');
+            resetResultMessage();
         }
     });
 }
