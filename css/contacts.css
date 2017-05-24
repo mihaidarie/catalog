@@ -15,3 +15,8 @@
 .contactDetails input {
     float: right;
 }
+
+#result {
+    margin-top: 2%;
+    display: block;
+}

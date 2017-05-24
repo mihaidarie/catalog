@@ -40,7 +40,7 @@
     margin-left: 5%;
 }
 
-.profilesList label {
+.profilesList label  {
     width: 100%;
     padding: 2px;
     margin-top: 5%;
@@ -48,4 +48,10 @@
     clear: both;
     float: left;
     cursor: pointer;
+}
+
+#result {
+    margin-top: 0;
+    margin-bottom: 2%;
+    font-size: 20px;
 }

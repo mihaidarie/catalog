@@ -26,9 +26,9 @@ function loadClassInfo() {
         var items = [];
         $.each(data, function(index, classDetails) {
 
-            items.push( "<div id='classDescription'><textarea class='description'>" + classDetails.Description + "</textarea><button class='roundedCorners' id='saveDescription'>Salveaza descriere</button></div>" );
-
-            //items.push( '');
+            items.push( "<div id='classDescription'><textarea class='description'>" + 
+                classDetails.Description + "</textarea><button class='roundedCorners' id='saveDescription'>" +
+                "Salveaza descriere</button><label id='result'></label></div>" );
 
             $.each(classDetails.Profiles, function(index2, profile) {
 
@@ -38,10 +38,10 @@ function loadClassInfo() {
             });
         });
         
-        $( "<div/>", {
+        $( ' <div/>', {
             "class": "profilesList",
             html: items.join("")
-        }).appendTo("#profiles");
+        }).prependTo("#profiles");
 
         hookProfileClick();
 
@@ -60,21 +60,29 @@ function loadClassInfo() {
 
                 var postedData = JSON.stringify( { description : inputDescription });
                 var postUrl = "/saveClass?className=" + className;
-                    $.ajax({
-                        url: postUrl,
-                        type: 'POST',
-                        data: postedData,
-                        contentType: 'application/json',
-                        error: function(jqXHR, textStatus, errorThrown ) {
-                            //$('#emailResult').text('Trimitere esuata! Contactati administratorul.');
-                        },
-                        success: function() {
-                            console.log("success!");         
-                        },
-                        complete: function() {
-                            console.log("completed!");         
-                        }
-                    });
+                $.ajax({
+                    url: postUrl,
+                    type: 'POST',
+                    data: postedData,
+                    contentType: 'application/json',
+                    error: function(jqXHR, textStatus, errorThrown ) {
+                        $('#result').text('Salvare esuata! Contactati administratorul.');
+                        $('#result').css('color', 'red');
+                        resetResultMessage();
+                    },
+                    success: function() {
+                        console.log("success!");
+                        $('#result').text('Salvare reusita!');
+                        $('#result').css('color', 'green');
+                        resetResultMessage();
+                    },
+                    complete: function() {
+                        console.log("completed!");
+                    }
+                });
+            } else {
+                $('#result').text('Va rugam sa va logati.');
+                $('#result').css('color', 'red');
             }
         });
     });

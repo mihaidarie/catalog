@@ -203,6 +203,8 @@ function renderProfileData(profileId, profileClass) {
                         contentType: 'application/json',
                         error: function(jqXHR, textStatus, errorThrown ) {
                             console.log('jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
+                            $('#result').text('Salvare esuata! Contactati administratorul.');
+                            $('#result').css('color', 'red');
                         },
                         success: function() {
                             $('#result').text('Salvat!');

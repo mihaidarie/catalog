@@ -119,11 +119,16 @@ function wireupHeaderButtons() {
                 wireupSessionTimer();
                 window.location.href = window.location.href;
             } else {
-                // TODO: REPLACE with label maybe
-                alert("invalid credentials");
+                alert("User inexistent sau parola incorecta! Folositi butonul Reset pt a seta o parola noua, in caz ca ati uitat-o.");
             }
         }
     });
+}
+
+function resetResultMessage() {
+    setTimeout(function() {
+        $('#result').text('');
+    }, 5000);
 }
 
 function removeLoginCookie() {
