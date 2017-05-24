@@ -133,6 +133,16 @@ function resetResultMessage() {
 
 function removeLoginCookie() {
     Cookies.remove('login');
+    logout();
+}
+
+function scrollToResult() {
+    var scrollTo = $('#result');
+    var scrollTopPosition = scrollTo.position().top;
+    $('html, body').animate({
+        scrollTop: scrollTopPosition },
+        2000
+    );
 }
 
 function setLoginCookie(loginDetails) {

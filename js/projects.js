@@ -20,6 +20,7 @@ function renderProjectsForm() {
                 ProjectsItem.Title = itemDetails.children[0].value;
                 ProjectsItem.Subtitle = itemDetails.children[1].value;
                 ProjectsItem.Description = itemDetails.children[2].value;
+
                 ProjectsList.push(ProjectsItem);
             });
 
@@ -55,10 +56,16 @@ function renderProjectsForm() {
                 contentType: 'application/json',
                 error: function(jqXHR, textStatus, errorThrown ) {
                     console.log('jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
+                    $('#result').text('Salvare esuata! Contactati administratorul.');
+                    $('#result').css('color', 'red');
+                    resetResultMessage();
                 },
                 success: function() {
                     console.log("success!");
-                    loadProjects(); 
+                    $('#result').text('Salvare reusita!');
+                    $('#result').css('color', 'green');
+                    resetResultMessage();
+                    loadProjects(true); 
                 },
                 complete: function() {
                     console.log("completed!");
@@ -88,10 +95,16 @@ function renderProjectsForm() {
                 contentType: 'application/json',
                 error: function(jqXHR, textStatus, errorThrown ) {
                     console.log('jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
+                    $('#result').text('Stergere esuata! Contactati administratorul.');
+                    $('#result').css('color', 'red');
+                    resetResultMessage();
                 },
                 success: function() {
                     console.log("success!");
-                    loadProjects();
+                    loadProjects(true);
+                    $('#result').text('Stergere reusita!');
+                    $('#result').css('color', 'green');
+                    resetResultMessage();
                 },
                 complete: function() {
                     console.log("completed!");
@@ -101,7 +114,7 @@ function renderProjectsForm() {
     });
 }
 
-function loadProjects() {
+function loadProjects(shouldScroll) {
     var projectsFileName = "database/Projects/Projects.json";
     
     $('#projectsList').empty();
@@ -125,6 +138,10 @@ function loadProjects() {
         renderNewProjectsElement();
 
         setupFormMode();
+        
+        if(shouldScroll == true) {
+            scrollToResult();
+        }
     });
 }
 

@@ -109,15 +109,6 @@ function renderNewsForm() {
     });
 }
 
-function scrollToResult() {
-    var scrollTo = $('#result');
-    var scrollTopPosition = scrollTo.position().top;
-    $('html, body').animate({
-        scrollTop: scrollTopPosition },
-        2000
-    );
-}
-
 function loadNews(shouldScroll) {
     var newsFileName = "database/news/news.json";
     
