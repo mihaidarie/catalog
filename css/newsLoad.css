@@ -1,6 +1,5 @@
 #newsList {
     list-style-type: none;
-    float: left;
     padding: 1%;
     margin-top: 2%;
     width: 85%;
@@ -10,6 +9,9 @@
 
 #newsList li {
     float: left;
+    width: 100%;
+    word-break: break-all;
+    margin-top: 0.5em;
 }
 
 #newsList li:not(:last-child) {

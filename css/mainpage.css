@@ -61,6 +61,7 @@
 
 .updatesContent {
     float: left;
+    width: 20em;
 }
 
 .projectsList li {
