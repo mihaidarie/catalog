@@ -9,3 +9,7 @@
 #uploadContent {
     height: 25%;
 }
+
+.login {
+    bottom: -11% !important;
+}

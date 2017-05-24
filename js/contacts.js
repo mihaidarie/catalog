@@ -32,7 +32,6 @@ function renderControls() {
                     data: postedData,
                     contentType: 'application/json',
                     error: function(jqXHR, textStatus, errorThrown ) {
-                        alert('jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
                         //$('#emailResult').text('Trimitere esuata! Contactati administratorul.');
                     },
                     success: function() {

@@ -7,7 +7,6 @@ var oldEmailValue = '';
 
 $(document).ready(function() {
     $('#profileDescription').elastic();
-    $('#otherInfo').elastic();
     var uri = URI(window.location.href);
     var profileId = uri.getParameter('id');
     var profileClass = uri.getParameter('class');
@@ -178,10 +177,10 @@ function renderProfileData(profileId, profileClass) {
                     profile.Country = $('#country').val();
                     profile.LinkedIn = $('#linkedinUrl').val();
                     profile.Facebook = $('#facebookUrl').val();
-                    profile.job = $('#job').val();
+                    profile.Job = $('#job').val();
                     profile.Email = email;
                     profile.Description = $('#description').val();
-                    profile.Other = $('#otherInfo').text();
+                    profile.Other = $('#otherInfo').val();
 
                     profile.PhonePublic = $('#phonePublic')[0].checked;
                     profile.AddressPublic = $('#addressPublic')[0].checked;
@@ -203,9 +202,15 @@ function renderProfileData(profileId, profileClass) {
                         data: postedData,
                         contentType: 'application/json',
                         error: function(jqXHR, textStatus, errorThrown ) {
-                            alert('jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
+                            console.log('jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
                         },
                         success: function() {
+                            $('#result').text('Salvat!');
+                            $('#result').css('color', 'green');
+                            setTimeout(function() {
+                                 $('#result').text('');
+                            }, 5000);
+
                             console.log("success!");         
                         },
                         complete: function() {
@@ -214,7 +219,10 @@ function renderProfileData(profileId, profileClass) {
                     });  
                 } else {
                     $('#result').text('Email-ul este folosit deja!');
+                    $('#result').css('color', 'red');
                 }
+            } else {
+                location.href = "Index.html";
             }
         });
 
@@ -246,7 +254,7 @@ function validateEmailUnicity(profileId, profileClass, email) {
         data: postedData,
         contentType: 'application/json',
         error: function(jqXHR, textStatus, errorThrown ) {
-            alert('Error validating email unicity!');
+            console.log('Error validating email unicity! jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
         },
         success: function(result) {
             isEmailUnique = JSON.parse(result).isEmailUnique;  

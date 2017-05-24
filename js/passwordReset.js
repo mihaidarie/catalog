@@ -38,7 +38,7 @@ function validateToken(token) {
             }
         },
         error: function(jqXHR, textStatus, errorThrown ) {
-            alert('jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
+            console.log('jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
             isTokenValid = false;
         },
         complete: function() {
@@ -73,6 +73,7 @@ $(document).ready(function() {
 
                 if(password1 != password2) {
                     $('#result').text('Parolele nu coincid, va rugam reintroduceti.');
+                    $('#result').css('color', 'red');
                 } else {
                     // has token, try to reset
 
@@ -89,22 +90,24 @@ $(document).ready(function() {
                             result = JSON.parse(result);
                             if(result.success == false) {
                                 $('#result').text(result.message);
+                                $('#result').css('color', 'red');
                                 setTimeout(function() {
                                     location.href = "PasswordReset.html";
-                                }, 3000);
+                                }, 10 * 1000);
                             } else {
                                 if(result.success && result.success == true) {
                                     $('#result').text('Parola salvata! Incercati sa va logati, dupa 3 secunde.');
+                                    $('#result').css('color', 'green');
                                     $('#password1').text('');
                                     $('#password2').text('');
                                     setTimeout(function() {
                                         location.href = "index.html";
-                                    }, 3000)
+                                    }, 10 * 1000)
                                 } 
                             }
                         },
                         error: function(jqXHR, textStatus, errorThrown ) {
-                            alert('jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
+                            console.log('jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
                         },
                         complete: function() {
                             console.log("completed!");
@@ -139,14 +142,16 @@ $(document).ready(function() {
                     result = JSON.parse(result);
                     if(result.isValid == false) {
                         $('#result').text(result.message);
+                        $('#result').css('color', 'red');
                     } else {
                         if(result.isValid && result.isValid == true) {
-                            $('#result').text('Verificati email-ul si urmati link-ul pt resetarea parolei. Link-ul este valid doar 1 minut!');
+                            $('#result').text('Verificati email-ul si urmati link-ul pt resetarea parolei. Link-ul este valid doar 5 minute!');
+                            $('#result').css('color', 'green');
                         } 
                     }
                 },
                 error: function(jqXHR, textStatus, errorThrown ) {
-                    alert('jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
+                    console.log('jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
                 },
                 complete: function() {
                     console.log("completed!");         

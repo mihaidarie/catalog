@@ -113,10 +113,26 @@ input[type='checkbox'] {
 #buttons {
     float: left !important;
     width: 50%;
-    height: 15%;
-    margin-left: 30%;
+    height: 20%;
+    margin-left: 23%;
+    margin-top: 1em;
+}
+
+#buttons button {
+    font-size: 17px;
 }
 
 #changePhoto {
     margin-top: 1em;
+}
+
+#otherInfo {
+    overflow: auto;
+    min-height: 10.5em;
+    height: 10.5em;
+    max-height: 10.5em;
+}
+
+#result {
+    float: none !important;
 }

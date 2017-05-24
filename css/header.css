@@ -34,6 +34,10 @@
     border: none;
 }
 
+.roundedCorners {
+    border-radius: 7px;
+}
+
 .promotion button {
     cursor: pointer;
 }
@@ -69,7 +73,6 @@
 
 #loginOK, #loginReset {
     width: 40%;
-    border-radius: 7px;
 }
 
 header {
