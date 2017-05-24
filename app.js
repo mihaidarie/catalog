@@ -1083,8 +1083,6 @@ app.post('/upload', function(req, res) {
             console.log('profile file moved successfully');
 
             console.log('saved project foto');
-
-            res.sendStatus(200);
           });
         } else {
           res.sendStatus(401);
@@ -1095,11 +1093,12 @@ app.post('/upload', function(req, res) {
     // log any errors that occur
     form.on('error', function(err) {
       console.log('An error has occured: \n' + err);
+      res.sendStatus(503);
     });
 
     // once all the files have been uploaded, send a response to the client
     form.on('end', function() {
-      res.end('success');
+      res.sendStatus(200);
     });
 
     // parse the incoming request containing the form data

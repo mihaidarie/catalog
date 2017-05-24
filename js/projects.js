@@ -10,7 +10,7 @@ function renderProjectsForm() {
     $('#saveProjects').click(function() {
         var isAdminUserLoggedIn = isAdminLoggedIn();
 
-        if(isAdminUserLoggedIn) {
+        if(isAdminUserLoggedIn == true) {
 
             var ProjectsList = [];
             $('#projectsList li[id^="project_"]').each(function(index, itemDetails) {
@@ -81,7 +81,7 @@ function renderProjectsForm() {
     $('#removeProjects').click(function() {
         var isAdminUserLoggedIn = isAdminLoggedIn();
 
-        if(isAdminUserLoggedIn) {
+        if(isAdminUserLoggedIn == true) {
             var ProjectsIdsList = [];
 
             $('input[id^="deleteprojects_"]:checked').each(function(index, currentItem) {
@@ -173,7 +173,7 @@ function renderNewProjectsElement() {
 function setupFormMode() {
     var isAdminUserLoggedIn = isAdminLoggedIn();
 
-    if(isAdminUserLoggedIn) {
+    if(isAdminUserLoggedIn == true) {
         $('#projectsList input').removeAttr('readonly');
         $('#projectsList textarea').removeAttr('readonly');
         $('input[id^="newProject"]').removeAttr('readonly');

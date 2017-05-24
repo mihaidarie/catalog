@@ -21,12 +21,26 @@ function wireUpHandlers() {
         window.location.href = 'index.html';
     });
 
-    $('#upload-btn').click(loadProjectPhotos);
+    //$('#upload-btn').click(loadProjectPhotos);
     
+    $('#upload-btn').click(function(e) {
+        var isAdminUserLoggedIn = isAdminLoggedIn();
+        //isAdminUserLoggedIn = false;
+        if(isAdminUserLoggedIn == true) {
+
+        }
+        else {
+            location.href = "index.html";
+            $('#result').text('Incarcare esuata! Va rugam sa va logati.');
+            $('#result').css('color', 'red');
+            resetResultMessage();
+        }
+    });
+
     $('#btnRemove').click(function() {
         var checkedImagesNames = [];
         $.each($('#allPhotos input:checked'), function(i, elem) {
-            var imagePath = $(this).siblings('img').attr('src');
+            var imagePath = $(this).siblings('a').attr('href');
             var photoName = imagePath.replace(/^.*[\\\/]/, '');
             checkedImagesNames.push(photoName);
         });
@@ -76,7 +90,7 @@ function loadProjectDetails() {
 function setupFormMode() {
     var isAdminUserLoggedIn = isAdminLoggedIn();
 
-    if(isAdminUserLoggedIn) {        
+    if(isAdminUserLoggedIn == true) {        
         $('#uploadContent').show();
         $(':checkbox').show();
     }

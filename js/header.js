@@ -83,10 +83,11 @@ function refreshLoginCookie() {
     }
 }
 
-function logout() {
+function logout(shouldRedirect) {
     removeLoginCookie();
-    isUserLoggedIn = checkCookie();
-    setLoginButtonText(isUserLoggedIn);
+    if(shouldRedirect == true) {
+        window.location.href = "index.html";
+    }
 }
 
 function wireupHeaderButtons() {
@@ -103,8 +104,7 @@ function wireupHeaderButtons() {
     $("#loginOK").click(function() {
         var isUserLoggedIn = checkCookie();
         if(isUserLoggedIn == true) {
-            logout();
-            window.location.href = "index.html";
+            logout(true);
         }
         else {
             var username = $("#username").val();
@@ -133,7 +133,7 @@ function resetResultMessage() {
 
 function removeLoginCookie() {
     Cookies.remove('login');
-    logout();
+    logout(true);
 }
 
 function scrollToResult() {
@@ -146,7 +146,15 @@ function scrollToResult() {
 }
 
 function setLoginCookie(loginDetails) {
-    Cookies.set('login', { UserId: loginDetails.UserId, Class: loginDetails.Class }, { expires: in3Minutes30Seconds });
+    Cookies.set(
+        'login', 
+        { 
+            UserId: loginDetails.UserId, 
+            Class: loginDetails.Class 
+        }, 
+        { 
+            expires: in3Minutes30Seconds 
+        });
 }
 
 function setLoginButtonText(isUserLoggedIn) {

@@ -71,7 +71,7 @@ function renderNewsForm() {
     $('#removeNews').click(function() {
         var isAdminUserLoggedIn = isAdminLoggedIn();
 
-        if(isAdminUserLoggedIn) {
+        if(isAdminUserLoggedIn == true) {
             var newsIdsList = [];
 
             $('input[id^="deletenews_"]:checked').each(function(index, currentItem) {
