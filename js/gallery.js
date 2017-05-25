@@ -28,6 +28,12 @@ $(document).ready(function() {
                 $.post("/removephoto?photoName=" + imageName, function() {
                     window.location.href = window.location.href;
                 });
+            } else {
+                $('#result').text('Salvare esuata! Va rugam sa va logati.');
+                $('#result').css('color', 'red');
+                setTimeout(function() {
+                    location.href = "index.html";
+                }, 5000);
             }
         });
     } else {

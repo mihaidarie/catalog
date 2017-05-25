@@ -39,8 +39,10 @@ function setupUploadControls(uploadType, profileId, profileClass) {
           processData: false,
           contentType: false,
           success: function(data) {
-              if(loadProjectPhotos) {
-                loadProjectPhotos(profileId);
+              if(uploadType == 'project' && loadProjectPhotos) {
+                setTimeout(function() {
+                  loadProjectPhotos(profileId);
+                }, 2000);
               }
           },
           complete: function() {
@@ -73,8 +75,7 @@ function setupUploadControls(uploadType, profileId, profileClass) {
             }, false);
 
             return xhr;
-          },
-          async: false
+          }
         });
       }
     });
