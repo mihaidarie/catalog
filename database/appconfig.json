@@ -2,7 +2,7 @@
 	"SmtpService": "Yahoo", 
 	"SmtpUsername": "mihai_darie2@yahoo.com",
 	"SmptPassword": "298fcd9d20682a20611e",
-	"ListeningPort": 3000,
+	"ListeningPort": 80,
 	"DomainName": "http://localhost",
 	"IsSecured": false
 }
