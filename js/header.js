@@ -114,7 +114,13 @@ function wireupHeaderButtons() {
                 isUserLoggedIn = checkCookie();
                 setLoginButtonText(isUserLoggedIn);
                 wireupSessionTimer();
-                window.location.href = window.location.href;
+
+                var currentUrl = window.location.href;
+                if(currentUrl.indexOf("passwordreset.html") >= 0) {
+                    currentUrl = "Index.html";
+                }
+
+                window.location.href = currentUrl;
             } else {
                 alert("User inexistent sau parola incorecta! Folositi butonul Reset pt a seta o parola noua, in caz ca ati uitat-o.");
             }
