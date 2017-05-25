@@ -38,6 +38,7 @@
     float: left;
     cursor: pointer;
     margin-left: 5%;
+    width: 15em;
 }
 
 .profilesList label  {
@@ -48,6 +49,7 @@
     clear: both;
     float: left;
     cursor: pointer;
+    height: 1.3em;
 }
 
 #result {
