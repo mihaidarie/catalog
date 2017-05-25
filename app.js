@@ -768,7 +768,7 @@ app.post('/removeProjects', function(req, res) {
       itemsToRemove.forEach(itemToRemove => {
         var index = projectsArray.indexOf(itemToRemove);
         projectsArray.splice(index, 1);
-        var projectPhotosPath = projectsFolder + itemToRemove.Id;
+        var projectPhotosPath = projectsFolder + itemToRemove.Id + '/';
         if(fs.existsSync(projectPhotosPath)) {
           try{
             rimraf(projectPhotosPath, function () { 
