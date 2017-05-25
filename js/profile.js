@@ -33,8 +33,8 @@ function renderProfileData(profileId, profileClass) {
       
         $.each(data[0].Profiles, function(index, profile) {
             if(profile.Id == profileId) {
-                $('#firstname').text(profile.FirstName);
-                $('#lastname').text(profile.LastName);
+                $('#firstname').val(profile.FirstName);
+                $('#lastname').val(profile.LastName);
     
                 var defaultString = "privat";
                 var isRightUserLoggedIn = verifyLoggedInUser();
@@ -170,8 +170,8 @@ function renderProfileData(profileId, profileClass) {
 
                 if(isEmailUnique === true) {
                     var profile = {};
-                    profile.FirstName = $('#firstname').text();
-                    profile.LastName = $('#lastname').text();
+                    profile.FirstName = $('#firstname').val();
+                    profile.LastName = $('#lastname').val();
                     profile.Phone = $('#phoneNumber').val();
                     profile.Address = $('#address').val();
                     profile.Country = $('#country').val();
@@ -205,6 +205,10 @@ function renderProfileData(profileId, profileClass) {
                             console.log('jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
                             $('#result').text('Salvare esuata! Contactati administratorul.');
                             $('#result').css('color', 'red');
+                            scrollToResult();
+                            setTimeout(function() {
+                                 $('#result').text('');
+                            }, 5000);
                         },
                         success: function() {
                             $('#result').text('Salvat!');
@@ -224,7 +228,12 @@ function renderProfileData(profileId, profileClass) {
                     $('#result').css('color', 'red');
                 }
             } else {
-                location.href = "Index.html";
+                $('#result').text('Salvare esuata! Va rugam sa va logati.');
+                $('#result').css('color', 'red');
+                
+                setTimeout(function() {
+                    location.href = "Index.html";
+                }, 5000);
             }
         });
 
@@ -236,7 +245,7 @@ function renderProfileData(profileId, profileClass) {
 
 function validateEmailUnicity(profileId, profileClass, email) {
     
-    if(oldEmailValue == email) {
+    if(oldEmailValue == email || email == '') {
         return true;
     }
     
@@ -257,6 +266,12 @@ function validateEmailUnicity(profileId, profileClass, email) {
         contentType: 'application/json',
         error: function(jqXHR, textStatus, errorThrown ) {
             console.log('Error validating email unicity! jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
+            $('#result').text('Salvare esuata! Contactati administratorul.');
+            $('#result').css('color', 'red');
+            scrollToResult();
+            setTimeout(function() {
+                    $('#result').text('');
+            }, 5000);
         },
         success: function(result) {
             isEmailUnique = JSON.parse(result).isEmailUnique;  

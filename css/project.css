@@ -18,6 +18,7 @@
     max-width: 50em;
     min-width: 50em;
     height: auto;
+    min-height: 10em;
     max-height: 50em;
     overflow: auto;
 }

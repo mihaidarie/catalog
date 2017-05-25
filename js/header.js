@@ -1,6 +1,3 @@
-
-var in3Minutes30Seconds = 1/192;
-
 $(document).ready(function() {
     var isUserLoggedIn = checkCookie();
     if(isUserLoggedIn == true) {
@@ -8,12 +5,15 @@ $(document).ready(function() {
     }
 });
 
+var sessionTimerIdleTimeMinutes = 10;
+var cookieExpirationTimespanMinutes = 12;
+
 function wireupSessionTimer() {
     // binds timer to document, 3 minutes
 
     $.idleTimer(
         {
-            timeout: 3 * 60 * 1000,
+            timeout: sessionTimerIdleTimeMinutes * 60 * 1000,
         });
 
     $(document).on("idle.idleTimer", function(event, elem, obj){
@@ -23,7 +23,8 @@ function wireupSessionTimer() {
             // function you want to fire when the user goes idle
 
             $('#alert-session').show();
-            
+            console.log('User detected as idle');
+
             // $('html, body').animate({
             //     scrollTop: $("body").offset().top
             // }, 1000);
@@ -31,18 +32,21 @@ function wireupSessionTimer() {
             // 10 seconds timeout till we logout
             setTimeout(function () {
                 
+                console.log('Verifying if user became active');
                 var isIdle = $.idleTimer("isIdle");
                 if(isIdle) {
+                    console.log('Still inactive, logging out...');
 
-                    // remove login cookie
-                    removeLoginCookie();
-    
                     // stop the timer, removes data, removes event bindings
                     // to come back from this you will need to instantiate again
                     // returns: jQuery
                     $.idleTimer("destroy");
 
-                    window.location.href = "index.html";
+                    // remove login cookie
+                    logout(true);
+                } else {
+                    console.log('User became active');
+                    refreshLoginCookie();
                 }
             }, 8 * 1000);
         }
@@ -78,15 +82,18 @@ function loadHeader() {
 function refreshLoginCookie() {
     var isUserLoggedIn = checkCookie();
     var cookieValue = Cookies.getJSON('login');
+    console.log('refreshing cookie if exists');
     if(cookieValue && cookieValue.UserId) {
         setLoginCookie(cookieValue);
     }
 }
 
-function logout() {
+function logout(shouldRedirect) {
     removeLoginCookie();
-    isUserLoggedIn = checkCookie();
-    setLoginButtonText(isUserLoggedIn);
+    if(shouldRedirect == true) {
+        console.log('Redirecting to homepage');
+        window.location.href = "index.html";
+    }
 }
 
 function wireupHeaderButtons() {
@@ -103,8 +110,7 @@ function wireupHeaderButtons() {
     $("#loginOK").click(function() {
         var isUserLoggedIn = checkCookie();
         if(isUserLoggedIn == true) {
-            logout();
-            window.location.href = "index.html";
+            logout(true);
         }
         else {
             var username = $("#username").val();
@@ -117,7 +123,13 @@ function wireupHeaderButtons() {
                 isUserLoggedIn = checkCookie();
                 setLoginButtonText(isUserLoggedIn);
                 wireupSessionTimer();
-                window.location.href = window.location.href;
+
+                var currentUrl = window.location.href;
+                if(currentUrl.indexOf("passwordreset.html") >= 0) {
+                    currentUrl = "Index.html";
+                }
+
+                window.location.href = currentUrl;
             } else {
                 alert("User inexistent sau parola incorecta! Folositi butonul Reset pt a seta o parola noua, in caz ca ati uitat-o.");
             }
@@ -133,7 +145,7 @@ function resetResultMessage() {
 
 function removeLoginCookie() {
     Cookies.remove('login');
-    logout();
+    console.log('Removed login cookie');
 }
 
 function scrollToResult() {
@@ -146,7 +158,17 @@ function scrollToResult() {
 }
 
 function setLoginCookie(loginDetails) {
-    Cookies.set('login', { UserId: loginDetails.UserId, Class: loginDetails.Class }, { expires: in3Minutes30Seconds });
+    var cookieExpirationMinutes = new Date(new Date().getTime() + cookieExpirationTimespanMinutes * 60 * 1000);
+    Cookies.set(
+        'login', 
+        { 
+            UserId: loginDetails.UserId, 
+            Class: loginDetails.Class 
+        }, 
+        { 
+            expires: cookieExpirationMinutes 
+        });
+    console.log('login cookie was set');
 }
 
 function setLoginButtonText(isUserLoggedIn) {

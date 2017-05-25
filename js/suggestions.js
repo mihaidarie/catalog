@@ -49,9 +49,11 @@ function sendMail() {
         error: function(jqXHR, textStatus, errorThrown ) {
             console.log('jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
             $('#emailResult').text('Trimitere esuata! Contactati administratorul.');
+            $('#emailResult').css('color', 'red');
         },
         complete: function() {
             $('#emailResult').text('Mesaj expediat!');
+            $('#emailResult').css('color', 'green');
         }
     });
 

@@ -34,12 +34,14 @@ function renderControls() {
                 error: function(jqXHR, textStatus, errorThrown ) {
                     $('#result').text('Salvare esuata! Contactati administratorul.');
                     $('#result').css('color', 'red');
+                    scrollToResult();
                     resetResultMessage();
                 },
                 success: function() {
                     console.log("success!");
                     $('#result').text('Salvare reusita!');
                     $('#result').css('color', 'green');
+                    scrollToResult();
                     resetResultMessage();
                 },
                 complete: function() {

@@ -10,7 +10,7 @@ function renderProjectsForm() {
     $('#saveProjects').click(function() {
         var isAdminUserLoggedIn = isAdminLoggedIn();
 
-        if(isAdminUserLoggedIn) {
+        if(isAdminUserLoggedIn == true) {
 
             var ProjectsList = [];
             $('#projectsList li[id^="project_"]').each(function(index, itemDetails) {
@@ -58,6 +58,7 @@ function renderProjectsForm() {
                     console.log('jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
                     $('#result').text('Salvare esuata! Contactati administratorul.');
                     $('#result').css('color', 'red');
+                    scrollToResult();
                     resetResultMessage();
                 },
                 success: function() {
@@ -71,13 +72,18 @@ function renderProjectsForm() {
                     console.log("completed!");
                 }
             });
+        } else {
+            $('#result').text('Stergere esuata! Va rugam sa va logati.');
+            $('#result').css('color', 'red');
+            scrollToResult();
+            resetResultMessage();
         }
     });
     
     $('#removeProjects').click(function() {
         var isAdminUserLoggedIn = isAdminLoggedIn();
 
-        if(isAdminUserLoggedIn) {
+        if(isAdminUserLoggedIn == true) {
             var ProjectsIdsList = [];
 
             $('input[id^="deleteprojects_"]:checked').each(function(index, currentItem) {
@@ -97,6 +103,7 @@ function renderProjectsForm() {
                     console.log('jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
                     $('#result').text('Stergere esuata! Contactati administratorul.');
                     $('#result').css('color', 'red');
+                    scrollToResult();
                     resetResultMessage();
                 },
                 success: function() {
@@ -110,6 +117,11 @@ function renderProjectsForm() {
                     console.log("completed!");
                 }
             });
+        } else {
+            $('#result').text('Stergere esuata! Va rugam sa va logati.');
+            $('#result').css('color', 'red');
+            scrollToResult();
+            resetResultMessage();
         }
     });
 }
@@ -165,7 +177,7 @@ function renderNewProjectsElement() {
 function setupFormMode() {
     var isAdminUserLoggedIn = isAdminLoggedIn();
 
-    if(isAdminUserLoggedIn) {
+    if(isAdminUserLoggedIn == true) {
         $('#projectsList input').removeAttr('readonly');
         $('#projectsList textarea').removeAttr('readonly');
         $('input[id^="newProject"]').removeAttr('readonly');

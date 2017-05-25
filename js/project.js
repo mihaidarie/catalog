@@ -13,7 +13,9 @@ function setupPageElements() {
     loadProjectDetails();
     wireUpHandlers();
     var uploadType = "project";
-    setupUploadControls(uploadType);
+    var uri = URI(window.location.href);
+    var projectId = uri.getParameter('id');
+    setupUploadControls(uploadType, projectId);
 }
 
 function wireUpHandlers() {
@@ -21,18 +23,36 @@ function wireUpHandlers() {
         window.location.href = 'index.html';
     });
 
-    $('#upload-btn').click(loadProjectPhotos);
+    //$('#upload-btn').click(loadProjectPhotos);
     
+    $('#upload-btn').click(function(e) {
+        var isAdminUserLoggedIn = isAdminLoggedIn();
+        //isAdminUserLoggedIn = false;
+        if(isAdminUserLoggedIn == true) {
+
+        }
+        else {
+            $('#result').text('Incarcare esuata! Va rugam sa va logati.');
+            $('#result').css('color', 'red');
+            scrollToResult();
+            resetResultMessage();
+            location.href = "index.html";
+        }
+    });
+
     $('#btnRemove').click(function() {
         var checkedImagesNames = [];
         $.each($('#allPhotos input:checked'), function(i, elem) {
-            var imagePath = $(this).siblings('img').attr('src');
+            var imagePath = $(this).siblings('a').attr('href');
             var photoName = imagePath.replace(/^.*[\\\/]/, '');
             checkedImagesNames.push(photoName);
         });
         
+        var uri = URI(window.location.href);
+        var projectId = uri.getParameter('id');
+
         if(checkedImagesNames.length > 0) {
-            var postUrl = "/removeProjectPhoto";
+            var postUrl = "/removeProjectPhoto?projectId=" + projectId;
             $.ajax({
                 url: postUrl,
                 type: 'POST',
@@ -42,7 +62,7 @@ function wireUpHandlers() {
                     console.log('jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
                 },
                 success: function() {
-                    loadProjectPhotos();
+                    loadProjectPhotos(projectId);
                 },
                 complete: function() {
                     console.log("completed!");
@@ -70,13 +90,13 @@ function loadProjectDetails() {
         setupFormMode();
     });
 
-    loadProjectPhotos();
+    loadProjectPhotos(projectId);
 }
 
 function setupFormMode() {
     var isAdminUserLoggedIn = isAdminLoggedIn();
 
-    if(isAdminUserLoggedIn) {        
+    if(isAdminUserLoggedIn == true) {        
         $('#uploadContent').show();
         $(':checkbox').show();
     }
@@ -86,10 +106,10 @@ function setupFormMode() {
     }
 }
 
-function loadProjectPhotos() {
+function loadProjectPhotos(projectId) {
     var photosArray = [];
 
-    $.getJSON('/getProjectPhotos', function(photosPathsArray) {
+    $.getJSON('/getProjectPhotos?projectId=' + projectId, function(photosPathsArray) {
         $.each( photosPathsArray, function( key, elem ) {
             var newPhoto = '<li><a data-lightbox="roadtrip" href="' + elem + '"><img src="' + elem + '" /></a><input type="checkbox" /></li>';
             photosArray.push(newPhoto);

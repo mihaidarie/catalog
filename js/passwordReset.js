@@ -74,6 +74,7 @@ $(document).ready(function() {
                 if(password1 != password2) {
                     $('#result').text('Parolele nu coincid, va rugam reintroduceti.');
                     $('#result').css('color', 'red');
+                    scrollToResult();
                 } else {
                     // has token, try to reset
 
@@ -91,6 +92,7 @@ $(document).ready(function() {
                             if(result.success == false) {
                                 $('#result').text(result.message);
                                 $('#result').css('color', 'red');
+                                scrollToResult();
                                 setTimeout(function() {
                                     location.href = "PasswordReset.html";
                                 }, 10 * 1000);
@@ -100,6 +102,7 @@ $(document).ready(function() {
                                     $('#result').css('color', 'green');
                                     $('#password1').text('');
                                     $('#password2').text('');
+                                    scrollToResult();
                                     setTimeout(function() {
                                         location.href = "index.html";
                                     }, 10 * 1000)
@@ -108,6 +111,9 @@ $(document).ready(function() {
                         },
                         error: function(jqXHR, textStatus, errorThrown ) {
                             console.log('jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
+                            $('#result').text('Salvare esuata! Contactati administratorul.');
+                            $('#result').css('color', 'red');
+                            scrollToResult();
                         },
                         complete: function() {
                             console.log("completed!");
@@ -143,19 +149,23 @@ $(document).ready(function() {
                     if(result.isValid == false) {
                         $('#result').text(result.message);
                         $('#result').css('color', 'red');
+                        scrollToResult();
                     } else {
                         if(result.isValid && result.isValid == true) {
                             $('#result').text('Verificati email-ul si urmati link-ul pt resetarea parolei. Link-ul este valid doar 5 minute!');
                             $('#result').css('color', 'green');
+                            scrollToResult();
                         } 
                     }
                 },
                 error: function(jqXHR, textStatus, errorThrown ) {
                     console.log('jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
                     $('#result').text('Trimitere esuata! Contactati administratorul.');
+                    $('#result').css('color', 'red');
+                    scrollToResult();
                 },
                 complete: function() {
-                    console.log("completed!");         
+                    console.log("completed!");
                 }
             });
         });

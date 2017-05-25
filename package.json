@@ -26,8 +26,10 @@
     "express": "^4.15.2",
     "formidable": "^1.1.1",
     "lightbox2": "^2.9.0",
+    "mkdirp": "^0.5.1",
     "mv": "^2.1.1",
     "nodemailer": "^4.0.1",
+    "rimraf": "^2.6.1",
     "semaphore": "^1.0.5",
     "uuid": "^3.0.1"
   }

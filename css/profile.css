@@ -45,10 +45,14 @@ body {
     text-align: left;
 }
 
+#name input {
+    width: 9em;
+}
+
 #description {
     width: 100%;
     height: auto;
-    border: none;
+    border: 1px solid;
     resize: none;
     margin-top: 1em;
     margin-bottom: 1em;
@@ -57,7 +61,7 @@ body {
 #otherInfo {
     width: 100%;
     height: auto;
-    border: none;
+    border: 1px solid;
     resize: none;
     margin-top: 1em;
 }
@@ -107,7 +111,10 @@ input[type='checkbox'] {
     font-size: 26px;
     font-weight: bold;
     float: left !important;
-    margin-right: 1em;
+}
+
+#lastname {
+    float: right !important;
 }
 
 #buttons {
