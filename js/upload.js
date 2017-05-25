@@ -27,6 +27,9 @@ function setupUploadControls(uploadType, profileId, profileClass) {
 
         if(uploadType == 'gallery' || uploadType == 'project') {
           postUrl = '/upload?type=' + uploadType;
+          if(uploadType == 'project') {
+            postUrl = postUrl + '&projectId=' + profileId;
+          }
         }
 
         $.ajax({
@@ -37,7 +40,7 @@ function setupUploadControls(uploadType, profileId, profileClass) {
           contentType: false,
           success: function(data) {
               if(loadProjectPhotos) {
-                loadProjectPhotos();
+                loadProjectPhotos(profileId);
               }
           },
           complete: function() {
@@ -70,7 +73,8 @@ function setupUploadControls(uploadType, profileId, profileClass) {
             }, false);
 
             return xhr;
-          }
+          },
+          async: false
         });
       }
     });

@@ -9,6 +9,8 @@ var timer = require('timers');
 var uuid = require('uuid');
 var cookieParser = require('cookie-parser');
 var sem = require('semaphore')(1);
+var mkdirp = require('mkdirp');
+var rimraf = require('rimraf');
 
 var photosFolder = '/catalog/images/gallery/';
 var photoClientPath = '/images/gallery/';
@@ -766,6 +768,17 @@ app.post('/removeProjects', function(req, res) {
       itemsToRemove.forEach(itemToRemove => {
         var index = projectsArray.indexOf(itemToRemove);
         projectsArray.splice(index, 1);
+        var projectPhotosPath = projectsFolder + itemToRemove.Id;
+        if(fs.existsSync(projectPhotosPath)) {
+          try{
+            rimraf(projectPhotosPath, function () { 
+              console.log('removed projects photos folder: ' + projectPhotosPath); 
+            });
+          }
+          catch(error) {
+            console.log('failed to remove projects photos folder: ' + projectPhotosPath + "\nerror: " + error);
+          }
+        }
       });
 
       fs.writeFileSync(projectsFilePath, JSON.stringify(projectsArray));
@@ -942,12 +955,12 @@ app.get('/gallery', function(req, res) {
 app.get('/getProjectPhotos', function(req, res) {
     res.setHeader('Content-Type', 'application/json');
     var photosList = [];
-
-    var files = fs.readdirSync(projectsFolder);
+    var projectId = req.query.projectId;
+    var files = fs.readdirSync(projectsFolder + projectId + '/');
 
     if(files) {
       files.forEach(file => {
-        photosList.push(projectsClientPath + file);
+        photosList.push(projectsClientPath + projectId + '/' + file);
       });
     }
 
@@ -975,6 +988,7 @@ app.post('/removePhoto', function(req, res) {
 });
 
 app.post('/removeProjectPhoto', function(req, res) {
+  var projectId = req.query.projectId;
   sem.take(function() {
     var isUserAdmin = isAdminLoggedIn(req);
     if(isUserAdmin == true) {
@@ -982,7 +996,7 @@ app.post('/removeProjectPhoto', function(req, res) {
       for (var i = 0, len = photoNames.length; i < len; i++) {
         var photoName = photoNames[i];
         if(photoName != "NoPhoto.png") {
-          var photoPath = projectsFolder + photoName;
+          var photoPath = projectsFolder + projectId + '/' + photoName;
 
           fs.unlinkSync(photoPath);
         }
@@ -996,6 +1010,14 @@ app.post('/removeProjectPhoto', function(req, res) {
     sem.leave();
   });
 });
+
+const mkdirSync = function (dirPath) {
+  try {
+    fs.mkdirSync(dirPath)
+  } catch (err) {
+    if (err.code !== 'EEXIST') throw err
+  }
+}
 
 app.post('/upload', function(req, res) {
   sem.take(function() {
@@ -1069,16 +1091,21 @@ app.post('/upload', function(req, res) {
       if(uploadType == 'project') {
         var isUserAdmin = isAdminLoggedIn(req);
         if(isUserAdmin == true) {
-          var files = fs.readdirSync(projectsFolder);
+          var projectId = req.query.projectId;
+          var currentProjectPhotos = projectsFolder + projectId;
+          if(fs.existsSync(currentProjectPhotos) == false) {
+            mkdirSync(currentProjectPhotos);
+          }
+
+          var files = fs.readdirSync(currentProjectPhotos);
           var numberOfFiles = files.length;
-          var newPhotoPath = path.join(form.projectsUploadDir, numberOfFiles + "_" + file.name);
+          var newProjectPhotoPath = numberOfFiles + "_" + file.name;
+          var newPhotoPath = path.join(form.projectsUploadDir + projectId, newProjectPhotoPath);
 
           mv(file.path, newPhotoPath, function(err) {
             if (err) { 
               throw err;
             }
-
-            console.log('profile file moved successfully');
 
             console.log('saved project foto');
           });

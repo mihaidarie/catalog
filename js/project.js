@@ -13,7 +13,9 @@ function setupPageElements() {
     loadProjectDetails();
     wireUpHandlers();
     var uploadType = "project";
-    setupUploadControls(uploadType);
+    var uri = URI(window.location.href);
+    var projectId = uri.getParameter('id');
+    setupUploadControls(uploadType, projectId);
 }
 
 function wireUpHandlers() {
@@ -46,8 +48,11 @@ function wireUpHandlers() {
             checkedImagesNames.push(photoName);
         });
         
+        var uri = URI(window.location.href);
+        var projectId = uri.getParameter('id');
+
         if(checkedImagesNames.length > 0) {
-            var postUrl = "/removeProjectPhoto";
+            var postUrl = "/removeProjectPhoto?projectId=" + projectId;
             $.ajax({
                 url: postUrl,
                 type: 'POST',
@@ -57,7 +62,7 @@ function wireUpHandlers() {
                     console.log('jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
                 },
                 success: function() {
-                    loadProjectPhotos();
+                    loadProjectPhotos(projectId);
                 },
                 complete: function() {
                     console.log("completed!");
@@ -85,7 +90,7 @@ function loadProjectDetails() {
         setupFormMode();
     });
 
-    loadProjectPhotos();
+    loadProjectPhotos(projectId);
 }
 
 function setupFormMode() {
@@ -101,10 +106,10 @@ function setupFormMode() {
     }
 }
 
-function loadProjectPhotos() {
+function loadProjectPhotos(projectId) {
     var photosArray = [];
 
-    $.getJSON('/getProjectPhotos', function(photosPathsArray) {
+    $.getJSON('/getProjectPhotos?projectId=' + projectId, function(photosPathsArray) {
         $.each( photosPathsArray, function( key, elem ) {
             var newPhoto = '<li><a data-lightbox="roadtrip" href="' + elem + '"><img src="' + elem + '" /></a><input type="checkbox" /></li>';
             photosArray.push(newPhoto);
