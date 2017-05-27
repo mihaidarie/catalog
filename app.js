@@ -242,10 +242,64 @@ app.get('/', function(req, res){
 });
 
 app.get('/getPreviousClassProfile', function(req, res) {
-  var className = req.query.className;
+  var currentClassName = req.query.className;
   var currentProfileId = req.query.currentProfileId;
+  
+  var allClasses = fs.readdirSync(classesFilePath);
 
+  var personDetails = {
+    ClassName: '',
+    ProfileId: ''
+  };
 
+  for (var i = 0, classesNumber = allClasses.length ; i < classesNumber; i++) {
+    var className = allClasses[i];
+    if(className == currentClassName + ".json") {
+      var classDetails = JSON.parse(fs.readFileSync(classesFilePath + className));
+      var sortedProfiles = classDetails[0].Profiles.sort(compareProfileIds);
+      for (var j = 0, profilesNumber = sortedProfiles.length; j < profilesNumber; j++) {
+        var profileDetails = classDetails[0].Profiles[j];
+        if(profileDetails.Id == currentProfileId) {
+          
+          var isLastProfileOfCurrentClass = j == 0;
+
+          if(isLastProfileOfCurrentClass == true) {
+
+            var isLastClass = i == 0;
+
+            if(isLastClass == true) {
+              var nextClassName = allClasses[classesNumber - 1];
+              var nextClassDetails = JSON.parse(fs.readFileSync(classesFilePath + nextClassName));
+              var nextClassProfilesNumber = nextClassDetails[0].Profiles.length;
+              personDetails.ProfileId = nextClassDetails[0].Profiles.sort(compareProfileIds)[nextClassProfilesNumber - 1].Id;
+              personDetails.ClassName = nextClassName;
+            } else {
+              var nextClassName = allClasses[i - 1];
+              var nextClassDetails = JSON.parse(fs.readFileSync(classesFilePath + nextClassName));
+              var nextClassProfilesNumber = nextClassDetails[0].Profiles.length;
+              personDetails.ProfileId = nextClassDetails[0].Profiles.sort(compareProfileIds)[nextClassProfilesNumber - 1].Id;
+              personDetails.ClassName = nextClassName;
+            }
+ 
+          } else {
+            personDetails.ProfileId = sortedProfiles[j - 1].Id;
+            personDetails.ClassName = className;
+          }
+
+          personDetails.ClassName = personDetails.ClassName.replace('.json', '');
+          
+          break;
+        }
+      }
+
+      if(personDetails.ClassName != '' && personDetails.ProfileId != '') {
+        // navigation profile found
+        break;
+      }
+    }
+  }
+
+  res.json(personDetails);
 });
 
 app.get('/getNextClassProfile', function(req, res) {
