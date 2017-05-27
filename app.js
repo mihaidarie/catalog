@@ -229,6 +229,14 @@ app.get('/', function(req, res){
   res.sendFile(path.join(__dirname, '/Index.html'));
 });
 
+app.get('/getNextClassProfile', function(req, res) {
+  
+});
+
+app.get('/getPreviousClassProfile', function(req, res) {
+  
+});
+
 app.get('/getLinks', function(req, res) {
   var links = fs.readFileSync(linksFilePath, 'utf8');
   var returnResult = {

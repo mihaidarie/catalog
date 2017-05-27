@@ -7,6 +7,15 @@ body {
     width: 7em;
 }
 
+#nagivation {
+    float: none !important;
+    margin-bottom: 1em;
+}
+
+#btnPrevious {
+    float: none !important;
+}
+
 #recentPhoto {
     margin-top: 2em;
     border: 1px solid;
