@@ -230,11 +230,17 @@ app.get('/', function(req, res){
 });
 
 app.get('/getNextClassProfile', function(req, res) {
+  var className = req.query.className;
+  var currentProfileId = req.query.currentProfileId;
+
   
 });
 
 app.get('/getPreviousClassProfile', function(req, res) {
-  
+  var className = req.query.className;
+  var currentProfileId = req.query.currentProfileId;
+
+
 });
 
 app.get('/getLinks', function(req, res) {

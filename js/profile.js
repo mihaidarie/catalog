@@ -37,13 +37,37 @@ $(document).ready(function() {
 
 function getProfile(className, currentProfileId, serverMethod) {
     var url = serverMethod + "?className=" + className + "&currentProfileId=" + currentProfileId;
-    $.getJSON(url, function(data) {
-        
-    });
+    var profileDetails = {
+        ClassName: '',
+        ProfileId: ''
+    };
+    $.ajax({
+        url: url,
+        type: 'GET',
+        contentType: 'application/json',
+        error: function(jqXHR, textStatus, errorThrown ) {
+            console.log('jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
+            $('#result').text('Navigare esuata! Contactati administratorul.');
+            $('#result').css('color', 'red');
+            setTimeout(function() {
+                $('#result').text('');
+            }, 5000);
+        },
+        success: function(data) {
+            profileDetails.ClassName = data.ClassName;
+            profileDetails.ProfileId = data.ProfileId;
+        },
+        complete: function() {
+            console.log("completed profile retrieval!");         
+    }});
+
+    return profileDetails;
 }
 
 function navigateProfile(className, profileId) {
-    location.href = "profile.html?class=" + className + "&id=" + profileId;
+    if(className != '' && profileId != '') {
+        location.href = "profile.html?class=" + className + "&id=" + profileId;
+    }
 }
 
 function renderProfileData(profileId, profileClass) {
