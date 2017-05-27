@@ -23,7 +23,28 @@ $(document).ready(function() {
 
         window.location.href = "fileUpload.html?type=profile&class=" + profileClass + "&id=" + profileId;
     });
+
+    $('#btnPrevious').click(function() {
+       var previousProfile = getProfile(profileClass, profileId);
+       navigateProfile(previousProfile.ClassName, previousProfile.ProfileId);
+    });
+
+    $('#btnNext').click(function() {
+       var nextProfile = getProfile(profileClass, profileId);
+       navigateProfile(nextProfile.ClassName, nextProfile.ProfileId);
+    });
 });
+
+function getProfile(className, currentProfileId, serverMethod) {
+    var url = serverMethod + "?className=" + className + "&currentProfileId=" + currentProfileId;
+    $.getJSON(url, function(data) {
+        
+    });
+}
+
+function navigateProfile(className, profileId) {
+    location.href = "profile.html?class=" + className + "&id=" + profileId;
+}
 
 function renderProfileData(profileId, profileClass) {
 
