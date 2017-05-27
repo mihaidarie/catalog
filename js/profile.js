@@ -25,22 +25,19 @@ $(document).ready(function() {
     });
 
     $('#btnPrevious').click(function() {
-       var previousProfile = getProfile(profileClass, profileId);
-       navigateProfile(previousProfile.ClassName, previousProfile.ProfileId);
+        var serverMethod = '/getPreviousClassProfile';
+        navigateProfile(serverMethod, profileClass, profileId);
     });
 
     $('#btnNext').click(function() {
-       var nextProfile = getProfile(profileClass, profileId);
-       navigateProfile(nextProfile.ClassName, nextProfile.ProfileId);
+        var serverMethod = '/getNextClassProfile';
+        navigateProfile(serverMethod, profileClass, profileId);
     });
 });
 
-function getProfile(className, currentProfileId, serverMethod) {
+function getProfile(className, currentProfileId, serverMethod, navigationCallback) {
     var url = serverMethod + "?className=" + className + "&currentProfileId=" + currentProfileId;
-    var profileDetails = {
-        ClassName: '',
-        ProfileId: ''
-    };
+
     $.ajax({
         url: url,
         type: 'GET',
@@ -54,19 +51,21 @@ function getProfile(className, currentProfileId, serverMethod) {
             }, 5000);
         },
         success: function(data) {
-            profileDetails.ClassName = data.ClassName;
-            profileDetails.ProfileId = data.ProfileId;
+            navigationCallback(data.ClassName, data.ProfileId);
         },
         complete: function() {
             console.log("completed profile retrieval!");         
     }});
-
-    return profileDetails;
 }
 
-function navigateProfile(className, profileId) {
-    if(className != '' && profileId != '') {
-        location.href = "profile.html?class=" + className + "&id=" + profileId;
+function navigateProfile(serverMethod, currentClassName, currentProfileId) {
+    if(currentClassName != '' && currentProfileId != '') {
+        getProfile(currentClassName, currentProfileId, serverMethod, function(className, profileId) {
+                if(className && className != '' && profileId && profileId != '') {
+                    location.href = "profile.html?class=" + className + "&id=" + profileId;
+                }
+            }
+        );
     }
 }
 
