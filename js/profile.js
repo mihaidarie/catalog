@@ -23,7 +23,51 @@ $(document).ready(function() {
 
         window.location.href = "fileUpload.html?type=profile&class=" + profileClass + "&id=" + profileId;
     });
+
+    $('#btnPrevious').click(function() {
+        var serverMethod = '/getPreviousClassProfile';
+        navigateProfile(serverMethod, profileClass, profileId);
+    });
+
+    $('#btnNext').click(function() {
+        var serverMethod = '/getNextClassProfile';
+        navigateProfile(serverMethod, profileClass, profileId);
+    });
 });
+
+function getProfile(className, currentProfileId, serverMethod, navigationCallback) {
+    var url = serverMethod + "?className=" + className + "&currentProfileId=" + currentProfileId;
+
+    $.ajax({
+        url: url,
+        type: 'GET',
+        contentType: 'application/json',
+        error: function(jqXHR, textStatus, errorThrown ) {
+            console.log('jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
+            $('#result').text('Navigare esuata! Contactati administratorul.');
+            $('#result').css('color', 'red');
+            setTimeout(function() {
+                $('#result').text('');
+            }, 5000);
+        },
+        success: function(data) {
+            navigationCallback(data.ClassName, data.ProfileId);
+        },
+        complete: function() {
+            console.log("completed profile retrieval!");         
+    }});
+}
+
+function navigateProfile(serverMethod, currentClassName, currentProfileId) {
+    if(currentClassName != '' && currentProfileId != '') {
+        getProfile(currentClassName, currentProfileId, serverMethod, function(className, profileId) {
+                if(className && className != '' && profileId && profileId != '') {
+                    location.href = "profile.html?class=" + className + "&id=" + profileId;
+                }
+            }
+        );
+    }
+}
 
 function renderProfileData(profileId, profileClass) {
 

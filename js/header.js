@@ -5,8 +5,8 @@ $(document).ready(function() {
     }
 });
 
-var sessionTimerIdleTimeMinutes = 10;
-var cookieExpirationTimespanMinutes = 12;
+var sessionTimerIdleTimeMinutes = 1;
+var cookieExpirationTimespanMinutes = 60;
 
 function wireupSessionTimer() {
     // binds timer to document, 3 minutes
@@ -68,6 +68,9 @@ function wireupSessionTimer() {
             // starts timer with remaining time
             // returns: jQuery
             $(document).idleTimer("resume");
+        } else {
+            console.log('User still active');
+            refreshLoginCookie();
         }
     });
 }

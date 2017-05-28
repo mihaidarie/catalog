@@ -213,6 +213,18 @@ function createPasswordResetEmailMessage(emailTo, subject, body, adminEmail) {
   return mailOptions;
 }
 
+function compareProfileIds(a, b) {
+  if (a.Id < b.Id) {
+    return -1;
+  }
+  if (a.Id > b.Id) {
+    return 1;
+  }
+
+  // a must be equal to b
+  return 0;
+}
+
 function compareIds(a, b) {
   if (a < b) {
     return -1;
@@ -227,6 +239,126 @@ function compareIds(a, b) {
 
 app.get('/', function(req, res){
   res.sendFile(path.join(__dirname, '/Index.html'));
+});
+
+app.get('/getPreviousClassProfile', function(req, res) {
+  var currentClassName = req.query.className;
+  var currentProfileId = req.query.currentProfileId;
+  
+  var allClasses = fs.readdirSync(classesFilePath);
+
+  var personDetails = {
+    ClassName: '',
+    ProfileId: ''
+  };
+
+  for (var i = 0, classesNumber = allClasses.length ; i < classesNumber; i++) {
+    var className = allClasses[i];
+    if(className == currentClassName + ".json") {
+      var classDetails = JSON.parse(fs.readFileSync(classesFilePath + className));
+      var sortedProfiles = classDetails[0].Profiles.sort(compareProfileIds);
+      for (var j = 0, profilesNumber = sortedProfiles.length; j < profilesNumber; j++) {
+        var profileDetails = classDetails[0].Profiles[j];
+        if(profileDetails.Id == currentProfileId) {
+          
+          var isLastProfileOfCurrentClass = j == 0;
+
+          if(isLastProfileOfCurrentClass == true) {
+
+            var isLastClass = i == 0;
+
+            if(isLastClass == true) {
+              var nextClassName = allClasses[classesNumber - 1];
+              var nextClassDetails = JSON.parse(fs.readFileSync(classesFilePath + nextClassName));
+              var nextClassProfilesNumber = nextClassDetails[0].Profiles.length;
+              personDetails.ProfileId = nextClassDetails[0].Profiles.sort(compareProfileIds)[nextClassProfilesNumber - 1].Id;
+              personDetails.ClassName = nextClassName;
+            } else {
+              var nextClassName = allClasses[i - 1];
+              var nextClassDetails = JSON.parse(fs.readFileSync(classesFilePath + nextClassName));
+              var nextClassProfilesNumber = nextClassDetails[0].Profiles.length;
+              personDetails.ProfileId = nextClassDetails[0].Profiles.sort(compareProfileIds)[nextClassProfilesNumber - 1].Id;
+              personDetails.ClassName = nextClassName;
+            }
+ 
+          } else {
+            personDetails.ProfileId = sortedProfiles[j - 1].Id;
+            personDetails.ClassName = className;
+          }
+
+          personDetails.ClassName = personDetails.ClassName.replace('.json', '');
+          
+          break;
+        }
+      }
+
+      if(personDetails.ClassName != '' && personDetails.ProfileId != '') {
+        // navigation profile found
+        break;
+      }
+    }
+  }
+
+  res.json(personDetails);
+});
+
+app.get('/getNextClassProfile', function(req, res) {
+  var currentClassName = req.query.className;
+  var currentProfileId = req.query.currentProfileId;
+  
+  var allClasses = fs.readdirSync(classesFilePath);
+
+  var personDetails = {
+    ClassName: '',
+    ProfileId: ''
+  };
+
+  for (var i = 0, classesNumber = allClasses.length ; i < classesNumber; i++) {
+    var className = allClasses[i];
+    if(className == currentClassName + ".json") {
+      var classDetails = JSON.parse(fs.readFileSync(classesFilePath + className));
+      var sortedProfiles = classDetails[0].Profiles.sort(compareProfileIds);
+      for (var j = 0, profilesNumber = sortedProfiles.length; j < profilesNumber; j++) {
+        var profileDetails = classDetails[0].Profiles[j];
+        if(profileDetails.Id == currentProfileId) {
+          
+          var isLastProfileOfCurrentClass = j == profilesNumber - 1;
+
+          if(isLastProfileOfCurrentClass == true) {
+
+            var isLastClass = i == classesNumber - 1;
+
+            if(isLastClass == true) {
+              var nextClassName = allClasses[0];
+              var nextClassDetails = JSON.parse(fs.readFileSync(classesFilePath + nextClassName));
+              personDetails.ProfileId = nextClassDetails[0].Profiles.sort(compareProfileIds)[0].Id;
+              personDetails.ClassName = nextClassName;
+            } else {
+              var nextClassName = allClasses[i+1];
+              var nextClassDetails = JSON.parse(fs.readFileSync(classesFilePath + nextClassName));
+              personDetails.ProfileId = nextClassDetails[0].Profiles.sort(compareProfileIds)[0].Id;
+              personDetails.ClassName = nextClassName;
+            }
+ 
+          } else {
+            personDetails.ProfileId = sortedProfiles[j+1].Id;
+            personDetails.ClassName = className;
+          }
+
+          personDetails.ClassName = personDetails.ClassName.replace('.json', '');
+          
+          break;
+        }
+      }
+
+      if(personDetails.ClassName != '' && personDetails.ProfileId != '') {
+        // navigation profile found
+        break;
+      }
+    }
+  }
+
+  res.json(personDetails);
 });
 
 app.get('/getLinks', function(req, res) {
@@ -335,7 +467,7 @@ function findPersonByEmail(email, className) {
         break;
       }
     }
-  } else {
+  } else {F
     personDetails.IsFound = false;
   }
 
@@ -523,30 +655,34 @@ app.post('/resetPassword', function(req, res) {
       var accounts = JSON.parse(accountsContent);
 
       for (var i = 0, len = accounts.length; i < len; i++) {
+        var adminId = getAdminDetails().Id;
         var currentPersonId = accounts[i].Id;
         var currentPersonClass = accounts[i].Class;
-        if(className == currentPersonClass && personId == currentPersonId) {
-          var hash = crypto.createHash('sha256');
-          hash.update(newPassword);
-          var hashedPassword = hash.digest('hex');
+        
+        if(adminId != currentPersonId) {
+          if(className.toLowerCase() == currentPersonClass.toLowerCase() && personId == currentPersonId) {
+            var hash = crypto.createHash('sha256');
+            hash.update(newPassword);
+            var hashedPassword = hash.digest('hex');
 
-          var username = accounts[i].Username;
-          var personDetails = findPersonByClassAndId(className, personId);
-          var email = personDetails.Email;
-          var isEmailPasswordDifferentThanAdmin = isDifferentThanAdmin(email, hashedPassword);
-          var isUsernamePasswordDifferentThanAdmin = isDifferentThanAdmin(username, hashedPassword);
-          
-          if(isEmailPasswordDifferentThanAdmin == true && isUsernamePasswordDifferentThanAdmin) {
-            accounts[i].Password = hashedPassword;
-            returnResult.success = true;
-          } else {
-            returnResult = {
-              success: false,
-              message: 'Credentiale folosite deja. Reluati resetarea.'
-            };
+            var username = accounts[i].Username;
+            var personDetails = findPersonByClassAndId(className, personId);
+            var email = personDetails.Email;
+            var isEmailPasswordDifferentThanAdmin = isDifferentThanAdmin(email, hashedPassword);
+            var isUsernamePasswordDifferentThanAdmin = isDifferentThanAdmin(username, hashedPassword);
+            
+            if(isEmailPasswordDifferentThanAdmin == true && isUsernamePasswordDifferentThanAdmin) {
+              accounts[i].Password = hashedPassword;
+              returnResult.success = true;
+            } else {
+              returnResult = {
+                success: false,
+                message: 'Credentiale folosite deja. Reluati resetarea.'
+              };
+            }
+
+            break;
           }
-
-          break;
         }
       }
 
