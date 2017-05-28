@@ -655,30 +655,34 @@ app.post('/resetPassword', function(req, res) {
       var accounts = JSON.parse(accountsContent);
 
       for (var i = 0, len = accounts.length; i < len; i++) {
+        var adminId = getAdminDetails().Id;
         var currentPersonId = accounts[i].Id;
         var currentPersonClass = accounts[i].Class;
-        if(className == currentPersonClass && personId == currentPersonId) {
-          var hash = crypto.createHash('sha256');
-          hash.update(newPassword);
-          var hashedPassword = hash.digest('hex');
+        
+        if(adminId != currentPersonId) {
+          if(className.toLowerCase() == currentPersonClass.toLowerCase() && personId == currentPersonId) {
+            var hash = crypto.createHash('sha256');
+            hash.update(newPassword);
+            var hashedPassword = hash.digest('hex');
 
-          var username = accounts[i].Username;
-          var personDetails = findPersonByClassAndId(className, personId);
-          var email = personDetails.Email;
-          var isEmailPasswordDifferentThanAdmin = isDifferentThanAdmin(email, hashedPassword);
-          var isUsernamePasswordDifferentThanAdmin = isDifferentThanAdmin(username, hashedPassword);
-          
-          if(isEmailPasswordDifferentThanAdmin == true && isUsernamePasswordDifferentThanAdmin) {
-            accounts[i].Password = hashedPassword;
-            returnResult.success = true;
-          } else {
-            returnResult = {
-              success: false,
-              message: 'Credentiale folosite deja. Reluati resetarea.'
-            };
+            var username = accounts[i].Username;
+            var personDetails = findPersonByClassAndId(className, personId);
+            var email = personDetails.Email;
+            var isEmailPasswordDifferentThanAdmin = isDifferentThanAdmin(email, hashedPassword);
+            var isUsernamePasswordDifferentThanAdmin = isDifferentThanAdmin(username, hashedPassword);
+            
+            if(isEmailPasswordDifferentThanAdmin == true && isUsernamePasswordDifferentThanAdmin) {
+              accounts[i].Password = hashedPassword;
+              returnResult.success = true;
+            } else {
+              returnResult = {
+                success: false,
+                message: 'Credentiale folosite deja. Reluati resetarea.'
+              };
+            }
+
+            break;
           }
-
-          break;
         }
       }
 
