@@ -11,6 +11,8 @@ var cookieParser = require('cookie-parser');
 var sem = require('semaphore')(1);
 var mkdirp = require('mkdirp');
 var rimraf = require('rimraf');
+var https = require('https');
+var http = require('http');
 
 var photosFolder = '/catalog/images/gallery/';
 var photoClientPath = '/images/gallery/';
@@ -25,6 +27,9 @@ var linksFilePath = "/catalog/database/links/links.json";
 var appconfigFilePath = "/catalog/database/appconfig.json";
 var appconfig = JSON.parse(fs.readFileSync(appconfigFilePath));
 var sitePort = appconfig.ListeningPort;
+var sitePortSecured = appconfig.ListeningPortSecured;
+var certificatePath = appconfig.CertificatePath;
+var certificatePassword = appconfig.CertificatePassword;
 
 var passwordResetTokens = [];
 
@@ -1269,6 +1274,26 @@ app.post('/upload', function(req, res) {
   });
 });
 
-var server = app.listen(sitePort, function(){
+// var server = app.listen(sitePort, function(){
+//   console.log('Server listening on port ' + sitePort);
+// });
+
+
+
+http.createServer(app).listen(sitePort, function() {
   console.log('Server listening on port ' + sitePort);
 });
+
+if(sitePortSecured != '') {
+
+  var certFile = fs.readFileSync(certificatePath);
+  
+  const options = {
+    pfx: certFile,
+    passphrase: certificatePassword
+  };
+
+  https.createServer(options, app).listen(sitePortSecured, function() {
+    console.log('Server listening on secured port ' + sitePortSecured);
+  });
+}
