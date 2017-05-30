@@ -4,7 +4,8 @@
 	- IpAddres: can be the private IP address of your network, which is bound to the public IP that the site domain translates to
 	- SmptUsername: email account from which the website sends emails (used for password reset and suggestions sent by the user to the site owner)
 	- SmptPassword: password of the above email account
-	- SmtpService: could be Yahoo, Gmail, etc - it's the email service provider that hosts the above email account
+	- SmtpService: could be Yahoo, Gmail, etc - it's the email service provider that hosts the above email account 
+		-> pick from the supported list of services, here: https://nodemailer.com/smtp/well-known/ 
 	- CertificatePath: physical path of the .pfx certificate file used for serving HTTPS traffic
 	- CertificatePassword: password set to the .pfx certificate file from above
 - configure the desired domain name to point to the hosting public IP address
