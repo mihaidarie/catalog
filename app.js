@@ -28,6 +28,7 @@ var appconfigFilePath = "/catalog/database/appconfig.json";
 var appconfig = JSON.parse(fs.readFileSync(appconfigFilePath));
 var sitePort = appconfig.ListeningPort;
 var sitePortSecured = appconfig.ListeningPortSecured;
+var ipAddress = appconfig.IpAddress;
 var certificatePath = appconfig.CertificatePath;
 var certificatePassword = appconfig.CertificatePassword;
 
@@ -1274,13 +1275,7 @@ app.post('/upload', function(req, res) {
   });
 });
 
-// var server = app.listen(sitePort, function(){
-//   console.log('Server listening on port ' + sitePort);
-// });
-
-
-
-http.createServer(app).listen(sitePort, function() {
+http.createServer(app).listen(sitePort, ipAddress, function() {
   console.log('Server listening on port ' + sitePort);
 });
 
@@ -1293,7 +1288,7 @@ if(sitePortSecured != '') {
     passphrase: certificatePassword
   };
 
-  https.createServer(options, app).listen(sitePortSecured, function() {
+  https.createServer(options, app).listen(sitePortSecured, ipAddress, function() {
     console.log('Server listening on secured port ' + sitePortSecured);
   });
 }
