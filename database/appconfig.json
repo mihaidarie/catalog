@@ -3,6 +3,8 @@
 	"SmtpUsername": "mihai_darie2@yahoo.com",
 	"SmptPassword": "298fcd9d20682a20611e",
 	"ListeningPort": 80,
-	"DomainName": "http://localhost",
-	"IsSecured": false
+	"ListeningPortSecured": 443,
+	"IpAddress": "192.168.0.103",
+	"CertificatePath": "c:/certs/localhost.pfx",
+	"CertificatePassword": "test"
 }

@@ -11,6 +11,8 @@ var cookieParser = require('cookie-parser');
 var sem = require('semaphore')(1);
 var mkdirp = require('mkdirp');
 var rimraf = require('rimraf');
+var https = require('https');
+var http = require('http');
 
 var photosFolder = '/catalog/images/gallery/';
 var photoClientPath = '/images/gallery/';
@@ -25,6 +27,10 @@ var linksFilePath = "/catalog/database/links/links.json";
 var appconfigFilePath = "/catalog/database/appconfig.json";
 var appconfig = JSON.parse(fs.readFileSync(appconfigFilePath));
 var sitePort = appconfig.ListeningPort;
+var sitePortSecured = appconfig.ListeningPortSecured;
+var ipAddress = appconfig.IpAddress;
+var certificatePath = appconfig.CertificatePath;
+var certificatePassword = appconfig.CertificatePassword;
 
 var passwordResetTokens = [];
 
@@ -572,19 +578,23 @@ app.post('/sendResetPassword', function(req, res) {
         try {
           passwordResetTokens[passwordResetToken] = passwordResetAttempt;
           
-          var hostDomain = req.headers.host;
-          var portIndex = hostDomain.indexOf(":");
+          var incomingRequestUrl = req.headers.referer;
+          var host = req.headers.host;
+          var portIndex = host.indexOf(":");
+          var hostDomain = host;
           if(portIndex >= 0) {
-            hostDomain = hostDomain.substring(0, portIndex);
+            hostDomain = host.substring(0, portIndex);
           }
 
-          var isSecured = appconfig.IsSecured;
+          var isSecured = incomingRequestUrl.indexOf('https://') > -1;
           var protocol = "http://";
+          var usedPort = sitePort;
           if(isSecured == true) {
             protocol = "https://";
+            usedPort = sitePortSecured;
           }
 
-          var siteUrl = protocol + hostDomain + ':'+ sitePort + '/PasswordReset.html?token=' + passwordResetToken;
+          var siteUrl = protocol + hostDomain + ':'+ usedPort + '/PasswordReset.html?token=' + passwordResetToken;
           body = body + "\nAici e link-ul pentru resetarea parolei: <a href='" + siteUrl + "'>Resetare parola</a></html>"
           sendMailToUser(email, subject, body);
         }
@@ -1269,6 +1279,20 @@ app.post('/upload', function(req, res) {
   });
 });
 
-var server = app.listen(sitePort, function(){
+http.createServer(app).listen(sitePort, ipAddress, function() {
   console.log('Server listening on port ' + sitePort);
 });
+
+if(sitePortSecured != '') {
+
+  var certFile = fs.readFileSync(certificatePath);
+  
+  const options = {
+    pfx: certFile,
+    passphrase: certificatePassword
+  };
+
+  https.createServer(options, app).listen(sitePortSecured, ipAddress, function() {
+    console.log('Server listening on secured port ' + sitePortSecured);
+  });
+}
