@@ -6,7 +6,5 @@
 	"ListeningPortSecured": 443,
 	"IpAddress": "192.168.0.103",
 	"CertificatePath": "c:/certs/localhost.pfx",
-	"CertificatePassword": "test",
-	"DomainName": "http://localhost",
-	"IsSecured": false
+	"CertificatePassword": "test"
 }

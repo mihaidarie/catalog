@@ -1,0 +1,15 @@
+- install NodeJS on the hosting machine: https://nodejs.org/en/
+- extract all files and folders from the provided .zip archive to the desired hosting location
+- in the extraction folder, open the file "/database/appconfig.json" and set values for the following:
+	- IpAddres: can be the private IP address of your network, which is bound to the public IP that the site domain translates to
+	- SmptUsername: email account from which the website sends emails (used for password reset and suggestions sent by the user to the site owner)
+	- SmptPassword: password of the above email account
+	- SmtpService: could be Yahoo, Gmail, etc - it's the email service provider that hosts the above email account
+	- CertificatePath: physical path of the .pfx certificate file used for serving HTTPS traffic
+	- CertificatePassword: password set to the .pfx certificate file from above
+- configure the desired domain name to point to the hosting public IP address
+- route the public IP address to the private address set as value for IpAddres field in the configuration file
+- open a console window as administrator
+- navigate to the website hosting folder
+- type "node app.js" in the console and hit Enter
+- and off you go! access the website through its associated domain name

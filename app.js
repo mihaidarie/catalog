@@ -578,19 +578,23 @@ app.post('/sendResetPassword', function(req, res) {
         try {
           passwordResetTokens[passwordResetToken] = passwordResetAttempt;
           
-          var hostDomain = req.headers.host;
-          var portIndex = hostDomain.indexOf(":");
+          var incomingRequestUrl = req.headers.referer;
+          var host = req.headers.host;
+          var portIndex = host.indexOf(":");
+          var hostDomain = host;
           if(portIndex >= 0) {
-            hostDomain = hostDomain.substring(0, portIndex);
+            hostDomain = host.substring(0, portIndex);
           }
 
-          var isSecured = appconfig.IsSecured;
+          var isSecured = incomingRequestUrl.indexOf('https://') > -1;
           var protocol = "http://";
+          var usedPort = sitePort;
           if(isSecured == true) {
             protocol = "https://";
+            usedPort = sitePortSecured;
           }
 
-          var siteUrl = protocol + hostDomain + ':'+ sitePort + '/PasswordReset.html?token=' + passwordResetToken;
+          var siteUrl = protocol + hostDomain + ':'+ usedPort + '/PasswordReset.html?token=' + passwordResetToken;
           body = body + "\nAici e link-ul pentru resetarea parolei: <a href='" + siteUrl + "'>Resetare parola</a></html>"
           sendMailToUser(email, subject, body);
         }
