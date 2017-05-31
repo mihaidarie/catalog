@@ -1,7 +1,9 @@
 {
-	"SmtpService": "Yahoo", 
+	"SmtpServiceHost": "smtp.mail.yahoo.com", 
+	"SmptServicePort": 465,
+	"SmptServiceSecured": true,
 	"SmtpUsername": "mihai_darie2@yahoo.com",
-	"SmptPassword": "298fcd9d20682a20611e",
+	"SmtpPassword": "Maymay2017",
 	"ListeningPort": 80,
 	"ListeningPortSecured": 443,
 	"IpAddress": "192.168.0.103",

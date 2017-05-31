@@ -89,22 +89,37 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 
 app.use(express.static(path.join(__dirname, '')));
 
-function setupTransporter(service, user, password) {
+// verify connection configuration
+function verifyEmailConfiguration(transporter) {
+  transporter.verify(function(error, success) {
+    if (error) {
+          console.log('Email configuration error: ' + error);
+          configurationOk = false;
+    } else {
+          console.log('Email Server is ready to take our messages');
+          configurationOk = true;
+    }
+  });
+}
+
+function setupTransporter(serviceHost, servicePort, secured, user, password) {
   var adminEmail = appconfig.SmtpUsername;
-  var adminPassword = appconfig.SmptPassword;
+  var adminPassword = appconfig.SmtpPassword;
   var service = appconfig.SmtpService;
-  
-  var decryptedAdminPassword = decrypt(adminPassword);
 
   // create reusable transporter object using the default SMTP transport
   let transporter = nodemailer.createTransport({
-      service: service,
+      host: serviceHost,
+      port: servicePort,
+      secure: secured,
       auth: {
           user: adminEmail,
-          pass: decryptedAdminPassword
+          pass: adminPassword
       }
   });
 
+  verifyEmailConfiguration(transporter);
+  
   return transporter;
 }
 
@@ -140,7 +155,7 @@ function sendMailToAdmin(firstname, lastname, email, subject, body) {
   }
 
   if(adminEmail != "") {
-    var transporter = setupTransporter(settingsDoc.Service, settingsDoc.Username, settingsDoc.Password);
+    var transporter = setupTransporter(settingsDoc.SmtpServiceHost, settingsDoc.SmptServicePort, settingsDoc.SmptServiceSecured, settingsDoc.Username, settingsDoc.Password);
     var mailDetails = createSuggestionEmailMessage(firstname, lastname, email, subject, body, adminEmail);
     
     // send mail with defined transport object
@@ -189,7 +204,7 @@ function sendMailToUser(email, subject, body) {
   }
 
   if(adminEmail != "") {
-    var transporter = setupTransporter(settingsDoc.Service, settingsDoc.Username, settingsDoc.Password);
+    var transporter = setupTransporter(settingsDoc.SmtpServiceHost, settingsDoc.SmptServicePort, settingsDoc.SmptServiceSecured, settingsDoc.Username, settingsDoc.Password);
     var mailDetails = createPasswordResetEmailMessage(email, subject, body, adminEmail);
     
     // send mail with defined transport object
