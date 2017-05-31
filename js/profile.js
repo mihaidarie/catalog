@@ -91,12 +91,23 @@ function renderProfileData(profileId, profileClass) {
                 $('#email').val(profile.Email);
                 oldEmailValue = profile.Email;
                 $('#description').val(profile.Description);
+                
                 $('#profilePhoto').attr("src", profile.ProfilePhotoPath);
                 var recentPhotoPath = "/images/profiles/large/placeholder.png";
                 if(profile.RecentPhotoPath && profile.RecentPhotoPath != '') {
-                    recentPhotoPath = profile.RecentPhotoPath;
+                    $.ajax({
+                        url: profile.RecentPhotoPath,
+                        type: "HEAD",
+                        success: function() {
+                            recentPhotoPath = profile.RecentPhotoPath;
+                        },
+                        error: function () { 
+                        },
+                        complete: function() {
+                            $('#recentPhoto').attr("src", recentPhotoPath);
+                        }
+                    });
                 }
-                $('#recentPhoto').attr("src", recentPhotoPath);
                 $('#otherInfo').text(profile.Other);
                 $('#address').val(profile.Address);
                 

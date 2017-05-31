@@ -1207,7 +1207,7 @@ app.post('/upload', function(req, res) {
         var profileIdParam = req.query.profileId;
 
         var isExpectedUserLoggedIn = isExpectedUser(classParam, profileIdParam, req);
-        if(isUserAdmin == true) {
+        if(isUserAdmin == true || isExpectedUserLoggedIn == true) {
           
           var newFileName = classParam + profileIdParam + fileExtension;
           var newFilePath = path.join(form.profileUploadDir, newFileName);
