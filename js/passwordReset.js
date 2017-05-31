@@ -53,6 +53,7 @@ function validateToken(token) {
 $(document).ready(function() {
     $("header").load('header.html', loadHeader);
     $("footer").load('footer.html');
+    logout();
     
     var uri = URI(window.location.href);
     var token = uri.getParameter('token');
