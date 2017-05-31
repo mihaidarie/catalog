@@ -3,7 +3,14 @@ $(document).ready(function() {
     if(isUserLoggedIn == true) {
         wireupSessionTimer();
     }
+    setHeaderMargin();
 });
+
+function setHeaderMargin() {
+    if(document.documentMode || /Edge/.test(navigator.userAgent)) {
+        $('header').css('margin-bottom', '6%');
+    }
+}
 
 var sessionTimerIdleTimeMinutes = 10;
 var cookieExpirationTimespanMinutes = 60;

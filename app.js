@@ -702,7 +702,7 @@ app.post('/resetPassword', function(req, res) {
             } else {
               returnResult = {
                 success: false,
-                message: 'Credentiale folosite deja. Reluati resetarea.'
+                message: 'Credentiale folosite deja. Incercati alta parola.'
               };
             }
 
