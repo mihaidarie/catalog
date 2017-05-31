@@ -48,32 +48,41 @@ function renderProjectsForm() {
 
             var postedProjectsJson = JSON.stringify(ProjectsJson);
 
-            var postUrl = "/saveProjects";
-            $.ajax({
-                url: postUrl,
-                type: 'POST',
-                data: postedProjectsJson,
-                contentType: 'application/json',
-                error: function(jqXHR, textStatus, errorThrown ) {
-                    console.log('jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
-                    $('#result').text('Salvare esuata! Contactati administratorul.');
-                    $('#result').css('color', 'red');
-                    scrollToResult();
-                    resetResultMessage();
-                },
-                success: function() {
-                    console.log("success!");
-                    $('#result').text('Salvare reusita!');
-                    $('#result').css('color', 'green');
-                    resetResultMessage();
-                    loadProjects(true); 
-                },
-                complete: function() {
-                    console.log("completed!");
-                }
-            });
+            if(ProjectsJson.length > 0) {
+
+                var postUrl = "/saveProjects";
+                $.ajax({
+                    url: postUrl,
+                    type: 'POST',
+                    data: postedProjectsJson,
+                    contentType: 'application/json',
+                    error: function(jqXHR, textStatus, errorThrown ) {
+                        console.log('jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
+                        $('#result').text('Salvare esuata! Contactati administratorul.');
+                        $('#result').css('color', 'red');
+                        scrollToResult();
+                        resetResultMessage();
+                    },
+                    success: function() {
+                        console.log("success!");
+                        $('#result').text('Salvare reusita!');
+                        $('#result').css('color', 'green');
+                        resetResultMessage();
+                        loadProjects(true); 
+                    },
+                    complete: function() {
+                        console.log("completed!");
+                    }
+                });
+            }
+            else {
+                $('#result').text('Nimic de salvat!');
+                $('#result').css('color', 'red');
+                scrollToResult();
+                resetResultMessage();
+            }
         } else {
-            $('#result').text('Stergere esuata! Va rugam sa va logati.');
+            $('#result').text('Salvare esuata! Va rugam sa va logati.');
             $('#result').css('color', 'red');
             scrollToResult();
             resetResultMessage();
@@ -91,32 +100,39 @@ function renderProjectsForm() {
                 ProjectsIdsList.push(itemId);
             });
 
-            var postedData = JSON.stringify(ProjectsIdsList);
+            if(ProjectsIdsList.length > 0) {
+                var postedData = JSON.stringify(ProjectsIdsList);
 
-            var postUrl = "/removeProjects";
-            $.ajax({
-                url: postUrl,
-                type: 'POST',
-                data: postedData,
-                contentType: 'application/json',
-                error: function(jqXHR, textStatus, errorThrown ) {
-                    console.log('jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
-                    $('#result').text('Stergere esuata! Contactati administratorul.');
-                    $('#result').css('color', 'red');
-                    scrollToResult();
-                    resetResultMessage();
-                },
-                success: function() {
-                    console.log("success!");
-                    loadProjects(true);
-                    $('#result').text('Stergere reusita!');
-                    $('#result').css('color', 'green');
-                    resetResultMessage();
-                },
-                complete: function() {
-                    console.log("completed!");
-                }
-            });
+                var postUrl = "/removeProjects";
+                $.ajax({
+                    url: postUrl,
+                    type: 'POST',
+                    data: postedData,
+                    contentType: 'application/json',
+                    error: function(jqXHR, textStatus, errorThrown ) {
+                        console.log('jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
+                        $('#result').text('Stergere esuata! Contactati administratorul.');
+                        $('#result').css('color', 'red');
+                        scrollToResult();
+                        resetResultMessage();
+                    },
+                    success: function() {
+                        console.log("success!");
+                        loadProjects(true);
+                        $('#result').text('Stergere reusita!');
+                        $('#result').css('color', 'green');
+                        resetResultMessage();
+                    },
+                    complete: function() {
+                        console.log("completed!");
+                    }
+                });
+            } else {
+                $('#result').text('Nimic de sters!');
+                $('#result').css('color', 'red');
+                scrollToResult();
+                resetResultMessage();
+            }
         } else {
             $('#result').text('Stergere esuata! Va rugam sa va logati.');
             $('#result').css('color', 'red');
