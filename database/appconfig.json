@@ -1,0 +1,12 @@
+{
+	"SmtpServiceHost": "smtp.mail.yahoo.com", 
+	"SmptServicePort": 465,
+	"SmptServiceSecured": true,
+	"SmtpUsername": "mihai_darie2@yahoo.com",
+	"SmtpPassword": "Maymay2017",
+	"ListeningPort": 80,
+	"ListeningPortSecured": 443,
+	"IpAddress": "192.168.0.103",
+	"CertificatePath": "c:/certs/localhost.pfx",
+	"CertificatePassword": "test"
+}

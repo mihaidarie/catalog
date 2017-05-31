@@ -1,0 +1,88 @@
+header {
+    overflow: hidden;
+}
+
+.header {
+    background-image: url("../images/colegiul.png");
+    background-size: 100% 100%;
+    margin: auto;
+    position: relative;
+    height: 50%;
+    width: 58%;
+}
+
+#alert-session {
+    background-color: yellow;
+    margin-left: auto;
+    margin-right: auto;  
+    border: solid 3px red;
+    border-radius: 15px;
+    padding: 1%;
+    width: 97.2%;
+    height: 40%;
+    z-index: 100;
+    margin-top: 30%;
+    font-size: 28px;
+    position: absolute;
+    display: none;
+}
+
+.promotion {
+    clear: right;
+}
+
+.promotion, .promotion button {
+    color: white;
+    font-size: 25px;
+    background-color: black;
+    border: none;
+}
+
+.roundedCorners {
+    border-radius: 7px;
+}
+
+.promotion button {
+    cursor: pointer;
+}
+
+.login {
+    margin-right: 2.5%;
+    width: 19%;
+    height: 55%;
+    position: absolute; 
+    bottom: -16.5%; 
+    right: 0;
+}
+
+.loginLabel {
+    color: white;
+}
+
+.floatRight {
+    float: right;
+}
+
+.textBox {
+    width: 100%;
+}
+
+.marginTop {
+    margin-top: 4%;
+}
+
+.header input {
+    height: 15%;
+}
+
+#loginOK, #loginReset {
+    width: 43%;
+}
+
+header {
+    margin-bottom: 3%;
+}
+
+#loginReset {
+    margin-right: 1em;
+}

@@ -1,0 +1,26 @@
+#newsList {
+    list-style-type: none;
+    padding: 1%;
+    margin-top: 2%;
+    width: 95%;
+    float: none;
+    height: 41%;
+}
+
+#newsList li {
+    float: left;
+    width: 100%;
+    word-break: break-all;
+    margin-top: 0.1em;
+}
+
+#newsList li textarea {
+    width: inherit;
+    overflow: hidden;
+    resize: none;
+    border-radius: 7px;
+}
+
+#newsList li:not(:last-child) {
+    margin-bottom: 2%;
+}

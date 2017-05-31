@@ -1,0 +1,24 @@
+.menu {
+    background-color: #595959;
+    width: 58%;
+    clear: right;
+    text-align: center;
+    height: 10%;
+}
+
+.menu button, span {
+    background-color: #595959;
+    color: white;
+    border: none;
+    font-size: 16px;
+    position: relative;
+    top: 35%;
+}
+
+.menu button {
+    cursor: pointer;
+}
+
+footer {
+    margin-top: 3%;
+}

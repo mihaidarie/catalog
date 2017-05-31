@@ -1,0 +1,15 @@
+#upload-input {
+    visibility: hidden;
+}
+
+.progress {
+    width: 58% !important;
+}
+
+#uploadContent {
+    height: 25%;
+}
+
+.login {
+    bottom: -11% !important;
+}
