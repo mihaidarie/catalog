@@ -5,7 +5,7 @@ $(document).ready(function() {
     }
 });
 
-var sessionTimerIdleTimeMinutes = 1;
+var sessionTimerIdleTimeMinutes = 10;
 var cookieExpirationTimespanMinutes = 60;
 
 function wireupSessionTimer() {
