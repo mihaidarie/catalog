@@ -434,6 +434,10 @@ function getAdminDetails() {
     }
   }
 
+  var contactsFilePath = '/catalog/database/contacts/contacts.json';
+  var contacts = JSON.parse(fs.readFileSync(contactsFilePath));
+  adminDetails.Email = contacts.EmailRomania;
+
   return adminDetails;
 }
 
