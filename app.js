@@ -173,7 +173,7 @@ function createSuggestionEmailMessage(firstname, lastname, email, subject, body,
   // setup email data with unicode symbols
   var friendlyName= '"' + firstname + ' ' + lastname + '"';
   var mailForBody = friendlyName + ' ' + email;
-  var from =  friendlyName + ' ' + adminEmail;
+  var from =  friendlyName + ' ' + appconfig.SmtpUsername;
   var bodyHeader = "Ati primit o sugestie de la " + mailForBody + "\r\n\r\n";
 
   let mailOptions = {

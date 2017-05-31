@@ -100,14 +100,14 @@ $(document).ready(function() {
                                 }
                             } else {
                                 if(result.success && result.success == true) {
-                                    $('#result').text('Parola salvata! Incercati sa va logati, dupa 3 secunde.');
+                                    $('#result').text('Parola salvata! Incercati sa va logati, dupa 5 secunde.');
                                     $('#result').css('color', 'green');
                                     $('#password1').text('');
                                     $('#password2').text('');
                                     scrollToResult();
                                     setTimeout(function() {
                                         location.href = "index.html";
-                                    }, 10 * 1000)
+                                    }, 5 * 1000);
                                 } 
                             }
                         },
