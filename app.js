@@ -173,7 +173,7 @@ function createSuggestionEmailMessage(firstname, lastname, email, subject, body,
   // setup email data with unicode symbols
   var friendlyName= '"' + firstname + ' ' + lastname + '"';
   var mailForBody = friendlyName + ' ' + email;
-  var from =  friendlyName + ' ' + adminEmail;
+  var from =  friendlyName + ' ' + appconfig.SmtpUsername;
   var bodyHeader = "Ati primit o sugestie de la " + mailForBody + "\r\n\r\n";
 
   let mailOptions = {
@@ -702,7 +702,7 @@ app.post('/resetPassword', function(req, res) {
             } else {
               returnResult = {
                 success: false,
-                message: 'Credentiale folosite deja. Reluati resetarea.'
+                message: 'Credentiale folosite deja. Incercati alta parola.'
               };
             }
 
@@ -1207,7 +1207,7 @@ app.post('/upload', function(req, res) {
         var profileIdParam = req.query.profileId;
 
         var isExpectedUserLoggedIn = isExpectedUser(classParam, profileIdParam, req);
-        if(isUserAdmin == true) {
+        if(isUserAdmin == true || isExpectedUserLoggedIn == true) {
           
           var newFileName = classParam + profileIdParam + fileExtension;
           var newFilePath = path.join(form.profileUploadDir, newFileName);

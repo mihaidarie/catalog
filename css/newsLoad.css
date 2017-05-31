@@ -12,13 +12,15 @@
     width: 100%;
     word-break: break-all;
     margin-top: 0.1em;
+    height: 5em;
 }
 
 #newsList li textarea {
     width: inherit;
-    overflow: hidden;
+    overflow: auto;
     resize: none;
     border-radius: 7px;
+    height: inherit;
 }
 
 #newsList li:not(:last-child) {

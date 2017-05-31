@@ -3,9 +3,16 @@ $(document).ready(function() {
     if(isUserLoggedIn == true) {
         wireupSessionTimer();
     }
+    setHeaderMargin();
 });
 
-var sessionTimerIdleTimeMinutes = 1;
+function setHeaderMargin() {
+    if(document.documentMode || /Edge/.test(navigator.userAgent)) {
+        $('header').css('margin-bottom', '6%');
+    }
+}
+
+var sessionTimerIdleTimeMinutes = 10;
 var cookieExpirationTimespanMinutes = 60;
 
 function wireupSessionTimer() {
