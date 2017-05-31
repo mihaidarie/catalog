@@ -135,7 +135,7 @@ function wireupHeaderButtons() {
                 wireupSessionTimer();
 
                 var currentUrl = window.location.href;
-                if(currentUrl.indexOf("passwordreset.html") >= 0) {
+                if(currentUrl.toLowerCase().indexOf("passwordreset.html") >= 0) {
                     currentUrl = "Index.html";
                 }
 

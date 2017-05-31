@@ -74,7 +74,7 @@ function isDifferentThanAdmin(usernameOrEmail, password) {
   var adminEmail = adminDetails.Email;
   var adminPassword = adminDetails.Password;
 
-  isDifferent = adminUser != usernameOrEmail && adminEmail != usernameOrEmail && adminPassword != password;
+  isDifferent = adminEmail != usernameOrEmail || adminPassword != password;
   return isDifferent;
 }
 
@@ -145,15 +145,9 @@ function sendMailToAdmin(firstname, lastname, email, subject, body) {
   var settingsDocResult = [];
   var accountsResult = [];
 
-  var adminEmail = "";
-  for (var i = 0, len = accounts.length; i < len; i++) {
-    var accountType = accounts[i].AccountType;
-    if(accountType == 'admin') {
-      adminEmail = accounts[i].Email;
-      break;
-    }
-  }
-
+  var adminDetails = getAdminDetails();
+  var adminEmail = adminDetails.Email;
+  
   if(adminEmail != "") {
     var transporter = setupTransporter(settingsDoc.SmtpServiceHost, settingsDoc.SmptServicePort, settingsDoc.SmptServiceSecured, settingsDoc.Username, settingsDoc.Password);
     var mailDetails = createSuggestionEmailMessage(firstname, lastname, email, subject, body, adminEmail);
@@ -194,14 +188,8 @@ function sendMailToUser(email, subject, body) {
   
   var settingsDocResult = [];
 
-  var adminEmail = "";
-  for (var i = 0, len = accounts.length; i < len; i++) {
-    var accountType = accounts[i].AccountType;
-    if(accountType == 'admin') {
-      adminEmail = accounts[i].Email;
-      break;
-    }
-  }
+  var adminDetails = getAdminDetails();
+  var adminEmail = adminDetails.Email;
 
   if(adminEmail != "") {
     var transporter = setupTransporter(settingsDoc.SmtpServiceHost, settingsDoc.SmptServicePort, settingsDoc.SmptServiceSecured, settingsDoc.Username, settingsDoc.Password);
