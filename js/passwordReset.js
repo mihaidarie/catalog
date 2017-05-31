@@ -93,9 +93,11 @@ $(document).ready(function() {
                                 $('#result').text(result.message);
                                 $('#result').css('color', 'red');
                                 scrollToResult();
-                                setTimeout(function() {
-                                    location.href = "PasswordReset.html";
-                                }, 10 * 1000);
+                                if(result.message.indexOf('Token-ul a expirat') > -1) {
+                                    setTimeout(function() {
+                                        location.href = "PasswordReset.html";
+                                    }, 10 * 1000);
+                                }
                             } else {
                                 if(result.success && result.success == true) {
                                     $('#result').text('Parola salvata! Incercati sa va logati, dupa 3 secunde.');

@@ -48,46 +48,48 @@ function loadClassInfo() {
         var isAdminLogged = isAdminLoggedIn();
         if(isAdminLogged == false) {
             $('.description').attr('readonly', 'readonly');
+            $('#saveDescription').hide();
+        } else {
+            $('#saveDescription').show();
+            $('#saveDescription').click(function() {
+                if(isAdminLogged == true) {
+                    // post description to server
+                    
+                    var inputDescription = $('.description').val();
+                    var uri = URI(window.location.href);
+                    var className = uri.getParameter("name");
+
+                    var postedData = JSON.stringify( { description : inputDescription });
+                    var postUrl = "/saveClass?className=" + className;
+                    $.ajax({
+                        url: postUrl,
+                        type: 'POST',
+                        data: postedData,
+                        contentType: 'application/json',
+                        error: function(jqXHR, textStatus, errorThrown ) {
+                            $('#result').text('Salvare esuata! Contactati administratorul.');
+                            $('#result').css('color', 'red');
+                            scrollToDescription();
+                            resetResultMessage();
+                        },
+                        success: function() {
+                            console.log("success!");
+                            $('#result').text('Salvare reusita!');
+                            $('#result').css('color', 'green');
+                            scrollToDescription();
+                            resetResultMessage();
+                        },
+                        complete: function() {
+                            console.log("completed!");
+                        }
+                    });
+                } else {
+                    $('#result').text('Va rugam sa va logati.');
+                    scrollToDescription();
+                    $('#result').css('color', 'red');
+                }
+            });
         }
-
-        $('#saveDescription').click(function() {
-            if(isAdminLogged == true) {
-                // post description to server
-                
-                var inputDescription = $('.description').val();
-                var uri = URI(window.location.href);
-                var className = uri.getParameter("name");
-
-                var postedData = JSON.stringify( { description : inputDescription });
-                var postUrl = "/saveClass?className=" + className;
-                $.ajax({
-                    url: postUrl,
-                    type: 'POST',
-                    data: postedData,
-                    contentType: 'application/json',
-                    error: function(jqXHR, textStatus, errorThrown ) {
-                        $('#result').text('Salvare esuata! Contactati administratorul.');
-                        $('#result').css('color', 'red');
-                        scrollToDescription();
-                        resetResultMessage();
-                    },
-                    success: function() {
-                        console.log("success!");
-                        $('#result').text('Salvare reusita!');
-                        $('#result').css('color', 'green');
-                        scrollToDescription();
-                        resetResultMessage();
-                    },
-                    complete: function() {
-                        console.log("completed!");
-                    }
-                });
-            } else {
-                $('#result').text('Va rugam sa va logati.');
-                scrollToDescription();
-                $('#result').css('color', 'red');
-            }
-        });
     });
 }
 

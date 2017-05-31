@@ -45,6 +45,18 @@ function setupUploadControls(uploadType, profileId, profileClass) {
                 }, 2000);
               }
           },
+          error: function(e) {
+            if(e.status == 401) {
+              $('.progress-bar').html('Incarcare esuata! Va rugam sa va logati.');
+              $('.progress-bar').css('background-color', 'red');
+              setTimeout(function() {
+                location.href = "index.html";
+              }, 5000);
+            } else {
+              $('.progress-bar').html('Incarcare esuata! Contactati administratorul.');
+              $('.progress-bar').css('background-color', 'red');
+            }
+          },
           complete: function() {
               $('#upload-input').val('');
           },
