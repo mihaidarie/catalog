@@ -2,7 +2,7 @@
 - extract all files and folders from the provided .zip archive to the desired hosting location
 - in the extraction folder, open the file "/database/appconfig.json" and set values for the following:
 	- IpAddres: can be the private IP address of your network, which is bound to the public IP that the site domain translates to
-	- SmptUsername: email account from which the website sends emails (used for password reset and suggestions sent by the user to the site owner)
+	- SmptUsername: email account from which the website sends emails (used for sending password reset emails and suggestions emails sent by the user to the site owner)
 	- SmtpPassword: password of the above email account
 	- SmtpServiceHost: the host name or IP address of the email service provider that hosts the above email account 
 	- SmptServicePort: the port of the email service provider that hosts the above email account
