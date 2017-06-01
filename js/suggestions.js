@@ -11,6 +11,10 @@ $(document).ready(function() {
     $("#emailBody").elastic();
     
     generateCaptcha();
+    
+    if(document.documentMode || /Edge/.test(navigator.userAgent)) {
+        $('#emailBody').css('width', '15em');
+    }
 
     $("#sendEmail").click(function () {
         if ($("#captchaInput").val() != iNumber) {
