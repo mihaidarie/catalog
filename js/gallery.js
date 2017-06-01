@@ -26,7 +26,7 @@ $(document).ready(function() {
                 var imageName = $('ul.pxs_thumbnails li.selected img').attr('src').split('/').pop();
 
                 $.post("/removephoto?photoName=" + imageName, function() {
-                    window.location.href = window.location.href;
+                    window.location.href = window.location.href;                 
                 });
             } else {
                 $('#result').text('Salvare esuata! Va rugam sa va logati.');
@@ -89,11 +89,11 @@ function loadLinks() {
 function loadPhotos() {
     // get current photos paths from server
 
-    $.getJSON("/gallery", function(data) {
+    $.getJSON("/gallery", {_: new Date().getTime()}, function(data) {
         
         var thumbnailsArray = [];
         $.each( data, function(key, val) {
-            thumbnailsArray.push('<li><img src="' + val + '" alt="" /><</li>');
+            thumbnailsArray.push('<li><img src="' + val + '" alt="" /></li>');
         });
         
         var items = [];
