@@ -42,7 +42,7 @@ $(document).ready(function() {
 });
 
 function loadLinks() {
-    $.getJSON("/getLinks", function(data) {
+    $.getJSON("/getLinks", {_: new Date().getTime()}, function(data) {
         $('#freeLinks').val(data.AllLinks);
 
         var isAdminUserLoggedIn = isAdminLoggedIn();
@@ -50,7 +50,6 @@ function loadLinks() {
             $('#freeLinks').removeAttr('readonly');
             $('#btnSaveLinks').show();
 
-            
             $('#galleryLinks button').click(function() {
                 var isAdminUserLoggedIn = isAdminLoggedIn();
                 if(isAdminUserLoggedIn == true) {
@@ -66,7 +65,7 @@ function loadLinks() {
                             $('#result').text('Salvare reusita!');
                             $('#result').css('color', 'green');
                             resetResultMessage();
-                            loadLinks();
+                            loadLinks();                            
                             scrollToResult();
                         },
                         error: function(jqXHR, textStatus, errorThrown ) {
