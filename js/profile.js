@@ -107,7 +107,10 @@ function renderProfileData(profileId, profileClass) {
                             $('#recentPhoto').attr("src", recentPhotoPath);
                         }
                     });
+                } else {
+                    $('#recentPhoto').attr("src", recentPhotoPath);
                 }
+                
                 $('#otherInfo').text(profile.Other);
                 $('#address').val(profile.Address);
                 
