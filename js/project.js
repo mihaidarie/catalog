@@ -110,7 +110,7 @@ function setupFormMode() {
 function loadProjectPhotos(projectId) {
     var photosArray = [];
 
-    $.getJSON('/getProjectPhotos?projectId=' + projectId, function(photosPathsArray) {
+    $.getJSON('/getProjectPhotos?projectId=' + projectId, {_: new Date().getTime()}, function(photosPathsArray) {
         $.each( photosPathsArray, function( key, elem ) {
             var newPhoto = '<li><a data-lightbox="roadtrip" href="' + elem + '"><img src="' + elem + '" /></a><input type="checkbox" /></li>';
             photosArray.push(newPhoto);
