@@ -12,6 +12,10 @@
     height: 2em;
 }
 
+.suggestionDetails label {
+    font-family: Verdana;
+}
+
 .suggestions {
     width: 58%;
 }
