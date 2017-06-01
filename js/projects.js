@@ -138,7 +138,7 @@ function loadProjects(shouldScroll) {
     
     $('#projectsList').empty();
     
-    $.getJSON(projectsFileName, {_: new Date().getTime()}, function(data) {
+    $.getJSON(projectsFileName, function(data) {
     
         var items = [];
         $.each(data, function(index, ProjectsDetails) {
