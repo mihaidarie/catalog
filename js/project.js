@@ -66,7 +66,8 @@ function wireUpHandlers() {
                 },
                 complete: function() {
                     console.log("completed!");
-                }
+                },
+                async: false
             });
         }
     });
