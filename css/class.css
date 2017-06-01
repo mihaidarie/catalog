@@ -50,6 +50,7 @@
     float: left;
     cursor: pointer;
     height: 1.3em;
+    font-family: Verdana;
 }
 
 #result {

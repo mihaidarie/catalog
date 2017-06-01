@@ -4,12 +4,13 @@
 }
 
 .contactDetails {
-    width: 50%;
+    width: 55%;
     height: 18%;
 }
 
 .contactDetails label {
     float: left;
+    font-family: Verdana;
 }
 
 .contactDetails input {
