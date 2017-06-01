@@ -528,30 +528,31 @@ app.post('/validateCredentials', function(req, res) {
     var profileId = '';
     var isValid = false;
 
-    var accountsContent = fs.readFileSync(accountsFilePath);
-    var accounts = JSON.parse(accountsContent);
+    if(username && username != '' && password && password != '') {
+      var accountsContent = fs.readFileSync(accountsFilePath);
+      var accounts = JSON.parse(accountsContent);
 
-    var personDetails = getPersonDetailsByMail(username);
-    if(personDetails.IsValid == true) {
-      isValid = personDetails.IsValid;
-      className = personDetails.Class;
-      profileId = personDetails.UserId;
-    } else {
-      for (var i = 0, len = accounts.length; i < len; i++) {
-        var currentUsername = accounts[i].Username;
-        var currentPassword = accounts[i].Password;
-        var hash = crypto.createHash('sha256');
-        hash.update(password);
-        var hashedPassword = hash.digest('hex');
-        if(username == currentUsername && hashedPassword == currentPassword) {
-          isValid = true;
-          className = accounts[i].Class;
-          profileId = accounts[i].Id;
-          break;
+      var personDetails = getPersonDetailsByMail(username);
+      if(personDetails.IsValid == true) {
+        isValid = personDetails.IsValid;
+        className = personDetails.Class;
+        profileId = personDetails.UserId;
+      } else {
+        for (var i = 0, len = accounts.length; i < len; i++) {
+          var currentUsername = accounts[i].Username;
+          var currentPassword = accounts[i].Password;
+          var hash = crypto.createHash('sha256');
+          hash.update(password);
+          var hashedPassword = hash.digest('hex');
+          if(username == currentUsername && hashedPassword == currentPassword) {
+            isValid = true;
+            className = accounts[i].Class;
+            profileId = accounts[i].Id;
+            break;
+          }
         }
       }
     }
-
     var returnMessage = {
       isValid: isValid,
       className: className,
