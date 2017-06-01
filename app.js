@@ -138,6 +138,34 @@ function updateRecentPhotoPath(newFilePath, profileIdParam, classParam) {
   fs.writeFileSync(classFilePath, JSON.stringify(classDetails));
 }
 
+app.get('/exportAllEmails', function(req, res) {
+  var allEmails = '';
+  var isUserAdmin = isAdminLoggedIn(req);
+  
+  if(isUserAdmin == true) {
+    
+    var allClasses = fs.readdirSync(classesFilePath);
+    for (var i = 0, classesNumber = allClasses.length ; i < classesNumber; i++) {
+      var className = allClasses[i];
+      var classDetails = JSON.parse(fs.readFileSync(classesFilePath + className));
+      var sortedProfiles = classDetails[0].Profiles.sort(compareProfileIds);
+      for (var j = 0, profilesNumber = sortedProfiles.length; j < profilesNumber; j++) {
+        var profileDetails = classDetails[0].Profiles[j];
+        var email = profileDetails.Email;
+        if(email && email != '') {
+          allEmails = allEmails + email + '; ';
+        }
+      }
+    }
+  }
+
+  var allEmailsResult = {
+    EmailsList: allEmails
+  };
+
+  res.json(allEmailsResult);
+});
+
 function sendMailToAdmin(firstname, lastname, email, subject, body) {
   var settingsDoc = appconfig;
   var accounts = JSON.parse(fs.readFileSync(accountsFilePath));
