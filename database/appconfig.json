@@ -1,5 +1,5 @@
 {
-	"SmtpServiceHost": "smtp.mail.yahoo.com", 
+	"SmtpServiceHost": "EMAIL SERVER HOST NAME HERE", 
 	"SmptServicePort": 465,
 	"SmptServiceSecured": true,
 	"SmtpUsername": "YOUR EMAIL USERNAME HERE",
