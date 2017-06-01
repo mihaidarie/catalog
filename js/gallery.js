@@ -93,7 +93,7 @@ function loadPhotos() {
         
         var thumbnailsArray = [];
         $.each( data, function(key, val) {
-            thumbnailsArray.push('<li><img src="' + val + '" alt="" /><</li>');
+            thumbnailsArray.push('<li><img src="' + val + '" alt="" /></li>');
         });
         
         var items = [];
