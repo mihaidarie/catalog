@@ -1,0 +1,18 @@
+#btnExportEmails {
+    float: left;
+}
+
+#allEmails {
+    float: right;
+    overflow: auto !important;
+    height: 5em !important;
+    max-height: 5em !important;
+    width: 45em;
+    max-width: 45em !important;
+    resize: none;
+}
+
+#emailsExport {
+    width: inherit;
+    margin-top: 1em;
+}
