@@ -6,7 +6,7 @@
 	"SmtpPassword": "YOUR EMAIL PASSWORD HERE",
 	"ListeningPort": 80,
 	"ListeningPortSecured": 443,
-	"IpAddress": "192.168.0.103",
+	"IpAddress": "THE HOST PRIVATE IP ADDRESS HERE",
 	"CertificatePath": "c:/certs/localhost.pfx",
 	"CertificatePassword": "test"
 }
