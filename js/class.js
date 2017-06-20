@@ -11,8 +11,8 @@ function afterLoadHeader() {
 }
 
 function loadClassProfiles() {
-    $("header").load('header.html', afterLoadHeader);
-    $("footer").load('footer.html');
+    $("header").load('Header.html', afterLoadHeader);
+    $("footer").load('Footer.html');
 }
 
 function loadClassInfo() {
@@ -108,7 +108,7 @@ function hookProfileClick() {
         var className = uri.getParameter("name");
         var elementId = this.id;
         var profileId = this.getAttribute("data-id");
-        window.location.href = "profile.html?class=" + className + "&id=" + profileId;
+        window.location.href = "Profile.html?class=" + className + "&id=" + profileId;
         e.stopPropagation();
     });
 }

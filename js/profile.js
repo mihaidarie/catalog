@@ -11,8 +11,8 @@ $(document).ready(function() {
     var profileId = uri.getParameter('id');
     var profileClass = uri.getParameter('class');
 
-    $("header").load('header.html', loadHeader);
-    $("footer").load('footer.html');
+    $("header").load('Header.html', loadHeader);
+    $("footer").load('Footer.html');
 
     renderProfileData(profileId, profileClass);
 
@@ -21,7 +21,7 @@ $(document).ready(function() {
         var profileId = uri.getParameter('id');
         var profileClass = uri.getParameter('class');
 
-        window.location.href = "fileUpload.html?type=profile&class=" + profileClass + "&id=" + profileId;
+        window.location.href = "FileUpload.html?type=profile&class=" + profileClass + "&id=" + profileId;
     });
 
     $('#btnPrevious').click(function() {
@@ -62,7 +62,7 @@ function navigateProfile(serverMethod, currentClassName, currentProfileId) {
     if(currentClassName != '' && currentProfileId != '') {
         getProfile(currentClassName, currentProfileId, serverMethod, function(className, profileId) {
                 if(className && className != '' && profileId && profileId != '') {
-                    location.href = "profile.html?class=" + className + "&id=" + profileId;
+                    location.href = "Profile.html?class=" + className + "&id=" + profileId;
                 }
             }
         );

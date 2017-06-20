@@ -4,8 +4,8 @@ URI.prototype.getParameter = function(key) {
 };
 
 $(document).ready(function() {
-    $("header").load('header.html', setupPageElements);
-    $("footer").load('footer.html'); 
+    $("header").load('Header.html', setupPageElements);
+    $("footer").load('Footer.html'); 
 });
 
 function setupPageElements() {

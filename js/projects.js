@@ -1,6 +1,6 @@
 $(document).ready(function() {
-    $("header").load('header.html', renderProjectsForm);
-    $("footer").load('footer.html');
+    $("header").load('Header.html', renderProjectsForm);
+    $("footer").load('Footer.html');
 });
  
 function renderProjectsForm() {

@@ -6,8 +6,8 @@ function generateNumber() {
 }
 
 $(document).ready(function() {
-    $("header").load('header.html', loadHeader);
-    $("footer").load('footer.html');
+    $("header").load('Header.html', loadHeader);
+    $("footer").load('Footer.html');
     $("#emailBody").elastic();
     
     generateCaptcha();

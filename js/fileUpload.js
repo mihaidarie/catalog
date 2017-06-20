@@ -10,8 +10,8 @@ $(document).ready(function() {
     var profileClass = uri.getParameter('class');
     var uploadType = uri.getParameter('type');
       
-    $("header").load('header.html', loadHeader);
-    $("footer").load('footer.html');
+    $("header").load('Header.html', loadHeader);
+    $("footer").load('Footer.html');
 
     $('#btnBack').on('click', function () {
 

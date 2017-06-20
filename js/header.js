@@ -109,7 +109,7 @@ function logout(shouldRedirect) {
 function wireupHeaderButtons() {
      $(".promotion button").click(function() {
         var className = this.firstChild.data;
-        window.location.href = "class.html?name=" + className;
+        window.location.href = "Class.html?name=" + className;
     });
 
     $('#loginReset').click(function() {

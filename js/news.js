@@ -1,6 +1,6 @@
 $(document).ready(function() {
-    $("header").load('header.html', renderNewsForm);
-    $("footer").load('footer.html');
+    $("header").load('Header.html', renderNewsForm);
+    $("footer").load('Footer.html');
 });
  
 function SortById(a, b){

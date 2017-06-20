@@ -24,6 +24,6 @@ function loadProjects() {
 function hookProjectsClick() {
      $("ul li[id^='project_']").click(function(e) {
         var projectId = this.id.substring(this.id.indexOf('project_') + 8);
-        location.href = "project.html?id=" + projectId;
+        location.href = "Project.html?id=" + projectId;
      });
 }

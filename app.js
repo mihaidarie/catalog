@@ -14,23 +14,27 @@ var rimraf = require('rimraf');
 var https = require('https');
 var http = require('http');
 
-var photosFolder = '/catalog/images/gallery/';
+console.log('Catalog server starting...');
+
+var photosFolder = path.join(__dirname, '/images/gallery/');
 var photoClientPath = '/images/gallery/';
-var projectsFolder = '/Catalog/images/projects/';
+var projectsFolder = path.join(__dirname, '/images/projects/');
 var projectsClientPath = '/images/projects/';
-var newsFilePath = '/catalog/database/news/news.json';
-var projectsFilePath = '/catalog/database/projects/projects.json';
-var accountsFilePath = "/catalog/database/accounts/accounts.json";
-var classesFilePath = '/catalog/database/classes/';
+var newsFilePath = path.join(__dirname, '/database/news/news.json');
+var projectsFilePath = path.join(__dirname, '/database/projects/projects.json');
+var accountsFilePath = path.join(__dirname, "/database/accounts/accounts.json");
+var classesFilePath = path.join(__dirname, '/database/classes/');
 var recentPhotosPath = '/images/profiles/large/';
-var linksFilePath = "/catalog/database/links/links.json";
-var appconfigFilePath = "/catalog/database/appconfig.json";
+var linksFilePath = path.join(__dirname, "/database/links/links.json");
+var appconfigFilePath = path.join(__dirname, "/database/appconfig.json");
 var appconfig = JSON.parse(fs.readFileSync(appconfigFilePath));
 var sitePort = appconfig.ListeningPort;
 var sitePortSecured = appconfig.ListeningPortSecured;
 var ipAddress = appconfig.IpAddress;
 var certificatePath = appconfig.CertificatePath;
 var certificatePassword = appconfig.CertificatePassword;
+
+console.log('Catalog server read paths...');
 
 var passwordResetTokens = [];
 
@@ -1315,20 +1319,29 @@ app.post('/upload', function(req, res) {
   });
 });
 
+
+console.log('Attempting server binding creation...');
+
 http.createServer(app).listen(sitePort, ipAddress, function() {
   console.log('Server listening on port ' + sitePort);
 });
 
 if(sitePortSecured != '') {
+  if (fs.existsSync(certificatePath)) {
+    var certFile = fs.readFileSync(certificatePath);
+    
+    const options = {
+      pfx: certFile,
+      passphrase: certificatePassword
+    };
 
-  var certFile = fs.readFileSync(certificatePath);
-  
-  const options = {
-    pfx: certFile,
-    passphrase: certificatePassword
-  };
+    console.log('Attempting server secured binding creation...');
 
-  https.createServer(options, app).listen(sitePortSecured, ipAddress, function() {
-    console.log('Server listening on secured port ' + sitePortSecured);
-  });
+    https.createServer(options, app).listen(sitePortSecured, ipAddress, function() {
+      console.log('Server listening on secured port ' + sitePortSecured);
+    });
+  } 
+  else {
+    console.log('Certificate not found at specified path, not creating HTTPS binding');
+  }
 }
