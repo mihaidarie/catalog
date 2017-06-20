@@ -1,0 +1,94 @@
+ftp.negruzzi1987.ro
+root@negruzzi1987.ro
+1DinDealInVale#
+
+
+IP-ul dvs. dedicat (188.213.132.249) a fost alocat. Propagarea in Internet a informatiilor DNS despre IP-ul dvs. poate dura pana la 24 de ore.
+
+Abonament: L2 SSD (spatiu de stocare SSD necontorizat, trafic si domenii gazduite nelimitate)
+Domeniu: negruzzi1987.ro
+Adresa IP: 5.35.209.10
+V-am permis accesul SSH (portul 5334). Va rog sa verificati.
+Server: server20ssd
+Utilizator: negruzzi
+Parola: jt5gZ3o1X9
+(* Parola este sensibila la litere mici sau mari. Veti avea nevoie de utilizator si parola pentru a accesa cPanel si FTP).
+cPanel: http://www.negruzzi1987.ro/cpanel/
+(* Pana la activarea domeniului puteti accesa cPanel la adresa http://5.35.209.10:2082)
+
+----------------------------------------------------------> 
+Instructiuni FTP: 
+---------------------------------------------------------->
+Pana la propagarea nameserverelor, puteti incarca situl folosind IP-ul: 5.35.209.10
+Server FTP: ftp.negruzzi1987.ro
+Situl trebuie incarcat in directorul ‘public_html'
+
+
+Pt ticket
+
+user:
+Lucian@spinaltec.com
+pw:
+ZeRatul3G0o#3o#oO
+
+Mail account:
+info@negruzzi1987.ro
+#DinDealInVale21
+
+
+
+Intrebari:
+- care e parola contului de mail?
+- certificatul SSL e instalat deja pe domeniul negruzzi1987.ro? asa apare cand ma uit aici: https://server20ssd.hostx.ro:2083/cpsess4202077029/frontend/paper_lantern/ssl/install.html
+- mai am nevoie sa fac binding in aplicatie pe IP si Port pt SSL? sau e de ajuns ce-am gasit mai sus pt ca site-ul sa mearga HTTPS?
+- daca trebuie sa fac binding HTTPS in aplicatia NodeJS, imi puteti exporta certificatul in format .pfx cu parola?
+- care e parola certificatului?
+
+
+Pt port forwarding:
+
+RewriteEngine On
+RewriteRule ^$ http://127.0.0.1:60000/ [P,L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ http://127.0.0.1:60000/$1 [P,L]
+
+RewriteRule ^$ http://127.0.0.1:60001/ [P,L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ http://127.0.0.1:60001/$1 [P,L]
+
+
+
+
+Pt redirectionare trafic spre HTTPS:
+RewriteEngine On
+RewriteCond %{SERVER_PORT} 80
+RewriteRule ^(.*)$ https://negruzzi1987.ro/$1 [R,L]
+
+
+
+Pt instalare NodeJS:
+
+cd ~
+https://nodejs.org/dist/v4.4.7/node-v4.4.7-linux-x64.tar.xz
+tar -xvf node-v4.4.7-linux-x64.tar.xz
+mv node-v4.4.7-linux-x64 nodejs
+
+mkdir ~/bin
+cp nodejs/bin/node ~/bin
+cd ~/bin
+ln -s ../nodejs/lib/node_modules/npm/bin/npm-cli.js npm
+
+node --version
+npm --version
+
+nohup node app.js &
+
+
+
+
+
+
+
+

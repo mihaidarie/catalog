@@ -51,8 +51,8 @@ function validateToken(token) {
 }
 
 $(document).ready(function() {
-    $("header").load('header.html', loadHeader);
-    $("footer").load('footer.html');
+    $("header").load('Header.html', loadHeader);
+    $("footer").load('Footer.html');
     logout();
     
     var uri = URI(window.location.href);
@@ -107,7 +107,7 @@ $(document).ready(function() {
                                     $('#password2').text('');
                                     scrollToResult();
                                     setTimeout(function() {
-                                        location.href = "index.html";
+                                        location.href = "Index.html";
                                     }, 5 * 1000);
                                 } 
                             }
@@ -125,7 +125,7 @@ $(document).ready(function() {
                 }
             });
         } else {
-            location.href = "index.html";
+            location.href = "Index.html";
         }
         
     } else {
