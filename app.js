@@ -1154,12 +1154,12 @@ app.post('/saveClass', function(req, res) {
     if(isUserAdmin == true) {
       var classDescription = req.body.description.trim();
       var className = req.query.className;
-      var classesFilePath = classesFilePath + className + ".json";
-      var classDetails = JSON.parse(fs.readFileSync(classesFilePath));
+      var targetClassFilePath = classesFilePath + className + ".json";
+      var classDetails = JSON.parse(fs.readFileSync(targetClassFilePath));
 
       classDetails[0].Description = classDescription;
 
-      fs.writeFileSync(classesFilePath, JSON.stringify(classDetails));
+      fs.writeFileSync(targetClassFilePath, JSON.stringify(classDetails));
       res.sendStatus(200);  
     } else {
       res.sendStatus(401);
