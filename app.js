@@ -532,9 +532,10 @@ function findPersonByClassAndId(className, personId) {
 function findPersonByEmail(email, className) {
   var classFilePath = classesFilePath + className + ".json";
   var fileExists = fs.existsSync(classFilePath);
+  var personDetails = {};
+  
   if(fileExists == true) {
     var classPersons = JSON.parse(fs.readFileSync(classFilePath));
-    var personDetails = {};
 
     for (var i = 0, len = classPersons[0].Profiles.length; i < len; i++) {
       var currentPerson = classPersons[0].Profiles[i];
