@@ -545,7 +545,7 @@ function findPersonByEmail(email, className) {
         break;
       }
     }
-  } else {F
+  } else {
     personDetails.IsFound = false;
   }
 
@@ -1108,8 +1108,8 @@ app.post('/saveProfile', function(req, res) {
     var isExpectedUserLoggedIn = isExpectedUser(className, profileId, req);
     if(isUserAdmin == true || isExpectedUserLoggedIn == true) {
     
-      var classesFilePath = classesFilePath + className + ".json";
-      var classDetails = JSON.parse(fs.readFileSync(classesFilePath));
+      var targetClassFilePath = classesFilePath + className + ".json";
+      var classDetails = JSON.parse(fs.readFileSync(targetClassFilePath));
 
       for (var i = 0, len = classDetails[0].Profiles.length; i < len; i++) {
         var profileDetails = classDetails[0].Profiles[i];
@@ -1137,7 +1137,7 @@ app.post('/saveProfile', function(req, res) {
         }
       }
 
-      fs.writeFileSync(classesFilePath, JSON.stringify(classDetails));
+      fs.writeFileSync(targetClassFilePath, JSON.stringify(classDetails));
       res.sendStatus(200);  
     } else {
       res.sendStatus(401);

@@ -163,7 +163,7 @@ $(document).ready(function() {
                 },
                 error: function(jqXHR, textStatus, errorThrown ) {
                     console.log('jqXHR: ' + jqXHR + " textStatus: " + textStatus + " errorThrown: " + errorThrown);
-                    $('#result').text('Trimitere esuata! Contactati administratorul.');
+                    $('#result').text('Verificare esuata! Contactati administratorul.');
                     $('#result').css('color', 'red');
                     scrollToResult();
                 },
