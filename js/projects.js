@@ -134,7 +134,7 @@ function renderProjectsForm() {
 }
 
 function loadProjects(shouldScroll) {
-    var projectsFileName = "database/Projects/Projects.json";
+    var projectsFileName = "database/projects/projects.json";
     
     $('#projectsList').empty();
     
