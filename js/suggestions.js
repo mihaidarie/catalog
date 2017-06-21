@@ -30,8 +30,8 @@ $(document).ready(function() {
 });
 
 function setCaptchaValidCookie() {
-    var in1Minute = 1/55;
-    Cookies.set('suggestionsCaptcha', { IsValid: true }, { expires: in1Minute });
+    var in1Minute = 1;
+    Cookies.set('suggestionsCaptcha', { IsValid: true }, { expires: new Date(new Date().getTime() + in1Minute * 60 * 1000); });
 }
 
 function sendMail() {

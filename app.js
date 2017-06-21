@@ -827,7 +827,7 @@ app.post('/emailadmin', function(req, res) {
       var subject = req.query.subject;
       var body = req.body.emailBody;
 
-	  console.log('Validating captcha...');
+	  console.log('Initiating mail sending to admin...');
       sendMailToAdmin(firstname, lastname, email, subject, body);
       res.sendStatus(200);
     } else {
@@ -842,12 +842,17 @@ app.post('/emailadmin', function(req, res) {
 function validateCaptchaCookie(req) {
   var captchaCookie = req.cookies.suggestionsCaptcha;
   if(captchaCookie) {
+    console.log('captcha cookie found in request...');
     var captchaCookieValue = JSON.parse(captchaCookie);
     if(captchaCookieValue.IsValid == true) {
+	  console.log('captcha found as valid...');
       return true;
     }
+  } else {
+	  console.log('captcha cookie not found...');
   }
 
+  console.log('captcha return as invalid...');
   return false;
 }
 
