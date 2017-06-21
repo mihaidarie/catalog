@@ -36,7 +36,8 @@ $(document).ready(function() {
 });
 
 function getProfile(className, currentProfileId, serverMethod, navigationCallback) {
-    var url = serverMethod + "?className=" + className + "&currentProfileId=" + currentProfileId;
+    var currentDate = new Date().getTime();
+	var url = serverMethod + "?className=" + className + "&currentProfileId=" + currentProfileId + "&time=" + currentDate;
 
     $.ajax({
         url: url,
