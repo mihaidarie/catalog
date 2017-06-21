@@ -96,15 +96,20 @@ app.use(express.static(path.join(__dirname, '')));
 
 // verify connection configuration
 function verifyEmailConfiguration(transporter) {
-  transporter.verify(function(error, success) {
-    if (error) {
-          console.log('Email configuration error: ' + error);
-          configurationOk = false;
-    } else {
-          console.log('Email Server is ready to take our messages');
-          configurationOk = true;
-    }
-  });
+	
+	console.log('Verifying transporter setup...');
+	
+	transporter.verify(function(error, success) {
+		if (error) {
+			  console.log('Email configuration error: ' + error);
+			  configurationOk = false;
+		} else {
+			  console.log('Email Server is ready to take our messages');
+			  configurationOk = true;
+		}
+	});
+  
+	console.log('Transporter check finished...');
 }
 
 function setupTransporter(serviceHost, servicePort, secured, user, password) {
@@ -112,6 +117,8 @@ function setupTransporter(serviceHost, servicePort, secured, user, password) {
   var adminPassword = appconfig.SmtpPassword;
   var service = appconfig.SmtpService;
 
+	console.log('Creating transporter...');
+	
   // create reusable transporter object using the default SMTP transport
   let transporter = nodemailer.createTransport({
       host: serviceHost,
@@ -122,6 +129,9 @@ function setupTransporter(serviceHost, servicePort, secured, user, password) {
           pass: adminPassword
       }
   });
+  
+  
+  console.log('Created transporter...');
 
   verifyEmailConfiguration(transporter);
   
@@ -182,16 +192,24 @@ function sendMailToAdmin(firstname, lastname, email, subject, body) {
   var adminEmail = adminDetails.Email;
   
   if(adminEmail != "") {
+	  
+	console.log('Retrieved admin email...');
+	
     var transporter = setupTransporter(settingsDoc.SmtpServiceHost, settingsDoc.SmptServicePort, settingsDoc.SmptServiceSecured, settingsDoc.Username, settingsDoc.Password);
+	
+	console.log('Email transporter setup...');
+	
     var mailDetails = createSuggestionEmailMessage(firstname, lastname, email, subject, body, adminEmail);
     
+	console.log('Attempting to send email to admin...');
+	
     // send mail with defined transport object
     transporter.sendMail(mailDetails, (error, info) => {
         if (error) {
-            return console.log(error);
+            return console.log('Error sending mail: ' + error);
         }
 
-        console.log('Message %s sent: %s', info.messageId, info.response);
+        console.log('Message %s sent to admin: %s', info.messageId, info.response);
     });
   }
 }
@@ -216,27 +234,34 @@ function createSuggestionEmailMessage(firstname, lastname, email, subject, body,
 }
 
 function sendMailToUser(email, subject, body) {
-  var settingsDoc = appconfig;
-  var accounts = JSON.parse(fs.readFileSync(accountsFilePath));
-  
-  var settingsDocResult = [];
+	var settingsDoc = appconfig;
+	var accounts = JSON.parse(fs.readFileSync(accountsFilePath));
 
-  var adminDetails = getAdminDetails();
-  var adminEmail = adminDetails.Email;
+	var settingsDocResult = [];
 
-  if(adminEmail != "") {
-    var transporter = setupTransporter(settingsDoc.SmtpServiceHost, settingsDoc.SmptServicePort, settingsDoc.SmptServiceSecured, settingsDoc.Username, settingsDoc.Password);
-    var mailDetails = createPasswordResetEmailMessage(email, subject, body, adminEmail);
-    
-    // send mail with defined transport object
-    transporter.sendMail(mailDetails, (error, info) => {
-        if (error) {
-            return console.log(error);
-        }
+	var adminDetails = getAdminDetails();
+	var adminEmail = adminDetails.Email;
 
-        console.log('Message %s sent: %s', info.messageId, info.response);
-    });
-  }
+	console.log('Retrieved admin email...');
+	
+	if(adminEmail != "") {
+		var transporter = setupTransporter(settingsDoc.SmtpServiceHost, settingsDoc.SmptServicePort, settingsDoc.SmptServiceSecured, settingsDoc.Username, settingsDoc.Password);
+		
+		console.log('Email transporter setup...');
+	
+		var mailDetails = createPasswordResetEmailMessage(email, subject, body, adminEmail);
+
+		console.log('Attempting to send email to user...');
+
+		// send mail with defined transport object
+		transporter.sendMail(mailDetails, (error, info) => {
+			if (error) {
+				return console.log('Error sending mail: ' + error);
+			}
+
+			console.log('Message %s sent to user: %s', info.messageId, info.response);
+		});
+	}
 }
 
 function createPasswordResetEmailMessage(emailTo, subject, body, adminEmail) {
