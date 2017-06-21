@@ -1208,13 +1208,16 @@ app.get('/getProjectPhotos', function(req, res) {
     res.setHeader('Content-Type', 'application/json');
     var photosList = [];
     var projectId = req.query.projectId;
-    var files = fs.readdirSync(projectsFolder + projectId + '/');
+	var projectPhotosPath = projectsFolder + projectId + '/';
+	if(fs.existsSync(projectPhotosPath)) {
+		var files = fs.readdirSync(projectPhotosPath);
 
-    if(files) {
-      files.forEach(file => {
-        photosList.push(projectsClientPath + projectId + '/' + file);
-      });
-    }
+		if(files) {
+		  files.forEach(file => {
+			photosList.push(projectsClientPath + projectId + '/' + file);
+		  });
+		}
+	}
 
     res.send(JSON.stringify(photosList));
 });
