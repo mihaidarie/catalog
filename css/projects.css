@@ -24,10 +24,10 @@
 }
 
 #projectsList textarea {
-    width: 26em;
-    max-width: 26em;
+    width: 24em;
+    max-width: 24em;
     resize: none;
-    min-width: 26em;
+    min-width: 24em;
     overflow: auto;
     height: 10em;
 }
