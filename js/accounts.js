@@ -23,7 +23,10 @@ function validateCredentials(username, password){
                 loginResult.UserId = loginResultData.profileId;
                 loginResult.Class = loginResultData.className;
             }
-        }
+        },
+		error: function(jqXHR, textStatus, errorThrown ) {
+			console.log('error occurred while validating credentials: textStatus: ' + textStatus + " errorThrown: " + errorThrown);
+		}
     });
 
     return loginResult;

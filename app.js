@@ -553,47 +553,72 @@ function getPersonDetailsByMail(email) {
 }
 
 app.post('/validateCredentials', function(req, res) {
-  sem.take(function() {
-    var username = req.body.username;
-    var password = req.body.password;
-    var className = '';
-    var profileId = '';
-    var isValid = false;
 
-    if(username && username != '' && password && password != '') {
-      var accountsContent = fs.readFileSync(accountsFilePath);
-      var accounts = JSON.parse(accountsContent);
+	console.log('Request for credentials validation received');
+	
+	sem.take(function() {
+		
+		console.log('Acquired lock');	
+		
+		var username = req.body.username;
+		var password = req.body.password;
+		var className = '';
+		var profileId = '';
+		var isValid = false;
 
-      var personDetails = getPersonDetailsByMail(username);
-      if(personDetails.IsValid == true) {
-        isValid = personDetails.IsValid;
-        className = personDetails.Class;
-        profileId = personDetails.UserId;
-      } else {
-        for (var i = 0, len = accounts.length; i < len; i++) {
-          var currentUsername = accounts[i].Username;
-          var currentPassword = accounts[i].Password;
-          var hash = crypto.createHash('sha256');
-          hash.update(password);
-          var hashedPassword = hash.digest('hex');
-          if(username == currentUsername && hashedPassword == currentPassword) {
-            isValid = true;
-            className = accounts[i].Class;
-            profileId = accounts[i].Id;
-            break;
-          }
-        }
-      }
-    }
-    var returnMessage = {
-      isValid: isValid,
-      className: className,
-      profileId: profileId
-    };
+		if(username && username != '' && password && password != '') {
+			var accountsContent = fs.readFileSync(accountsFilePath);
+			var accounts = JSON.parse(accountsContent);
 
-    res.json(JSON.stringify(returnMessage));  
-    sem.leave();
-  });
+			console.log('Read accounts file');	
+		
+			var personDetails = getPersonDetailsByMail(username);
+			
+			console.log('Got person details');	
+			
+			if(personDetails.IsValid == true) {
+				console.log('Person details valid');	
+				isValid = personDetails.IsValid;
+				className = personDetails.Class;
+				profileId = personDetails.UserId;
+			} else {
+				console.log('Person details invalid');	
+				for (var i = 0, len = accounts.length; i < len; i++) {
+					
+					console.log('iteration: ' + i);	
+				  var currentUsername = accounts[i].Username;
+				  var currentPassword = accounts[i].Password;
+				  var hash = crypto.createHash('sha256');
+				  hash.update(password);
+				  var hashedPassword = hash.digest('hex');
+					console.log('computed hash');	
+				  if(username == currentUsername && hashedPassword == currentPassword) {
+					console.log('login credentials are valid');
+					isValid = true;
+					className = accounts[i].Class;
+					profileId = accounts[i].Id;
+					break;
+				  }
+				}
+			}
+		}
+		var returnMessage = {
+		  isValid: isValid,
+		  className: className,
+		  profileId: profileId
+		};
+
+		console.log('returning response');
+		res.json(JSON.stringify(returnMessage));  		
+		
+		console.log('Releasing lock');	
+		
+		sem.leave();
+		
+		console.log('Released lock');	
+	});
+	
+	console.log('Credentials validation exit');	
 });
 
 app.post('/sendResetPassword', function(req, res) {
