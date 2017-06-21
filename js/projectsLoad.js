@@ -7,7 +7,7 @@ function loadProjects() {
     
     var projectsFileName = "database/projects/projects.json";
 
-    $.getJSON(projectsFileName, function(data) {
+    $.getJSON(projectsFileName, {_: new Date().getTime()}, function(data) {
     
         var items = [];
         $.each(data, function(index, projectDetails) {

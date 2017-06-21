@@ -7,7 +7,7 @@ function loadNews() {
     
     var newsFileName = "database/news/news.json";
 
-    $.getJSON(newsFileName, function(data) {
+    $.getJSON(newsFileName, {_: new Date().getTime()}, function(data) {
     
         var items = [];
         var sorted = data.sort(SortById);

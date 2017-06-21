@@ -78,7 +78,7 @@ function loadProjectDetails() {
     var uri = URI(window.location.href);
     var projectId = uri.getParameter('id');
 
-    $.getJSON(projectsFileName, function( data ) {
+    $.getJSON(projectsFileName, {_: new Date().getTime()}, function( data ) {
       
         $.each(data, function(index, project) {
             if(project.Id == projectId) {

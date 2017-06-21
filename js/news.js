@@ -117,7 +117,7 @@ function loadNews(shouldScroll) {
     
     $('#newsList').empty();
     
-    $.getJSON(newsFileName, function(data) {
+    $.getJSON(newsFileName, {_: new Date().getTime()}, function(data) {
     
         var items = [];
         $.each(data, function(index, newsDetails) {

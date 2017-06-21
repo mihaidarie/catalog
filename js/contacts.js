@@ -57,7 +57,7 @@ function renderControls() {
 
 function loadContacts() {
     var contactsFileName = "database/contacts/contacts.json";
-    $.getJSON(contactsFileName, function( data ) {
+    $.getJSON(contactsFileName, {_: new Date().getTime()}, function( data ) {
         $('#phoneNumberRO').val(data.PhoneRomania);
         $('#emailRO').val(data.EmailRomania);
         $('#phoneNumberEN').val(data.PhoneEngland);

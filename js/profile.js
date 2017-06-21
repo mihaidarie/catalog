@@ -73,7 +73,7 @@ function renderProfileData(profileId, profileClass) {
 
     var peopleFileName = "database/classes/" + profileClass + ".json";
 
-    $.getJSON(peopleFileName, function( data ) {
+    $.getJSON(peopleFileName, {_: new Date().getTime()}, function( data ) {
       
         $.each(data[0].Profiles, function(index, profile) {
             if(profile.Id == profileId) {

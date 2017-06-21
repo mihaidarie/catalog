@@ -21,7 +21,7 @@ function loadClassInfo() {
     
     var classFileName = "database/classes/" + className + ".json";
 
-    $.getJSON(classFileName, function( data ) {
+    $.getJSON(classFileName, {_: new Date().getTime()}, function( data ) {
       
         var items = [];
         $.each(data, function(index, classDetails) {

@@ -14,7 +14,7 @@ function afterLoadHeader() {
         $('#emailsExport').show();
         $('#btnExportEmails').click(function() {    
             var url = "/exportAllEmails";
-            $.getJSON(url, function(data) {
+            $.getJSON(url, {_: new Date().getTime()}, function(data) {
                 $('#allEmails').val(data.EmailsList);            
             });
         });
