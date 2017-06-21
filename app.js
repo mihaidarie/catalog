@@ -185,6 +185,8 @@ function sendMailToAdmin(firstname, lastname, email, subject, body) {
   var settingsDoc = appconfig;
   var accounts = JSON.parse(fs.readFileSync(accountsFilePath));
   
+  console.log('Initiating mail sending to admin...');
+  
   var settingsDocResult = [];
   var accountsResult = [];
 
@@ -211,6 +213,8 @@ function sendMailToAdmin(firstname, lastname, email, subject, body) {
 
         console.log('Message %s sent to admin: %s', info.messageId, info.response);
     });
+  } else {
+	  console.log('Admin email is empty, cannot send mail...');
   }
 }
 
@@ -237,6 +241,8 @@ function sendMailToUser(email, subject, body) {
 	var settingsDoc = appconfig;
 	var accounts = JSON.parse(fs.readFileSync(accountsFilePath));
 
+	console.log('Initiating email sending to user...');
+	
 	var settingsDocResult = [];
 
 	var adminDetails = getAdminDetails();
@@ -261,6 +267,8 @@ function sendMailToUser(email, subject, body) {
 
 			console.log('Message %s sent to user: %s', info.messageId, info.response);
 		});
+	} else {
+	  console.log('Admin email is empty, cannot send mail...');
 	}
 }
 
@@ -806,21 +814,24 @@ app.post('/resetPassword', function(req, res) {
 
 // handler for sending suggestions to administrator
 app.post('/emailadmin', function(req, res) {
+	console.log('Received suggestion sending request...');
   sem.take(function() {
     var isCaptchaValid = validateCaptchaCookie(req);
-
+	console.log('Validating captcha...');
     if(isCaptchaValid == true) {
       res.cookie('suggestionsCaptcha', { IsValid: false }, { expires: new Date(Date.now()) });
-
+		console.log('Captcha is valid...');
       var firstname = req.query.firstname;
       var lastname = req.query.lastname;
       var email = req.query.email;
       var subject = req.query.subject;
       var body = req.body.emailBody;
 
+	  console.log('Validating captcha...');
       sendMailToAdmin(firstname, lastname, email, subject, body);
       res.sendStatus(200);
     } else {
+		console.log('Captcha is invalid...');
       res.sendStatus(401);
     }
 
