@@ -1,7 +1,7 @@
 
-RewriteEngine On
-RewriteCond %{SERVER_PORT} 80 [NC]
-RewriteRule ^(.*)$ https://negruzzi1987.ro/$1 [R,NC,L]
+#RewriteEngine On
+#RewriteCond %{SERVER_PORT} 80 [NC]
+#RewriteRule ^(.*)$ https://negruzzi1987.ro/$1 [R,NC,L]
 
 RewriteEngine On
 RewriteRule ^$ http://188.213.132.249:60000/ [P,NC,L]
@@ -9,10 +9,4 @@ RewriteCond %{REQUEST_FILENAME} !-f [NC]
 RewriteCond %{REQUEST_FILENAME} !-d [NC]
 RewriteRule ^(.*)$ http://188.213.132.249:60000/$1 [P,NC,L]
 
-negruzzi 30324 0.0 0.0 158868 2524 ? S Jun20 0:00 sshd: negruzzi@pts/3
-negruzzi 30325 0.0 0.0 11768 1868 pts/3 Ss+ Jun20 0:00 -bash
-negruzzi 80983 0.0 0.0 892160 33228 pts/3 Sl 00:22 0:00 node app.js
-negruzzi 105318 0.0 0.0 146548 724 ? S 00:45 0:00 pure-ftpd (IDLE)
-negruzzi 108788 0.0 0.0 115384 1972 pts/1 S 00:49 0:00 bash
-negruzzi 108854 0.0 0.0 151052 1812 pts/1 R+ 00:49 0:00 ps axu
 
