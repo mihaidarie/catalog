@@ -20,7 +20,7 @@ function setupPageElements() {
 
 function wireUpHandlers() {
     $('#btnBack').on('click', function () {
-        window.location.href = 'index.html';
+        window.location.href = 'Index.html';
     });
 
     //$('#upload-btn').click(loadProjectPhotos);
@@ -36,7 +36,7 @@ function wireUpHandlers() {
             $('#result').css('color', 'red');
             scrollToResult();
             resetResultMessage();
-            location.href = "index.html";
+            location.href = "Index.html";
         }
     });
 

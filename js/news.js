@@ -158,6 +158,6 @@ function setupFormMode() {
     }
     else {       
         // redirect to root page if not admin
-        window.location.href = "index.html";
+        window.location.href = "Index.html";
     }
 }

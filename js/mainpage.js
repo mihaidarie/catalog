@@ -14,7 +14,7 @@ function wireupNewsHandlers() {
     $('.updatesHeader').click(function(e) {
         var isAdminUserLoggedIn1 = isAdminLoggedIn();
         if(isAdminUserLoggedIn1 == true) {
-            window.location.href = "news.html";
+            window.location.href = "News.html";
         }
 
         e.stopPropagation();
@@ -33,7 +33,7 @@ function wireupProjectsHandlers() {
         var isAdminUserLoggedIn1 = isAdminLoggedIn();
 
         if(isAdminUserLoggedIn1 == true) {
-            window.location.href = "projects.html";
+            window.location.href = "Projects.html";
         }
 
         e.stopPropagation();

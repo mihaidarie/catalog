@@ -16,11 +16,11 @@ $(document).ready(function() {
     $('#btnBack').on('click', function () {
 
       if(uploadType == 'profile') {
-        window.location.href = "profile.html?class=" + profileClass + "&id=" + profileId;
+        window.location.href = "Profile.html?class=" + profileClass + "&id=" + profileId;
       }
 
       if(uploadType == 'gallery') {
-        window.location.href = "gallery.html";
+        window.location.href = "Gallery.html";
       }
     });
 

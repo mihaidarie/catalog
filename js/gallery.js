@@ -32,7 +32,7 @@ $(document).ready(function() {
                 $('#result').text('Salvare esuata! Va rugam sa va logati.');
                 $('#result').css('color', 'red');
                 setTimeout(function() {
-                    location.href = "index.html";
+                    location.href = "Index.html";
                 }, 5000);
             }
         });

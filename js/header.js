@@ -102,7 +102,7 @@ function logout(shouldRedirect) {
     removeLoginCookie();
     if(shouldRedirect == true) {
         console.log('Redirecting to homepage');
-        window.location.href = "index.html";
+        window.location.href = "Index.html";
     }
 }
 

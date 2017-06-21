@@ -50,7 +50,7 @@ function setupUploadControls(uploadType, profileId, profileClass) {
               $('.progress-bar').html('Incarcare esuata! Va rugam sa va logati.');
               $('.progress-bar').css('background-color', 'red');
               setTimeout(function() {
-                location.href = "index.html";
+                location.href = "Index.html";
               }, 5000);
             } else {
               $('.progress-bar').html('Incarcare esuata! Contactati administratorul.');
