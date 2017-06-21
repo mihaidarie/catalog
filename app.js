@@ -16,6 +16,7 @@ var http = require('http');
 
 console.log('Catalog server starting...');
 
+var contactsFilePath = path.join(__dirname, '/database/contacts/contacts.json');
 var photosFolder = path.join(__dirname, '/images/gallery/');
 var photoClientPath = '/images/gallery/';
 var projectsFolder = path.join(__dirname, '/images/projects/');
@@ -454,7 +455,6 @@ function getAdminDetails() {
     }
   }
 
-  var contactsFilePath = '/catalog/database/contacts/contacts.json';
   var contacts = JSON.parse(fs.readFileSync(contactsFilePath));
   adminDetails.Email = contacts.EmailRomania;
 
@@ -473,7 +473,7 @@ function scheduleTokenRemoval(token) {
 }
 
 function findPersonByClassAndId(className, personId) {
-  var classFilePath = "/catalog/database/classes/" + className + ".json";
+  var classFilePath = classesFilePath + className + ".json";
   var fileExists = fs.existsSync(classFilePath);
 
   if(fileExists == true) {
@@ -497,7 +497,7 @@ function findPersonByClassAndId(className, personId) {
 }
 
 function findPersonByEmail(email, className) {
-  var classFilePath = "/catalog/database/classes/" + className + ".json";
+  var classFilePath = classesFilePath + className + ".json";
   var fileExists = fs.existsSync(classFilePath);
   if(fileExists == true) {
     var classPersons = JSON.parse(fs.readFileSync(classFilePath));
@@ -796,7 +796,6 @@ app.post('/saveContacts', function(req, res){
     if(isUserAdmin == true) {
       var body = req.body;
       
-      var contactsFilePath = '/catalog/database/contacts/contacts.json';
       fs.writeFileSync(contactsFilePath, JSON.stringify(body));
       res.sendStatus(200);
     } else {
@@ -1043,7 +1042,7 @@ app.post('/saveProfile', function(req, res) {
     var isExpectedUserLoggedIn = isExpectedUser(className, profileId, req);
     if(isUserAdmin == true || isExpectedUserLoggedIn == true) {
     
-      var classesFilePath = '/catalog/database/classes/' + className + ".json";
+      var classesFilePath = classesFilePath + className + ".json";
       var classDetails = JSON.parse(fs.readFileSync(classesFilePath));
 
       for (var i = 0, len = classDetails[0].Profiles.length; i < len; i++) {
@@ -1088,7 +1087,7 @@ app.post('/saveClass', function(req, res) {
     if(isUserAdmin == true) {
       var classDescription = req.body.description.trim();
       var className = req.query.className;
-      var classesFilePath = '/catalog/database/classes/' + className + ".json";
+      var classesFilePath = classesFilePath + className + ".json";
       var classDetails = JSON.parse(fs.readFileSync(classesFilePath));
 
       classDetails[0].Description = classDescription;
