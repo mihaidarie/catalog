@@ -1,3 +1,6 @@
+RewriteEngine On
+RewriteCond %{SERVER_PORT} 80
+RewriteRule ^(.*)$ https://negruzzi1987.ro/$1 [R,L]
 
 #RewriteEngine On
 #RewriteCond %{SERVER_PORT} 80 [NC]
